@@ -16,7 +16,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { doc, updateDoc } from "@firebase/firestore";
 import { db } from "../../src/firebase";
-import useTotalBalance from "../../components/useTotalBalance";
+import useTotalBalance from "../../hooks/useTotalBalance";
 
 interface FormData {
   daily: number;
