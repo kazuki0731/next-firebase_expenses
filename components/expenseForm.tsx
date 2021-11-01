@@ -1,14 +1,18 @@
 import { FormControl } from "@chakra-ui/form-control";
-import { Input, InputGroup, InputLeftAddon, InputRightAddon } from "@chakra-ui/input";
+import {
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  InputRightAddon,
+} from "@chakra-ui/input";
 import { VStack } from "@chakra-ui/layout";
 import { NextPage } from "next";
 
 interface Props {
-  register: any
-} 
+  register: any;
+}
 
-const ExpenseForm: NextPage<Props> = ({register}) => {
-
+const ExpenseForm: NextPage<Props> = ({ register }) => {
   return (
     <VStack spacing={3}>
       <FormControl id="daily">
