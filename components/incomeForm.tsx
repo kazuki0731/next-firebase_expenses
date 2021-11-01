@@ -12,8 +12,7 @@ interface Props {
   register: any;
 }
 
-const IncomeForm: NextPage<Props> = (props) => {
-  const { register } = props;
+const IncomeForm: NextPage<Props> = ({ register }) => {
   return (
     <VStack spacing={3}>
       <FormControl id="salary">

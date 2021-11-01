@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { doc, getDoc, updateDoc } from "@firebase/firestore";
 import { db } from "../src/firebase";
 import ExpenseForm from "../components/expenseForm";
-import IncomeForm from "./incomeForm";
+import IncomeForm from "../components/incomeForm";
 import BalancePrice from "./balancePrice";
 
 interface FormData {
