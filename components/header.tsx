@@ -13,7 +13,7 @@ const Header: NextPage = () => {
           <PageLink href="/total" color="whiteAlpha.800">
             合計
           </PageLink>
-          <PageLink href="/simulate/expense" color="whiteAlpha.800">
+          <PageLink href="/simulate" color="whiteAlpha.800">
             シミュレート
           </PageLink>
         </HStack>

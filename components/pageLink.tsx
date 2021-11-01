@@ -4,7 +4,6 @@ import { NextPage } from "next";
 
 interface Props {
   href: string;
-  url?: string;
   color?: string;
 }
 
@@ -16,7 +15,7 @@ const PageLink: NextPage<Props> = (props) => {
   };
 
   return (
-    <NextLink href={props.href} as={props.url}>
+    <NextLink href={props.href}>
       <Link
         color={props.color}
         fontWeight="semibold"
