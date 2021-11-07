@@ -2,12 +2,21 @@ import NextLink from "next/link";
 import { Link } from "@chakra-ui/react";
 import { NextPage } from "next";
 
-interface Props {
-  href: string;
-  color?: string;
-}
+// interface Props {
+//   href:
+//     | {
+//         pathname: string;
+//         query: {
+//           data: string;
+//         };
+//       }
+//     | string;
+//   url?: string;
+//   color?: string;
+//   underLine?: string;
+// }
 
-const PageLink: NextPage<Props> = (props) => {
+const PageLink = (props: any) => {
   const clickLink = () => {
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
@@ -15,8 +24,9 @@ const PageLink: NextPage<Props> = (props) => {
   };
 
   return (
-    <NextLink href={props.href}>
+    <NextLink href={props.href} as={props.url}>
       <Link
+        _hover={{ textDecoration: props.underLine }}
         color={props.color}
         fontWeight="semibold"
         {...props}

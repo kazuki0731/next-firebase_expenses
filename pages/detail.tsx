@@ -2,6 +2,8 @@ import Container from "../components/container";
 import { NextPage } from "next";
 import Head from "next/head";
 import TitleText from "../components/titleText";
+import { useRecoilState } from "recoil";
+
 import {
   Box,
   HStack,
@@ -10,9 +12,11 @@ import {
   Text,
   UnorderedList,
 } from "@chakra-ui/layout";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   collection,
+  deleteDoc,
+  doc,
   endBefore,
   getDocs,
   limit,
@@ -24,27 +28,13 @@ import {
 } from "@firebase/firestore";
 import { db } from "../src/firebase";
 
-import {
-  List,
-  Button,
-  Divider,
-  useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-} from "@chakra-ui/react";
-import { IoFastFoodOutline } from "react-icons/io5";
-import { IoIosBasket } from "react-icons/io";
-import { ImHome } from "react-icons/im";
-import { BsFillLightbulbFill } from "react-icons/bs";
-import { RiPsychotherapyFill } from "react-icons/ri";
+import { Button, Divider } from "@chakra-ui/react";
 import dayjs from "dayjs";
+import { AuthContext } from "../hooks/authProvider";
+import PageLink from "../components/pageLink";
+import { monthState } from "../hooks/userState";
+import MonthButton from "../components/monthButton";
 
-const month = new Date().getMonth() + 1;
 const pageLimit = 5;
 
 interface AllData {
@@ -55,31 +45,32 @@ interface AllData {
   text: string;
 }
 
-interface PriceData {
+interface expenseData {
   daily: number;
   food: number;
   rent: number;
   util: number;
-  other: number;
+  otherExpense: number;
   totalPrice?: number;
 }
 
 const Total: NextPage = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [nowMonth, setNowMonth] = useState(Number(month));
+  const [nowMonth, setNowMonth] = useRecoilState(monthState);
+  const { currentUser } = useContext<any>(AuthContext);
   const [prevtData, setPrevData] = useState({});
   const [nextData, setNextData] = useState({});
   const [nowPage, setNowPage] = useState(1);
   const [maxPage, setMaxPage] = useState(1);
   const [detailData, setDetailData] = useState<AllData[]>([]);
-  const [priceData, setPriceData] = useState<PriceData>({
+  const [expenseData, setExpenseData] = useState<expenseData>({
     daily: 0,
     food: 0,
     rent: 0,
     util: 0,
-    other: 0,
+    otherExpense: 0,
     totalPrice: 0,
   });
+
   const getAllData = async (month: string | string[] | number | undefined) => {
     const data: AllData[] = [];
     month = ("0" + month).slice(-2);
@@ -89,7 +80,7 @@ const Total: NextPage = () => {
       food: 0,
       rent: 0,
       util: 0,
-      other: 0,
+      otherExpense: 0,
       totalPrice: 0,
     };
     try {
@@ -127,12 +118,12 @@ const Total: NextPage = () => {
             allexpenseData.util += item.price;
             break;
           case "その他":
-            allexpenseData.other += item.price;
+            allexpenseData.otherExpense += item.price;
             break;
         }
         allexpenseData.totalPrice += item.price;
       });
-      setPriceData(allexpenseData);
+      setExpenseData(allexpenseData);
     } catch (e) {
       console.log(e);
     }
@@ -173,9 +164,11 @@ const Total: NextPage = () => {
   };
 
   useEffect(() => {
-    getAllData(nowMonth);
-    getDetailData(nowMonth);
-  }, [nowMonth]);
+    if (currentUser) {
+      getAllData(nowMonth);
+      getDetailData(nowMonth);
+    }
+  }, [nowMonth, currentUser]);
 
   const clickShowOtherMonth = (otherMonth: number) => {
     if (otherMonth <= 0) {
@@ -265,18 +258,70 @@ const Total: NextPage = () => {
     }
   };
 
+  const clickDelete = async (id: string) => {
+    await deleteDoc(doc(db, "spendings", id));
+    getAllData(nowMonth);
+    getDetailData(nowMonth);
+  };
+
   return (
-    <div>
+    <>
       <Head>
         <title>total</title>
       </Head>
-      <TitleText>{nowMonth}月の支出</TitleText>
+      <TitleText>{nowMonth}月</TitleText>
       <Container>
-        <HStack justify="center">
-          <Text>総計: {priceData.totalPrice}円</Text>
-          {priceData.totalPrice === 0 || (
-            <>
-              <Button onClick={onOpen}>詳細</Button>
+        <Text fontWeight="semibold"> 総計: {expenseData.totalPrice}円</Text>
+        {expenseData.totalPrice === 0 || (
+          <>
+            <UnorderedList mb={5} listStyleType="none">
+              {detailData.map((data) => (
+                <Box key={data.id}>
+                  <ListItem>
+                    <span> {data.text} </span>
+                    <span> ({data.category})</span>
+                    <span> {data.price}円 </span>
+                    <span> {dayjs(data.date).format("MM/DD(ddd)")} </span>
+                    <PageLink
+                      href={{
+                        pathname: "/edit",
+                        query: { id: data.id },
+                      }}
+                      url={`/edit`}
+                    >
+                      <Button m={1.5} fontSize="16px" h="32px" w="50px">
+                        編集
+                      </Button>
+                    </PageLink>
+                    <Button
+                      m={1.5}
+                      fontSize="16px"
+                      h="32px"
+                      w="50px"
+                      onClick={() => clickDelete(data.id)}
+                    >
+                      削除
+                    </Button>
+                  </ListItem>
+                  <Divider w="80%" m="0 auto" borderColor="black" />
+                </Box>
+              ))}
+            </UnorderedList>
+            <HStack w="100%" justify="center" spacing={5}>
+              <Button
+                disabled={nowPage === 1}
+                onClick={() => clickGetPrevData(nowMonth)}
+              >
+                &lt;&lt;前の5件
+              </Button>
+              <Button
+                disabled={nowPage === maxPage}
+                onClick={() => clickGetNextData(nowMonth)}
+              >
+                次の5件&gt;&gt;
+              </Button>
+            </HStack>
+            {/* <Button onClick={onOpen}>詳細</Button>
               <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
@@ -292,8 +337,35 @@ const Total: NextPage = () => {
                             <span>
                               {dayjs(data.date).format("MM/DD(ddd)")}{" "}
                             </span>
+                            <PageLink
+                              href={{
+                                pathname: "/edit",
+                                query: { id: data.id },
+                              }}
+                              url={`/edit`}
+                            >
+                              <Button
+                                bg="gray.300"
+                                m={1.5}
+                                fontSize="16px"
+                                h="32px"
+                                w="50px"
+                              >
+                                編集
+                              </Button>
+                            </PageLink>
+                            <Button
+                              bg="gray.300"
+                              m={1.5}
+                              fontSize="16px"
+                              h="32px"
+                              w="50px"
+                              onClick={() => clickDelete(data.id)}
+                            >
+                              削除
+                            </Button>
                           </ListItem>
-                          <Divider w="70%" m="0 auto" borderColor="black" />
+                          <Divider w="80%" m="0 auto" borderColor="black" />
                         </Box>
                       ))}
                     </UnorderedList>
@@ -315,42 +387,54 @@ const Total: NextPage = () => {
                     </HStack>
                   </ModalFooter>
                 </ModalContent>
-              </Modal>
-            </>
-          )}
-        </HStack>
-        <List spacing={2}>
+              </Modal> */}
+          </>
+        )}
+
+        {/* <List spacing={2}>
           <ListItem>
             <ListIcon as={IoIosBasket} color="green.500" />
-            日用品: {priceData.daily}円
+            日用品: {expenseData.daily}円
           </ListItem>
           <ListItem>
             <ListIcon as={IoFastFoodOutline} color="green.500" />
-            食費: {priceData.food}円
+            食費: {expenseData.food}円
           </ListItem>
           <ListItem>
             <ListIcon as={ImHome} color="green.500" />
-            家賃: {priceData.rent}円
+            家賃: {expenseData.rent}円
           </ListItem>
           <ListItem>
             <ListIcon as={BsFillLightbulbFill} color="green.500" />
-            光熱費: {priceData.util}円
+            光熱費: {expenseData.util}円
           </ListItem>
           <ListItem>
             <ListIcon as={RiPsychotherapyFill} color="green.500" />
-            その他: {priceData.other}円
+            その他: {expenseData.other}円
           </ListItem>
-        </List>
-        <HStack mt={3} justify="center" spacing={8}>
-          <Button onClick={() => clickShowOtherMonth(nowMonth - 1)}>
-            &lt;&lt;前の月
-          </Button>
-          <Button onClick={() => clickShowOtherMonth(nowMonth + 1)}>
-            次の月&gt;&gt;
-          </Button>
-        </HStack>
+        </List> */}
       </Container>
-    </div>
+      {/* <HStack spacing={8} justify="space-evenly" mt={3}>
+        <Button
+          w="120px"
+          bg="blue.300"
+          onClick={() => clickShowOtherMonth(nowMonth - 1)}
+        >
+          &lt;&lt;前の月
+        </Button>
+        <Button
+          w="120px"
+          bg="blue.300"
+          onClick={() => clickShowOtherMonth(nowMonth + 1)}
+        >
+          次の月&gt;&gt;
+        </Button>
+      </HStack> */}
+      <MonthButton
+        clickShowOtherMonth={clickShowOtherMonth}
+        nowMonth={nowMonth}
+      />
+    </>
   );
 };
 

@@ -5,6 +5,12 @@ import {
   InputLeftAddon,
   InputRightAddon,
 } from "@chakra-ui/input";
+import { Icon } from "@chakra-ui/react";
+import { IoFastFoodOutline } from "react-icons/io5";
+import { IoIosBasket } from "react-icons/io";
+import { ImHome } from "react-icons/im";
+import { BsFillLightbulbFill } from "react-icons/bs";
+import { RiPsychotherapyFill } from "react-icons/ri";
 import { VStack } from "@chakra-ui/layout";
 import { NextPage } from "next";
 
@@ -14,14 +20,17 @@ interface Props {
 
 const ExpenseForm: NextPage<Props> = ({ register }) => {
   return (
-    <VStack spacing={3}>
+    <VStack spacing={2} w="90%" m="0 auto">
       <FormControl id="daily">
         <InputGroup>
-          <InputLeftAddon>日用品</InputLeftAddon>
+          <InputLeftAddon fontSize="20px">
+            <Icon as={IoIosBasket} color="green.500" />
+            日用品
+          </InputLeftAddon>
           <Input
+            fontSize="20px"
             type="number"
             bg="white"
-            placeholder="金額"
             {...register("daily")}
           />
           <InputRightAddon>円</InputRightAddon>
@@ -29,11 +38,14 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
       </FormControl>
       <FormControl id="food">
         <InputGroup>
-          <InputLeftAddon>食費</InputLeftAddon>
+          <InputLeftAddon fontSize="20px">
+            <Icon as={IoFastFoodOutline} color="green.500" />
+            食費
+          </InputLeftAddon>
           <Input
+            fontSize="20px"
             type="number"
             bg="white"
-            placeholder="金額"
             {...register("food")}
           />
           <InputRightAddon>円</InputRightAddon>
@@ -41,11 +53,14 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
       </FormControl>
       <FormControl id="rent">
         <InputGroup>
-          <InputLeftAddon>家賃</InputLeftAddon>
+          <InputLeftAddon fontSize="20px">
+            <Icon as={ImHome} color="green.500" />
+            家賃
+          </InputLeftAddon>
           <Input
+            fontSize="20px"
             type="number"
             bg="white"
-            placeholder="金額"
             {...register("rent")}
           />
           <InputRightAddon>円</InputRightAddon>
@@ -53,38 +68,30 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
       </FormControl>
       <FormControl id="util">
         <InputGroup>
-          <InputLeftAddon>光熱費</InputLeftAddon>
+          <InputLeftAddon fontSize="20px">
+            <Icon as={BsFillLightbulbFill} color="green.500" />
+            光熱費
+          </InputLeftAddon>
           <Input
+            fontSize="20px"
             type="number"
             bg="white"
-            placeholder="金額"
             {...register("util")}
           />
           <InputRightAddon>円</InputRightAddon>
         </InputGroup>
       </FormControl>
-      <FormControl id="otherExpense1">
+      <FormControl id="otherExpense">
         <InputGroup>
-          <InputLeftAddon>その他</InputLeftAddon>
-          <Input type="text" bg="white" placeholder="カテゴリ名" />
+          <InputLeftAddon fontSize="20px">
+            <Icon as={RiPsychotherapyFill} color="green.500" />
+            その他
+          </InputLeftAddon>
           <Input
+            fontSize="20px"
             type="number"
             bg="white"
-            placeholder="金額"
-            {...register("otherExpense1")}
-          />
-          <InputRightAddon>円</InputRightAddon>
-        </InputGroup>
-      </FormControl>
-      <FormControl id="otherExpense2">
-        <InputGroup>
-          <InputLeftAddon>その他</InputLeftAddon>
-          <Input type="text" bg="white" placeholder="カテゴリ" />
-          <Input
-            type="number"
-            bg="white"
-            placeholder="金額"
-            {...register("otherExpense2")}
+            {...register("otherExpense")}
           />
           <InputRightAddon>円</InputRightAddon>
         </InputGroup>
