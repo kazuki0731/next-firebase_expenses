@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { NextPage } from "next";
-import router from "next/router";
+import { useRouter } from "next/router";
 import TitleText from "../components/titleText";
 import Container from "../components/container";
 import { HStack, Text, VStack } from "@chakra-ui/layout";
@@ -23,7 +23,9 @@ interface FormData {
 const Edit: NextPage = () => {
   const { register, handleSubmit, reset } = useForm<FormData>();
   const [msg, setMsg] = useState("");
+  const router = useRouter();
   const id = router.query.id;
+  console.log(id);
 
   useEffect(() => {
     const getData = async () => {
