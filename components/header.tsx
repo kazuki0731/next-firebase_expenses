@@ -18,24 +18,41 @@ const Header: NextPage = () => {
   return (
     <>
       <Box bg="tomato" p={1}>
-        <HStack spacing={10} justify="center">
-          <PageLink underline="underLine" href="/input" color="whiteAlpha.800">
-            入力
-          </PageLink>
-          <PageLink underline="underLine" href="/detail" color="whiteAlpha.800">
-            詳細
-          </PageLink>
-          <PageLink underline="underLine" href="/graph" color="whiteAlpha.800">
-            グラフ
-          </PageLink>
-          {currentUser ? (
-            <Button onClick={clickLogout}>ログアウト</Button>
-          ) : (
-            <PageLink href="/login" >
-              <Button>ログイン</Button>
-            </PageLink>
-          )}
-        </HStack>
+        <Box w="90%" m="0 auto">
+          <HStack justify="space-between">
+            <HStack spacing={10}>
+              <PageLink
+                underline="underLine"
+                href="/input"
+                color="whiteAlpha.800"
+              >
+                入力
+              </PageLink>
+              <PageLink
+                underline="underLine"
+                href="/detail"
+                color="whiteAlpha.800"
+              >
+                詳細
+              </PageLink>
+              <PageLink
+                underline="underLine"
+                href="/overall"
+                color="whiteAlpha.800"
+              >
+                全体
+              </PageLink>
+            </HStack>
+
+            {currentUser ? (
+              <Button onClick={clickLogout}>ログアウト</Button>
+            ) : (
+              <PageLink href="/login">
+                <Button>ログイン</Button>
+              </PageLink>
+            )}
+          </HStack>
+        </Box>
       </Box>
     </>
   );

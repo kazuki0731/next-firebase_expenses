@@ -23,8 +23,13 @@ interface FormData {
 }
 
 const InputData: NextPage = () => {
-  const { register, handleSubmit, reset } = useForm<FormData>();
-  const { isGetAuth } = useContext<any>(AuthContext);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>();
+  const { currentUser } = useContext<any>(AuthContext);
   const [msg, setMsg] = useState("");
 
   const submitData = async (data: FormData) => {
@@ -49,7 +54,7 @@ const InputData: NextPage = () => {
   };
 
   useEffect(() => {
-    if (!isGetAuth) {
+    if (!currentUser) {
       router.push("/login");
     }
   }, []);
@@ -59,12 +64,12 @@ const InputData: NextPage = () => {
       <Head>
         <title>Input</title>
       </Head>
-      {isGetAuth && (
+      {currentUser && (
         <>
           <TitleText>Input</TitleText>
           <Container>
             <form onSubmit={handleSubmit(submitData)}>
-              <VStack w="70%" m="0 auto" spacing={8}>
+              <VStack w="70%" m="0 auto" spacing={6}>
                 <FormControl id="price">
                   <Input
                     type="number"
@@ -92,8 +97,12 @@ const InputData: NextPage = () => {
                     variant="outline"
                     placeholder="メモ"
                     required
-                    {...register("text")}
+                    {...register("text", { maxLength: 10 })}
                   />
+
+                  {errors.text && (
+                    <Text mt={2} color="red" fontSize="16px">※10文字以内にしてください</Text>
+                  )}
                 </FormControl>
                 <FormControl id="date">
                   <Input

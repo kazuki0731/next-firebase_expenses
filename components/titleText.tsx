@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { Heading } from "@chakra-ui/layout";
-import { Props } from "../models";
+import { Props } from "../models/interface";
 
 const TitleText: NextPage<Props> = ({ children }) => {
   return (

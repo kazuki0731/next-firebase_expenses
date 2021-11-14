@@ -21,18 +21,17 @@ interface FormData {
 
 const Login: NextPage = () => {
   const { register, handleSubmit } = useForm<FormData>();
-  const { currentUser, setCurrentUser, isGetAuth, setIsGetAuth } =
-    useContext<any>(AuthContext);
+  const { currentUser, setCurrentUser } = useContext<any>(AuthContext);
   const [isLogin, setIsLogin] = useState(true);
   const [msg, setMsg] = useState("");
 
   useEffect(() => {
-    if (isGetAuth) {
+    if (currentUser) {
       router.push("/");
     } else {
       setIsLogin(false);
     }
-  }, [isGetAuth]);
+  }, [currentUser]);
 
   const submitData = async (data: FormData) => {
     const { email, password } = data;

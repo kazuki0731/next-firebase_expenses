@@ -32,6 +32,7 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
             type="number"
             bg="white"
             {...register("daily")}
+            textAlign="right"
           />
           <InputRightAddon>円</InputRightAddon>
         </InputGroup>
@@ -47,6 +48,7 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
             type="number"
             bg="white"
             {...register("food")}
+            textAlign="right"
           />
           <InputRightAddon>円</InputRightAddon>
         </InputGroup>
@@ -62,6 +64,7 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
             type="number"
             bg="white"
             {...register("rent")}
+            textAlign="right"
           />
           <InputRightAddon>円</InputRightAddon>
         </InputGroup>
@@ -77,6 +80,7 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
             type="number"
             bg="white"
             {...register("util")}
+            textAlign="right"
           />
           <InputRightAddon>円</InputRightAddon>
         </InputGroup>
@@ -92,6 +96,7 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
             type="number"
             bg="white"
             {...register("otherExpense")}
+            textAlign="right"
           />
           <InputRightAddon>円</InputRightAddon>
         </InputGroup>

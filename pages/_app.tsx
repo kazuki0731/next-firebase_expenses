@@ -5,15 +5,18 @@ import Header from "../components/header";
 import AuthProvider from "../hooks/authProvider";
 import { theme } from "../styles/theme";
 import { RecoilRoot } from "recoil";
+import DataProvider from "../hooks/dataProvider";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <AuthProvider>
-        <RecoilRoot>
-          <Header />
-          <Component {...pageProps} />
-        </RecoilRoot>
+        <DataProvider>
+          <RecoilRoot>
+            <Header />
+            <Component {...pageProps} />
+          </RecoilRoot>
+        </DataProvider>
       </AuthProvider>
     </ChakraProvider>
   );

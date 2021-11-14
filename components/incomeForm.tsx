@@ -17,7 +17,7 @@ interface Props {
 
 const IncomeForm: NextPage<Props> = ({ register }) => {
   return (
-    <VStack spacing={2} minHeight="232px">
+    <VStack spacing={2} w="90%" m="0 auto" minHeight="232px">
       <FormControl id="salary">
         <InputGroup>
           <InputLeftAddon fontSize="20px">
@@ -30,6 +30,7 @@ const IncomeForm: NextPage<Props> = ({ register }) => {
             type="number"
             bg="white"
             {...register("salary")}
+            textAlign="right"
           />
           <InputRightAddon>円</InputRightAddon>
         </InputGroup>
@@ -45,6 +46,7 @@ const IncomeForm: NextPage<Props> = ({ register }) => {
             type="number"
             bg="white"
             {...register("otherIncome")}
+            textAlign="right"
           />
           <InputRightAddon>円</InputRightAddon>
         </InputGroup>

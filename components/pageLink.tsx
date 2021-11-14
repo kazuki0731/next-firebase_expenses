@@ -26,6 +26,7 @@ const PageLink = (props: any) => {
   return (
     <NextLink href={props.href} as={props.url}>
       <Link
+        fontSize="24px"
         _hover={{ textDecoration: props.underLine }}
         color={props.color}
         fontWeight="semibold"

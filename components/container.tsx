@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/layout";
 import { NextPage } from "next";
-import { Props } from "../models";
+import { Props } from "../models/interface";
 
 const Container: NextPage<Props> = ({ children }) => {
   return (

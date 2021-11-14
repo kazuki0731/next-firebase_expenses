@@ -13,4 +13,20 @@ export const theme = extendTheme({
       },
     },
   },
+  colors: {
+    primary: {
+      100: "#2CB8D1",
+      200: "#51C1D5",
+    },
+    accent: {
+      50: "#fffbdbde",
+      100: "#FCD81E",
+      500: "#FCD81E", //colorScheme用
+    },
+    text: {
+      100: "#082024",
+      200: "#000F0F8A",
+    },
+    background: "#F6FDFF",
+  },
 });
