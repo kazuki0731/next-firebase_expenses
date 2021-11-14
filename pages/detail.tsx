@@ -180,79 +180,76 @@ const Total: NextPage = () => {
         <title>total</title>
       </Head>
       <TitleText>{nowMonth}月</TitleText>
-      <Container>
-        <Text mb={5} fontWeight="semibold">
-          {" "}
-          総計: {expenseData.totalPrice}円
-        </Text>
-
-        <HStack mb={5} justify="center" spacing={10}>
-          <BarChart barChart={barChart} />
-          <PieChart pieChart={pieChart} />
-        </HStack>
-        {expenseData.totalPrice === 0 || (
-          <>
-            <UnorderedList
-              w="90%"
-              m="0 auto 10px auto"
-              listStyleType="none"
-              fontSize="20px"
-            >
-              {detailData.map((data) => (
-                <Box key={data.id}>
-                  <ListItem>
-                    <HStack justify="space-between">
-                      <Box>
-                        <span> {dayjs(data.date).format("MM/DD(ddd)")} </span>
-                        <span> {data.text} </span>
-                        <span> ({data.category})</span>
-                      </Box>
-                      <Box>
-                        <span> {data.price}円 </span>
-                        <PageLink
-                          href={{
-                            pathname: "/edit",
-                            query: { id: data.id },
-                          }}
-                          url={`/edit`}
-                        >
-                          <Button m={1.5} fontSize="14px" h="32px" w="50px">
-                            編集
-                          </Button>
-                        </PageLink>
-                        <Button
-                          m={1.5}
-                          fontSize="14px"
-                          h="32px"
-                          w="50px"
-                          onClick={() => clickDelete(data.id)}
-                        >
-                          削除
+      {currentUser && (
+        <Container>
+          <Text mb={5} fontWeight="semibold">
+            {" "}
+            総計: {expenseData.totalPrice}円
+          </Text>
+          <HStack mb={5} justify="center" spacing={10}>
+            <BarChart barChart={barChart} />
+            <PieChart pieChart={pieChart} />
+          </HStack>
+          <UnorderedList
+            w="90%"
+            m="0 auto 10px auto"
+            listStyleType="none"
+            fontSize="20px"
+          >
+            {detailData.map((data) => (
+              <Box key={data.id}>
+                <ListItem>
+                  <HStack justify="space-between">
+                    <Box>
+                      <span> {dayjs(data.date).format("MM/DD(ddd)")} </span>
+                      <span> {data.text} </span>
+                      <span> ({data.category})</span>
+                    </Box>
+                    <Box>
+                      <span> {data.price}円 </span>
+                      <PageLink
+                        href={{
+                          pathname: "/edit",
+                          query: { id: data.id },
+                        }}
+                        url={`/edit`}
+                      >
+                        <Button m={1.5} fontSize="14px" h="32px" w="50px">
+                          編集
                         </Button>
-                      </Box>
-                    </HStack>
-                  </ListItem>
-                  <Divider borderColor="black" />
-                </Box>
-              ))}
-            </UnorderedList>
-            <HStack w="100%" justify="center" spacing={5}>
-              <Button
-                disabled={nowPage === 1}
-                onClick={() => clickGetPrevData(nowMonth)}
-              >
-                &lt;&lt;前の5件
-              </Button>
-              <Button
-                disabled={nowPage === maxPage}
-                onClick={() => clickGetNextData(nowMonth)}
-              >
-                次の5件&gt;&gt;
-              </Button>
-            </HStack>
-          </>
-        )}
-      </Container>
+                      </PageLink>
+                      <Button
+                        m={1.5}
+                        fontSize="14px"
+                        h="32px"
+                        w="50px"
+                        onClick={() => clickDelete(data.id)}
+                      >
+                        削除
+                      </Button>
+                    </Box>
+                  </HStack>
+                </ListItem>
+                <Divider borderColor="black" />
+              </Box>
+            ))}
+          </UnorderedList>
+          <HStack w="100%" justify="center" spacing={5}>
+            <Button
+              disabled={nowPage === 1}
+              onClick={() => clickGetPrevData(nowMonth)}
+            >
+              &lt;&lt;前の5件
+            </Button>
+            <Button
+              disabled={nowPage === maxPage}
+              onClick={() => clickGetNextData(nowMonth)}
+            >
+              次の5件&gt;&gt;
+            </Button>
+          </HStack>
+        </Container>
+      )}
       <MonthButton
         clickShowOtherMonth={clickShowOtherMonth}
         clickShowNowMonth={() => setNowMonth(new Date().getMonth() + 1)}

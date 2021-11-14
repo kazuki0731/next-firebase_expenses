@@ -348,139 +348,145 @@ const Overall: NextPage = () => {
         <title>overall</title>
       </Head>
       <TitleText>{nowMonth}月</TitleText>
-      <Container>
-        <BalancePrice
-          incomes={goalIncomes}
-          expenses={expenseDetail.totalPrice}
-          balance={totalBalance}
-        />
-        <HStack mb={5} justify="center" spacing={10}>
-          <BarChart barChart={barChart} />
-          <PieChart pieChart={pieChart} />
-        </HStack>
-        <HStack mt={3} alignItems="flex-start">
-          <Box w="50%">
-            <Text mb={2}>{isExpense ? "目標" : "収入"}</Text>
-            <form>
-              {isExpense ? (
-                <ExpenseForm register={register} />
-              ) : (
-                <IncomeForm register={register} />
-              )}
-            </form>
-            <Text textAlign="right" m="0 auto" w="85%" fontSize="24px" mt={2}>
-              合計: {isExpense ? goalExpenses : goalIncomes}円
-            </Text>
-          </Box>
-          <Box w="50%">
-            <Text mb={3}>現在の支出</Text>
+      {currentUser && (
+        <Container>
+          <BalancePrice
+            incomes={goalIncomes}
+            expenses={expenseDetail.totalPrice}
+            balance={totalBalance}
+          />
+          <HStack mb={5} justify="center" spacing={10}>
+            <BarChart barChart={barChart} />
+            <PieChart pieChart={pieChart} />
+          </HStack>
+          <HStack mt={3} alignItems="flex-start">
+            <Box w="50%">
+              <Text mb={2}>{isExpense ? "目標" : "収入"}</Text>
+              <form>
+                {isExpense ? (
+                  <ExpenseForm register={register} />
+                ) : (
+                  <IncomeForm register={register} />
+                )}
+              </form>
+              <Text textAlign="right" m="0 auto" w="85%" fontSize="24px" mt={2}>
+                合計: {isExpense ? goalExpenses : goalIncomes}円
+              </Text>
+            </Box>
+            <Box w="50%">
+              <Text mb={3}>現在の支出</Text>
 
-            <Box w="80%" m="0 auto">
-              <List spacing={3}>
-                <Box>
-                  <Divider w="100%" mb="7px" borderColor="black" />
-                  <ListItem textAlign="right" fontSize="22px">
-                    <ListIcon as={IoIosBasket} color="green.500" />
-                    {expenseDetail.daily}円 (
-                    <Text
-                      display="inline"
-                      color={balanceDetail.dailyBalance >= 0 ? "black" : "red"}
-                    >
-                      {balanceDetail.dailyBalance >= 0 && "あと"}
-                      {balanceDetail.dailyBalance}円
-                    </Text>
-                    )
-                  </ListItem>
-                  <Divider w="100%" mb="7px" borderColor="black" />
+              <Box w="80%" m="0 auto">
+                <List spacing={3}>
+                  <Box>
+                    <Divider w="100%" mb="7px" borderColor="black" />
+                    <ListItem textAlign="right" fontSize="22px">
+                      <ListIcon as={IoIosBasket} color="green.500" />
+                      {expenseDetail.daily}円 (
+                      <Text
+                        display="inline"
+                        color={
+                          balanceDetail.dailyBalance >= 0 ? "black" : "red"
+                        }
+                      >
+                        {balanceDetail.dailyBalance >= 0 && "あと"}
+                        {balanceDetail.dailyBalance}円
+                      </Text>
+                      )
+                    </ListItem>
+                    <Divider w="100%" mb="7px" borderColor="black" />
+                  </Box>
+                  <Box>
+                    <ListItem textAlign="right" fontSize="22px">
+                      <ListIcon as={IoFastFoodOutline} color="green.500" />
+                      {expenseDetail.food}円 (
+                      <Text
+                        display="inline"
+                        color={balanceDetail.foodBalance >= 0 ? "black" : "red"}
+                      >
+                        {balanceDetail.foodBalance >= 0 && "あと"}
+                        {balanceDetail.foodBalance}円
+                      </Text>
+                      )
+                    </ListItem>
+                    <Divider w="100%" mb="7px" borderColor="black" />
+                  </Box>
+                  <Box>
+                    <ListItem textAlign="right" fontSize="22px">
+                      <ListIcon as={ImHome} color="green.500" />
+                      {expenseDetail.rent}円 (
+                      <Text
+                        display="inline"
+                        color={balanceDetail.rentBalance >= 0 ? "black" : "red"}
+                      >
+                        {balanceDetail.rentBalance >= 0 && "あと"}
+                        {balanceDetail.rentBalance}
+                      </Text>
+                      円)
+                    </ListItem>
+                    <Divider w="100%" mb="7px" borderColor="black" />
+                  </Box>
+                  <Box>
+                    <ListItem textAlign="right" fontSize="22px">
+                      <ListIcon as={BsFillLightbulbFill} color="green.500" />
+                      {expenseDetail.util}円 (
+                      <Text
+                        display="inline"
+                        color={balanceDetail.utilBalance >= 0 ? "black" : "red"}
+                      >
+                        {balanceDetail.utilBalance >= 0 && "あと"}
+                        {balanceDetail.utilBalance}円
+                      </Text>
+                      )
+                    </ListItem>
+                    <Divider w="100%" mb="7px" borderColor="black" />
+                  </Box>
+                  <Box>
+                    <ListItem textAlign="right" fontSize="22px">
+                      <ListIcon as={RiPsychotherapyFill} color="green.500" />
+                      {expenseDetail.otherExpense}円 (
+                      <Text
+                        display="inline"
+                        color={
+                          balanceDetail.otherBalance >= 0 ? "black" : "red"
+                        }
+                      >
+                        {balanceDetail.otherBalance >= 0 && "あと"}
+                        {balanceDetail.otherBalance}円
+                      </Text>
+                      )
+                    </ListItem>
+                    <Divider w="100%" mb="7px" borderColor="black" />
+                  </Box>
+                </List>
+                <Box mt={3} textAlign="right" fontSize="24px">
+                  合計: {expenseDetail.totalPrice}円(
+                  <Text
+                    display="inline"
+                    color={allBalance >= 0 ? "black" : "red"}
+                  >
+                    {allBalance >= 0 && "あと"}
+                    {allBalance}円
+                  </Text>
+                  )
                 </Box>
-                <Box>
-                  <ListItem textAlign="right" fontSize="22px">
-                    <ListIcon as={IoFastFoodOutline} color="green.500" />
-                    {expenseDetail.food}円 (
-                    <Text
-                      display="inline"
-                      color={balanceDetail.foodBalance >= 0 ? "black" : "red"}
-                    >
-                      {balanceDetail.foodBalance >= 0 && "あと"}
-                      {balanceDetail.foodBalance}円
-                    </Text>
-                    )
-                  </ListItem>
-                  <Divider w="100%" mb="7px" borderColor="black" />
-                </Box>
-                <Box>
-                  <ListItem textAlign="right" fontSize="22px">
-                    <ListIcon as={ImHome} color="green.500" />
-                    {expenseDetail.rent}円 (
-                    <Text
-                      display="inline"
-                      color={balanceDetail.rentBalance >= 0 ? "black" : "red"}
-                    >
-                      {balanceDetail.rentBalance >= 0 && "あと"}
-                      {balanceDetail.rentBalance}
-                    </Text>
-                    円)
-                  </ListItem>
-                  <Divider w="100%" mb="7px" borderColor="black" />
-                </Box>
-                <Box>
-                  <ListItem textAlign="right" fontSize="22px">
-                    <ListIcon as={BsFillLightbulbFill} color="green.500" />
-                    {expenseDetail.util}円 (
-                    <Text
-                      display="inline"
-                      color={balanceDetail.utilBalance >= 0 ? "black" : "red"}
-                    >
-                      {balanceDetail.utilBalance >= 0 && "あと"}
-                      {balanceDetail.utilBalance}円
-                    </Text>
-                    )
-                  </ListItem>
-                  <Divider w="100%" mb="7px" borderColor="black" />
-                </Box>
-                <Box>
-                  <ListItem textAlign="right" fontSize="22px">
-                    <ListIcon as={RiPsychotherapyFill} color="green.500" />
-                    {expenseDetail.otherExpense}円 (
-                    <Text
-                      display="inline"
-                      color={balanceDetail.otherBalance >= 0 ? "black" : "red"}
-                    >
-                      {balanceDetail.otherBalance >= 0 && "あと"}
-                      {balanceDetail.otherBalance}円
-                    </Text>
-                    )
-                  </ListItem>
-                  <Divider w="100%" mb="7px" borderColor="black" />
-                </Box>
-              </List>
-              <Box mt={3} textAlign="right" fontSize="24px">
-                合計: {expenseDetail.totalPrice}円(
-                <Text
-                  display="inline"
-                  color={allBalance >= 0 ? "black" : "red"}
-                >
-                  {allBalance >= 0 && "あと"}
-                  {allBalance}円
-                </Text>
-                )
               </Box>
             </Box>
-          </Box>
-        </HStack>
-        <HStack m="10px 0" spacing={10} justify="center">
-          <Button
-            w="110px"
-            type="submit"
-            onClick={handleSubmit((data) => submitData(data, nowMonth))}
-          >
-            変更を保存
-          </Button>
-          <Button w="110px" onClick={() => setIsExpense(!isExpense)}>
-            支出/収入
-          </Button>
-        </HStack>
-      </Container>
+          </HStack>
+          <HStack m="10px 0" spacing={10} justify="center">
+            <Button
+              w="110px"
+              type="submit"
+              onClick={handleSubmit((data) => submitData(data, nowMonth))}
+            >
+              変更を保存
+            </Button>
+            <Button w="110px" onClick={() => setIsExpense(!isExpense)}>
+              支出/収入
+            </Button>
+          </HStack>
+        </Container>
+      )}
       <MonthButton
         clickShowOtherMonth={clickShowOtherMonth}
         nowMonth={nowMonth}
