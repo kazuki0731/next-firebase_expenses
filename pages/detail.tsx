@@ -7,7 +7,7 @@ import {
   monthlyInputData,
   monthlyNextData,
   monthlyPrevData,
-} from "../hooks/api/getData";
+} from "../hooks/api/getInputData";
 
 import { Box, HStack, ListItem, Text, UnorderedList } from "@chakra-ui/layout";
 import { useContext, useEffect, useState } from "react";
@@ -20,25 +20,10 @@ import MonthButton from "../components/monthButton";
 import BarChart from "../components/barChart";
 import PieChart from "../components/pieChart";
 import { DataContext } from "../hooks/dataProvider";
+import { divideData } from "../util/functions";
+import { ExpenseData, InputData } from "../models/interface";
 
 const pageLimit = 5;
-
-interface InputData {
-  id: string;
-  category: string;
-  date: string;
-  price: number;
-  text: string;
-}
-
-interface expenseData {
-  daily: number;
-  food: number;
-  rent: number;
-  util: number;
-  otherExpense: number;
-  totalPrice?: number;
-}
 
 const Total: NextPage = () => {
   const { currentUser } = useContext<any>(AuthContext);
@@ -50,7 +35,7 @@ const Total: NextPage = () => {
   const [nowPage, setNowPage] = useState(1);
   const [maxPage, setMaxPage] = useState(1);
   const [detailData, setDetailData] = useState<InputData[]>([]);
-  const [expenseData, setExpenseData] = useState<expenseData>({
+  const [expenseData, setExpenseData] = useState<ExpenseData>({
     daily: 0,
     food: 0,
     rent: 0,
@@ -75,27 +60,7 @@ const Total: NextPage = () => {
     const result = await monthlyInputData(month);
 
     if (result) {
-      result.data.forEach((item) => {
-        switch (item.category) {
-          case "食費":
-            allexpenseData.food += item.price;
-            break;
-          case "日用品":
-            allexpenseData.daily += item.price;
-            break;
-          case "家賃":
-            allexpenseData.rent += item.price;
-            break;
-          case "光熱費":
-            allexpenseData.util += item.price;
-            break;
-          case "その他":
-            allexpenseData.otherExpense += item.price;
-            break;
-        }
-        allexpenseData.totalPrice += item.price;
-      });
-
+      divideData(result.data, allexpenseData);
       const limitedData = result.data.slice(0, pageLimit);
       const { food, daily, rent, util, otherExpense } = allexpenseData;
       const pageLen = Math.ceil(result.data.length / pageLimit);
