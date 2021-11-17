@@ -13,22 +13,28 @@ import { BsFillLightbulbFill } from "react-icons/bs";
 import { RiPsychotherapyFill } from "react-icons/ri";
 import { VStack } from "@chakra-ui/layout";
 import { NextPage } from "next";
+import { UseFormRegister } from "react-hook-form";
+import { AllGoalData } from "../../models/interface";
+import { DataContext } from "../../hooks/dataProvider";
+import { useContext } from "react";
 
 interface Props {
-  register: any;
+  register: UseFormRegister<AllGoalData>;
 }
 
 const ExpenseForm: NextPage<Props> = ({ register }) => {
+  const { isLarger } = useContext(DataContext);
+
   return (
     <VStack spacing={2} w="90%" m="0 auto">
       <FormControl id="daily">
         <InputGroup>
-          <InputLeftAddon fontSize="20px">
+          <InputLeftAddon fontSize={isLarger ? "20px" : "16px"}>
             <Icon as={IoIosBasket} color="green.500" />
             日用品
           </InputLeftAddon>
           <Input
-            fontSize="20px"
+            fontSize={isLarger ? "20px" : "16px"}
             type="number"
             bg="white"
             {...register("daily")}
@@ -39,12 +45,12 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
       </FormControl>
       <FormControl id="food">
         <InputGroup>
-          <InputLeftAddon fontSize="20px">
+          <InputLeftAddon fontSize={isLarger ? "20px" : "16px"}>
             <Icon as={IoFastFoodOutline} color="green.500" />
             食費
           </InputLeftAddon>
           <Input
-            fontSize="20px"
+            fontSize={isLarger ? "20px" : "16px"}
             type="number"
             bg="white"
             {...register("food")}
@@ -55,12 +61,12 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
       </FormControl>
       <FormControl id="rent">
         <InputGroup>
-          <InputLeftAddon fontSize="20px">
+          <InputLeftAddon fontSize={isLarger ? "20px" : "16px"}>
             <Icon as={ImHome} color="green.500" />
             家賃
           </InputLeftAddon>
           <Input
-            fontSize="20px"
+            fontSize={isLarger ? "20px" : "16px"}
             type="number"
             bg="white"
             {...register("rent")}
@@ -71,12 +77,12 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
       </FormControl>
       <FormControl id="util">
         <InputGroup>
-          <InputLeftAddon fontSize="20px">
+          <InputLeftAddon fontSize={isLarger ? "20px" : "16px"}>
             <Icon as={BsFillLightbulbFill} color="green.500" />
             光熱費
           </InputLeftAddon>
           <Input
-            fontSize="20px"
+            fontSize={isLarger ? "20px" : "16px"}
             type="number"
             bg="white"
             {...register("util")}
@@ -87,12 +93,12 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
       </FormControl>
       <FormControl id="otherExpense">
         <InputGroup>
-          <InputLeftAddon fontSize="20px">
+          <InputLeftAddon fontSize={isLarger ? "20px" : "16px"}>
             <Icon as={RiPsychotherapyFill} color="green.500" />
             その他
           </InputLeftAddon>
           <Input
-            fontSize="20px"
+            fontSize={isLarger ? "20px" : "16px"}
             type="number"
             bg="white"
             {...register("otherExpense")}

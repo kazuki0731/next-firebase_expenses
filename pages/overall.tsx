@@ -1,54 +1,35 @@
 import Head from "next/head";
 import { NextPage } from "next";
-import TitleText from "../components/titleText";
-import Container from "../components/container";
-import { IoFastFoodOutline } from "react-icons/io5";
-import { IoIosBasket } from "react-icons/io";
-import { ImHome } from "react-icons/im";
-import { BsFillLightbulbFill } from "react-icons/bs";
-import { RiPsychotherapyFill } from "react-icons/ri";
+import TitleText from "../components/common/titleText";
+import Container from "../components/common/container";
 import { Button } from "@chakra-ui/button";
-import { useBreakpointValue } from "@chakra-ui/react";
-
-import {
-  Box,
-  HStack,
-  List,
-  ListIcon,
-  ListItem,
-  Text,
-  Divider,
-} from "@chakra-ui/layout";
+import { Box, HStack, VStack } from "@chakra-ui/layout";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import ExpenseForm from "../components/expenseForm";
-import IncomeForm from "../components/incomeForm";
-import BalancePrice from "../components/balancePrice";
-import MonthButton from "../components/monthButton";
+import BalancePrice from "../components/overall/balancePrice";
+import MonthButton from "../components/common/monthButtonList";
 import { AuthContext } from "../hooks/authProvider";
-import { AllGoalData, ExpenseData, IncomeData } from "../models/interface";
-import PieChart from "../components/pieChart";
+import {
+  AllGoalData,
+  BalanceDetail,
+  ExpenseData,
+  IncomeData,
+} from "../models/interface";
+import PieChart from "../components/common/pieChart";
 import { DataContext } from "../hooks/dataProvider";
 import { monthlyInputData } from "../hooks/api/getInputData";
-import BarChart from "../components/barChart";
+import BarChart from "../components/common/barChart";
 import { divideData } from "../util/functions";
 import { getBalanceData, updateBalanceData } from "../hooks/api/getBalanceData";
-
-
-interface BalanceDetail {
-  dailyBalance: number;
-  foodBalance: number;
-  rentBalance: number;
-  utilBalance: number;
-  otherBalance: number;
-}
+import GoalDataForm from "../components/overall/goalDataForm";
+import InputExpenseData from "../components/overall/inputExpenseData";
 
 const Overall: NextPage = () => {
   const { register, handleSubmit, reset } = useForm<AllGoalData>();
-
-  const { currentUser } = useContext<any>(AuthContext);
+  const { isLarger } = useContext(DataContext);
+  const { currentUser } = useContext(AuthContext);
   const { nowMonth, setNowMonth, barChart, pieChart, setPieChart } =
-    useContext<any>(DataContext);
+    useContext(DataContext);
 
   // 目標金額の合計（num）
   const [goalExpenses, setGoalExpenses] = useState(0);
@@ -82,8 +63,6 @@ const Overall: NextPage = () => {
   });
 
   const [isExpense, setIsExpense] = useState(true);
-
-  // const isMobile = useBreakpointValue({ base: true, md: false });
 
   const getAllData = async (month: string | string[] | number | undefined) => {
     let allexpenseData = {
@@ -215,133 +194,63 @@ const Overall: NextPage = () => {
             expenses={expenseDetail.totalPrice}
             balance={totalBalance}
           />
-          <HStack mb={5} justify="center" spacing={10}>
-            <BarChart barChart={barChart} />
-            <PieChart pieChart={pieChart} />
-          </HStack>
-          <HStack mt={3} alignItems="flex-start">
-            <Box w="50%">
-              <Text mb={2}>{isExpense ? "目標" : "収入"}</Text>
-              <form>
-                {isExpense ? (
-                  <ExpenseForm register={register} />
-                ) : (
-                  <IncomeForm register={register} />
-                )}
-              </form>
-              <Text textAlign="right" m="0 auto" w="85%" fontSize="24px" mt={2}>
-                合計: {isExpense ? goalExpenses : goalIncomes}円
-              </Text>
+          {isLarger ? (
+            <Box>
+              <HStack mb={5} justify="center" spacing={10}>
+                <BarChart barChart={barChart} />
+                <PieChart pieChart={pieChart} />
+              </HStack>
+              <HStack mt={3} alignItems="flex-start">
+                <GoalDataForm
+                  isExpense={isExpense}
+                  goalExpenses={goalExpenses}
+                  goalIncomes={goalIncomes}
+                  register={register}
+                />
+                <InputExpenseData
+                  expenseDetail={expenseDetail}
+                  balanceDetail={balanceDetail}
+                  allBalance={allBalance}
+                />
+              </HStack>
             </Box>
-            <Box w="50%">
-              <Text mb={3}>現在の支出</Text>
-
-              <Box w="80%" m="0 auto">
-                <List spacing={3}>
-                  <Box>
-                    <Divider w="100%" mb="7px" borderColor="black" />
-                    <ListItem textAlign="right" fontSize="22px">
-                      <ListIcon as={IoIosBasket} color="green.500" />
-                      {expenseDetail.daily}円 (
-                      <Text
-                        display="inline"
-                        color={
-                          balanceDetail.dailyBalance >= 0 ? "black" : "red"
-                        }
-                      >
-                        {balanceDetail.dailyBalance >= 0 && "あと"}
-                        {balanceDetail.dailyBalance}円
-                      </Text>
-                      )
-                    </ListItem>
-                    <Divider w="100%" mb="7px" borderColor="black" />
-                  </Box>
-                  <Box>
-                    <ListItem textAlign="right" fontSize="22px">
-                      <ListIcon as={IoFastFoodOutline} color="green.500" />
-                      {expenseDetail.food}円 (
-                      <Text
-                        display="inline"
-                        color={balanceDetail.foodBalance >= 0 ? "black" : "red"}
-                      >
-                        {balanceDetail.foodBalance >= 0 && "あと"}
-                        {balanceDetail.foodBalance}円
-                      </Text>
-                      )
-                    </ListItem>
-                    <Divider w="100%" mb="7px" borderColor="black" />
-                  </Box>
-                  <Box>
-                    <ListItem textAlign="right" fontSize="22px">
-                      <ListIcon as={ImHome} color="green.500" />
-                      {expenseDetail.rent}円 (
-                      <Text
-                        display="inline"
-                        color={balanceDetail.rentBalance >= 0 ? "black" : "red"}
-                      >
-                        {balanceDetail.rentBalance >= 0 && "あと"}
-                        {balanceDetail.rentBalance}
-                      </Text>
-                      円)
-                    </ListItem>
-                    <Divider w="100%" mb="7px" borderColor="black" />
-                  </Box>
-                  <Box>
-                    <ListItem textAlign="right" fontSize="22px">
-                      <ListIcon as={BsFillLightbulbFill} color="green.500" />
-                      {expenseDetail.util}円 (
-                      <Text
-                        display="inline"
-                        color={balanceDetail.utilBalance >= 0 ? "black" : "red"}
-                      >
-                        {balanceDetail.utilBalance >= 0 && "あと"}
-                        {balanceDetail.utilBalance}円
-                      </Text>
-                      )
-                    </ListItem>
-                    <Divider w="100%" mb="7px" borderColor="black" />
-                  </Box>
-                  <Box>
-                    <ListItem textAlign="right" fontSize="22px">
-                      <ListIcon as={RiPsychotherapyFill} color="green.500" />
-                      {expenseDetail.otherExpense}円 (
-                      <Text
-                        display="inline"
-                        color={
-                          balanceDetail.otherBalance >= 0 ? "black" : "red"
-                        }
-                      >
-                        {balanceDetail.otherBalance >= 0 && "あと"}
-                        {balanceDetail.otherBalance}円
-                      </Text>
-                      )
-                    </ListItem>
-                    <Divider w="100%" mb="7px" borderColor="black" />
-                  </Box>
-                </List>
-                <Box mt={3} textAlign="right" fontSize="24px">
-                  合計: {expenseDetail.totalPrice}円(
-                  <Text
-                    display="inline"
-                    color={allBalance >= 0 ? "black" : "red"}
-                  >
-                    {allBalance >= 0 && "あと"}
-                    {allBalance}円
-                  </Text>
-                  )
-                </Box>
-              </Box>
+          ) : (
+            <Box>
+              <VStack mb={5} justify="center" spacing={10}>
+                <BarChart barChart={barChart} />
+                <PieChart pieChart={pieChart} />
+              </VStack>
+              <VStack mb={3} alignItems="flex-start">
+                <GoalDataForm
+                  isExpense={isExpense}
+                  goalExpenses={goalExpenses}
+                  goalIncomes={goalIncomes}
+                  register={register}
+                />
+                <InputExpenseData
+                  expenseDetail={expenseDetail}
+                  balanceDetail={balanceDetail}
+                  allBalance={allBalance}
+                />
+              </VStack>
             </Box>
-          </HStack>
+          )}
           <HStack m="10px 0" spacing={10} justify="center">
             <Button
-              w="110px"
+              w={isLarger ? "110px" : "80px"}
+              h={isLarger ? "45px" : "32px"}
               type="submit"
+              fontSize={isLarger ? "16px" : "12px"}
               onClick={handleSubmit((data) => submitData(data, nowMonth))}
             >
               変更を保存
             </Button>
-            <Button w="110px" onClick={() => setIsExpense(!isExpense)}>
+            <Button
+              w={isLarger ? "110px" : "80px"}
+              h={isLarger ? "45px" : "32px"}
+              fontSize={isLarger ? "16px" : "12px"}
+              onClick={() => setIsExpense(!isExpense)}
+            >
               支出/収入
             </Button>
           </HStack>
@@ -349,7 +258,6 @@ const Overall: NextPage = () => {
       )}
       <MonthButton
         clickShowOtherMonth={clickShowOtherMonth}
-        nowMonth={nowMonth}
         clickShowNowMonth={() => setNowMonth(new Date().getMonth() + 1)}
       />
     </>

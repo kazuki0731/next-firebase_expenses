@@ -1,34 +1,34 @@
-import Container from "../components/container";
+import Container from "../components/common/container";
 import { NextPage } from "next";
 import Head from "next/head";
-import TitleText from "../components/titleText";
+import TitleText from "../components/common/titleText";
 import {
   deleteData,
   monthlyInputData,
   monthlyNextData,
   monthlyPrevData,
 } from "../hooks/api/getInputData";
+import InputDataButton from "../components/detail/inputDataButton";
 
-import { Box, HStack, ListItem, Text, UnorderedList } from "@chakra-ui/layout";
+import { HStack, Text, VStack } from "@chakra-ui/layout";
 import { useContext, useEffect, useState } from "react";
 
-import { Button, Divider } from "@chakra-ui/react";
-import dayjs from "dayjs";
 import { AuthContext } from "../hooks/authProvider";
-import PageLink from "../components/pageLink";
-import MonthButton from "../components/monthButton";
-import BarChart from "../components/barChart";
-import PieChart from "../components/pieChart";
+import BarChart from "../components/common/barChart";
+import PieChart from "../components/common/pieChart";
 import { DataContext } from "../hooks/dataProvider";
 import { divideData } from "../util/functions";
 import { ExpenseData, InputData } from "../models/interface";
+import DetailList from "../components/detail/inputDataList";
+import MonthButtonList from "../components/common/monthButtonList";
 
 const pageLimit = 5;
 
 const Total: NextPage = () => {
   const { currentUser } = useContext<any>(AuthContext);
   const { nowMonth, setNowMonth, barChart, pieChart, setPieChart } =
-    useContext<any>(DataContext);
+    useContext(DataContext);
+  const { isLarger } = useContext(DataContext);
 
   const [prevData, setPrevData] = useState({});
   const [nextData, setNextData] = useState({});
@@ -56,7 +56,6 @@ const Total: NextPage = () => {
       otherExpense: 0,
       totalPrice: 0,
     };
-
     const result = await monthlyInputData(month);
 
     if (result) {
@@ -134,7 +133,7 @@ const Total: NextPage = () => {
     setNowPage(nowPage - 1);
   };
 
-  const clickDelete = async (id: string) => {
+  const clickDelete = (id: string) => {
     deleteData(id);
     getDetailData(nowMonth);
   };
@@ -148,77 +147,39 @@ const Total: NextPage = () => {
       {currentUser && (
         <Container>
           <Text mb={5} fontWeight="semibold">
-            {" "}
             総計: {expenseData.totalPrice}円
           </Text>
-          <HStack mb={5} justify="center" spacing={10}>
-            <BarChart barChart={barChart} />
-            <PieChart pieChart={pieChart} />
-          </HStack>
-          <UnorderedList
-            w="90%"
-            m="0 auto 10px auto"
-            listStyleType="none"
-            fontSize="20px"
-          >
-            {detailData.map((data) => (
-              <Box key={data.id}>
-                <ListItem>
-                  <HStack justify="space-between">
-                    <Box>
-                      <span> {dayjs(data.date).format("MM/DD(ddd)")} </span>
-                      <span> {data.text} </span>
-                      <span> ({data.category})</span>
-                    </Box>
-                    <Box>
-                      <span> {data.price}円 </span>
-                      <PageLink
-                        href={{
-                          pathname: "/edit/[id]",
-                          query: { dataId: data.id },
-                        }}
-                        url={`/edit/${data.text}`}
-                      >
-                        <Button m={1.5} fontSize="14px" h="32px" w="50px">
-                          編集
-                        </Button>
-                      </PageLink>
-                      <Button
-                        m={1.5}
-                        fontSize="14px"
-                        h="32px"
-                        w="50px"
-                        onClick={() => clickDelete(data.id)}
-                      >
-                        削除
-                      </Button>
-                    </Box>
-                  </HStack>
-                </ListItem>
-                <Divider borderColor="black" />
-              </Box>
-            ))}
-          </UnorderedList>
+          {isLarger ? (
+            <HStack mb={5} justify="center" spacing={10}>
+              <BarChart barChart={barChart} />
+              <PieChart pieChart={pieChart} />
+            </HStack>
+          ) : (
+            <VStack mb={5} justify="center" spacing={10}>
+              <BarChart barChart={barChart} />
+              <PieChart pieChart={pieChart} />
+            </VStack>
+          )}
+          <DetailList detailData={detailData} clickDelete={clickDelete} />
           <HStack w="100%" justify="center" spacing={5}>
-            <Button
+            <InputDataButton
               disabled={nowPage === 1}
-              onClick={() => clickGetPrevData(nowMonth)}
+              clickHandle={() => clickGetPrevData(nowMonth)}
             >
               &lt;&lt;前の5件
-            </Button>
-            <Button
+            </InputDataButton>
+            <InputDataButton
               disabled={nowPage === maxPage}
-              onClick={() => clickGetNextData(nowMonth)}
+              clickHandle={() => clickGetNextData(nowMonth)}
             >
               次の5件&gt;&gt;
-            </Button>
+            </InputDataButton>
           </HStack>
         </Container>
       )}
-      <MonthButton
+      <MonthButtonList
         clickShowOtherMonth={clickShowOtherMonth}
         clickShowNowMonth={() => setNowMonth(new Date().getMonth() + 1)}
-        nowMonth={nowMonth}
       />
     </>
   );

@@ -1,11 +1,24 @@
 import { NextPage } from "next";
-import { createContext, useEffect, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { Props } from "../models/interface";
 import { onAuthStateChanged } from "@firebase/auth";
 import router from "next/router";
 import { auth } from "../src/firebase";
 
-export const AuthContext = createContext({});
+export const AuthContext = createContext(
+  {} as {
+    currentUser: {} | null
+    setCurrentUser: Dispatch<SetStateAction<{} | null>>;
+    nowMonth: number;
+    setNowMonth: Dispatch<SetStateAction<number>>;
+  }
+);
 
 const AuthProvider: NextPage<Props> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<null | {}>(null);

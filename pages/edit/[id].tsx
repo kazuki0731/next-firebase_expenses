@@ -1,8 +1,8 @@
 import Head from "next/head";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import TitleText from "../../components/titleText";
-import Container from "../../components/container";
+import TitleText from "../../components/common/titleText";
+import Container from "../../components/common/container";
 import { HStack, Text, VStack } from "@chakra-ui/layout";
 import { useEffect, useState } from "react";
 import { doc, getDoc, updateDoc } from "@firebase/firestore";
@@ -12,7 +12,8 @@ import { FormControl } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Select } from "@chakra-ui/select";
 import { Button } from "@chakra-ui/button";
-import { getBalanceData } from "../../hooks/api/getBalanceData";
+import FormList from "../../components/edit/formList";
+import FormButton from "../../components/edit/formButton";
 
 interface FormData {
   price: number;
@@ -36,7 +37,6 @@ const Edit: NextPage = () => {
   }, []);
 
   const changeData = async (data: FormData) => {
-    console.log("push");
     data.price = Number(data.price);
     const { price, category, text, date } = data;
     try {
@@ -68,50 +68,8 @@ const Edit: NextPage = () => {
       <Container>
         <form onSubmit={handleSubmit(changeData)}>
           <VStack w="70%" m="0 auto" justifyContent="center">
-            <FormControl id="price">
-              <Input
-                type="number"
-                bg="white"
-                variant="outline"
-                placeholder="金額"
-                required
-                {...register("price")}
-              />
-            </FormControl>
-            <FormControl id="category" w="60%">
-              <Select bg="white" required {...register("category")}>
-                <option value="">カテゴリを選択</option>
-                <option value="日用品">日用品</option>
-                <option value="食費">食費</option>
-                <option value="家賃">家賃</option>
-                <option value="光熱費">光熱費</option>
-                <option value="その他">その他</option>
-              </Select>
-            </FormControl>
-            <FormControl id="text">
-              <Input
-                type="text"
-                bg="white"
-                variant="outline"
-                placeholder="メモ"
-                required
-                {...register("text")}
-              />
-            </FormControl>
-            <FormControl id="date">
-              <Input
-                type="date"
-                bg="white"
-                variant="outline"
-                placeholder="メモ"
-                required
-                {...register("date")}
-              />
-            </FormControl>
-            <HStack>
-              <Button type="submit">変更する</Button>
-              <Button onClick={clickBack}>戻る</Button>
-            </HStack>
+            <FormList register={register} />
+            <FormButton clickBack={clickBack}  />
           </VStack>
         </form>
         {msg && <Text mt={1}>{msg}</Text>}

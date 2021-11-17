@@ -35,6 +35,14 @@ export interface IncomeData {
   otherIncome: number;
 }
 
+export interface BalanceDetail {
+  dailyBalance: number;
+  foodBalance: number;
+  rentBalance: number;
+  utilBalance: number;
+  otherBalance: number;
+}
+
 export interface Chart {
   labels: string[];
   datasets:

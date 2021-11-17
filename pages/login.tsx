@@ -1,15 +1,14 @@
 import Head from "next/head";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import TitleText from "../components/titleText";
-import Container from "../components/container";
+import TitleText from "../components/common/titleText";
+import Container from "../components/common/container";
 import { VStack } from "@chakra-ui/layout";
-import { FormControl, FormLabel } from "@chakra-ui/form-control";
-
+import { FormControl, FormLabel } from "@chakra-ui/form-control";                                                 
 import { Input } from "@chakra-ui/input";
 import { Button } from "@chakra-ui/button";
 import { NextPage } from "next";
-import router from "next/router";
+import { useRouter } from "next/router";
 import { auth } from "../src/firebase";
 import { signInWithEmailAndPassword } from "@firebase/auth";
 import { AuthContext } from "../hooks/authProvider";
@@ -21,9 +20,10 @@ interface FormData {
 
 const Login: NextPage = () => {
   const { register, handleSubmit } = useForm<FormData>();
-  const { currentUser, setCurrentUser } = useContext<any>(AuthContext);
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(true);
   const [msg, setMsg] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     if (currentUser) {

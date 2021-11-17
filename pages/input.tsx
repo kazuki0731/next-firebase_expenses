@@ -1,19 +1,19 @@
 import Head from "next/head";
 import { NextPage } from "next";
-import Container from "../components/container";
+import Container from "../components/common/container";
 import { FormControl } from "@chakra-ui/form-control";
 import { VStack } from "@chakra-ui/layout";
 import { Input } from "@chakra-ui/input";
 import { Button, Text } from "@chakra-ui/react";
 import { Select } from "@chakra-ui/select";
-
 import { useForm } from "react-hook-form";
-import TitleText from "../components/titleText";
+import TitleText from "../components/common/titleText";
 import { addDoc, collection } from "@firebase/firestore";
 import { db } from "../src/firebase";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../hooks/authProvider";
-import router from "next/router";
+import { useRouter } from "next/router";
+import FormList from "../components/input/formList";
 
 interface FormData {
   price: number;
@@ -30,6 +30,7 @@ const InputData: NextPage = () => {
     formState: { errors },
   } = useForm<FormData>();
   const { currentUser } = useContext<any>(AuthContext);
+  const router = useRouter();
   const [msg, setMsg] = useState("");
 
   const submitData = async (data: FormData) => {
@@ -70,51 +71,7 @@ const InputData: NextPage = () => {
           <Container>
             <form onSubmit={handleSubmit(submitData)}>
               <VStack w="70%" m="0 auto" spacing={6}>
-                <FormControl id="price">
-                  <Input
-                    type="number"
-                    bg="white"
-                    variant="outline"
-                    placeholder="金額"
-                    required
-                    {...register("price")}
-                  />
-                </FormControl>
-                <FormControl id="category" w="60%">
-                  <Select bg="white" required {...register("category")}>
-                    <option value="">カテゴリを選択</option>
-                    <option value="日用品">日用品</option>
-                    <option value="食費">食費</option>
-                    <option value="家賃">家賃</option>
-                    <option value="光熱費">光熱費</option>
-                    <option value="その他">その他</option>
-                  </Select>
-                </FormControl>
-                <FormControl id="text">
-                  <Input
-                    type="text"
-                    bg="white"
-                    variant="outline"
-                    placeholder="メモ"
-                    required
-                    {...register("text", { maxLength: 10 })}
-                  />
-
-                  {errors.text && (
-                    <Text mt={2} color="red" fontSize="16px">※10文字以内にしてください</Text>
-                  )}
-                </FormControl>
-                <FormControl id="date">
-                  <Input
-                    type="date"
-                    bg="white"
-                    variant="outline"
-                    placeholder="メモ"
-                    required
-                    {...register("date")}
-                  />
-                </FormControl>
-
+                <FormList register={register} errors={errors} />
                 <Button type="submit">保存</Button>
               </VStack>
             </form>

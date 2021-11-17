@@ -2,16 +2,22 @@ import { NextPage } from "next";
 import { createContext, useEffect, useState } from "react";
 import { Props } from "../models/interface";
 import { allInputData } from "./api/getInputData";
+import { useMediaQuery } from "@chakra-ui/react";
 
-export const DataContext = createContext({});
 
-interface InputData {
-  id: string;
-  category: string;
-  date: string;
-  price: number;
-  text: string;
-}
+export const DataContext = createContext(
+  {} as {
+    nowMonth: number;
+    setNowMonth: React.Dispatch<React.SetStateAction<number>>;
+    yearlyData: number[];
+    setYearlyData: React.Dispatch<React.SetStateAction<number[]>>;
+    pieChart: Chart;
+    setPieChart: React.Dispatch<React.SetStateAction<Chart>>;
+    barChart: Chart;
+    setBarChart: React.Dispatch<React.SetStateAction<Chart>>;
+    isLarger: boolean;
+  }
+);
 
 interface Chart {
   labels: string[];
@@ -30,6 +36,7 @@ interface Chart {
 const DataProvider: NextPage<Props> = ({ children }) => {
   const [nowMonth, setNowMonth] = useState<number>(new Date().getMonth() + 1);
   const [yearlyData, setYearlyData] = useState<number[]>([]);
+  const [isLarger] = useMediaQuery("(min-width: 768px)");
   const [pieChart, setPieChart] = useState<Chart>({
     labels: [],
     datasets: [],
@@ -80,6 +87,7 @@ const DataProvider: NextPage<Props> = ({ children }) => {
     setPieChart,
     barChart,
     setBarChart,
+    isLarger
   };
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 };
