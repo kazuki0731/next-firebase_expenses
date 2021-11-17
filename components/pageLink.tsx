@@ -15,6 +15,13 @@ import { NextPage } from "next";
 //   color?: string;
 //   underLine?: string;
 // }
+{/* <PageLink
+  href={{
+    pathname: "/todos/[id]",
+    query: { todo: todo.id },
+  }}
+  url={`/todos/${todo.title}`}
+></PageLink>; */}
 
 const PageLink = (props: any) => {
   const clickLink = () => {

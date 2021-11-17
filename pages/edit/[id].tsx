@@ -1,17 +1,18 @@
 import Head from "next/head";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import TitleText from "../components/titleText";
-import Container from "../components/container";
+import TitleText from "../../components/titleText";
+import Container from "../../components/container";
 import { HStack, Text, VStack } from "@chakra-ui/layout";
 import { useEffect, useState } from "react";
 import { doc, getDoc, updateDoc } from "@firebase/firestore";
-import { db } from "../src/firebase";
+import { db } from "../../src/firebase";
 import { useForm } from "react-hook-form";
 import { FormControl } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Select } from "@chakra-ui/select";
 import { Button } from "@chakra-ui/button";
+import { getBalanceData } from "../../hooks/api/getBalanceData";
 
 interface FormData {
   price: number;
@@ -24,14 +25,13 @@ const Edit: NextPage = () => {
   const { register, handleSubmit, reset } = useForm<FormData>();
   const [msg, setMsg] = useState("");
   const router = useRouter();
-  const id = router.query.id;
-  console.log(id);
+  const id = router.query.dataId;
 
+  const getData = async () => {
+    const res = await getDoc(doc(db, "spendings", `${id}`));
+    reset(res.data());
+  };
   useEffect(() => {
-    const getData = async () => {
-      const res = await getDoc(doc(db, "spendings", `${id}`));
-      reset(res.data());
-    };
     getData();
   }, []);
 
@@ -47,8 +47,9 @@ const Edit: NextPage = () => {
         date,
         createdAt: new Date(),
       });
+      getData();
+
       setMsg("変更しました");
-      reset();
     } catch (e: any) {
       setMsg("変更に失敗しました");
     }

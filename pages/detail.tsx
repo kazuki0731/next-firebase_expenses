@@ -174,10 +174,10 @@ const Total: NextPage = () => {
                       <span> {data.price}円 </span>
                       <PageLink
                         href={{
-                          pathname: "/edit",
-                          query: { id: data.id },
+                          pathname: "/edit/[id]",
+                          query: { dataId: data.id },
                         }}
-                        url={`/edit`}
+                        url={`/edit/${data.text}`}
                       >
                         <Button m={1.5} fontSize="14px" h="32px" w="50px">
                           編集
