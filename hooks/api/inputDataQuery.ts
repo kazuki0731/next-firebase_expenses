@@ -1,4 +1,5 @@
 import {
+  addDoc,
   collection,
   deleteDoc,
   doc,
@@ -12,6 +13,7 @@ import {
   startAfter,
   where,
 } from "@firebase/firestore";
+
 import InputData from "../../pages/input";
 import { db } from "../../src/firebase";
 
@@ -23,6 +25,13 @@ interface InputData {
   date: string;
   price: number;
   text: string;
+}
+
+interface FormData {
+  price: number;
+  category: string;
+  text: string;
+  date: Date;
 }
 
 const getSnap = (snapShot: QuerySnapshot, data: InputData[]) => {
@@ -140,4 +149,25 @@ export const monthlyPrevData = async (
 
 export const deleteData = async (id: string) => {
   await deleteDoc(doc(db, "spendings", id));
+};
+
+export const postData = async (data: FormData) => {
+  data.price = Number(data.price);
+  const { price, category, text, date } = data;
+  try {
+    await addDoc(collection(db, "spendings"), {
+      price,
+      category,
+      text,
+      date,
+      createdAt: new Date(),
+    });
+    return {
+      text: "登録しました",
+    };
+  } catch (e: any) {
+    return {
+      text: "登録に失敗しました",
+    };
+  }
 };

@@ -11,6 +11,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../hooks/provider/authProvider";
 import { useRouter } from "next/router";
 import FormList from "../components/input/formList";
+import { postData } from "../hooks/api/inputDataQuery";
 
 interface FormData {
   price: number;
@@ -31,23 +32,9 @@ const InputData: NextPage = () => {
   const [msg, setMsg] = useState("");
 
   const submitData = async (data: FormData) => {
-    data.price = Number(data.price);
-    const { price, category, text, date } = data;
-    try {
-      await addDoc(collection(db, "spendings"), {
-        price,
-        category,
-        text,
-        date,
-        createdAt: new Date(),
-      });
-      setMsg("登録しました");
-      reset();
-    } catch (e: any) {
-      if (e.code) {
-        setMsg("登録に失敗しました");
-      }
-    }
+    const messge = await postData(data);
+    setMsg(messge.text);
+    reset();
   };
 
   useEffect(() => {
