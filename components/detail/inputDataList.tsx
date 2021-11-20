@@ -1,17 +1,10 @@
-import {
-  Box,
-  HStack,
-  ListItem,
-  Text,
-  UnorderedList,
-  VStack,
-} from "@chakra-ui/layout";
+import { Box, HStack, ListItem, UnorderedList } from "@chakra-ui/layout";
 import { Button, Divider } from "@chakra-ui/react";
 
 import dayjs from "dayjs";
 import { NextPage } from "next";
 import { useContext } from "react";
-import { DataContext } from "../../hooks/dataProvider";
+import { DataContext } from "../../hooks/provider/dataProvider";
 import { InputData } from "../../models/interface";
 import PageLink from "../common/pageLink";
 
@@ -20,8 +13,8 @@ interface Props {
   clickDelete: (id: string) => void;
 }
 
-const DetailList: NextPage<Props> = ({ detailData, clickDelete }) => {
-  const { isLarger } = useContext(DataContext)
+const InputDataList: NextPage<Props> = ({ detailData, clickDelete }) => {
+  const { isLarger } = useContext(DataContext);
   return (
     <Box>
       <UnorderedList w="90%" m="0 auto 10px auto" listStyleType="none">
@@ -106,4 +99,4 @@ const DetailList: NextPage<Props> = ({ detailData, clickDelete }) => {
   );
 };
 
-export default DetailList;
+export default InputDataList;

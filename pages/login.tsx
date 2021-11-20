@@ -11,7 +11,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { auth } from "../src/firebase";
 import { signInWithEmailAndPassword } from "@firebase/auth";
-import { AuthContext } from "../hooks/authProvider";
+import { AuthContext } from "../hooks/provider/authProvider";
 
 interface FormData {
   email: string;

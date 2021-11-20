@@ -1,7 +1,7 @@
 import { Button } from "@chakra-ui/button";
 import { NextPage } from "next";
 import { MouseEventHandler, useContext } from "react";
-import { DataContext } from "../../hooks/dataProvider";
+import { DataContext } from "../../hooks/provider/dataProvider";
 
 interface Props {
   children: React.ReactNode;

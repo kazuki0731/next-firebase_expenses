@@ -1,17 +1,14 @@
 import Head from "next/head";
 import { NextPage } from "next";
 import Container from "../components/common/container";
-import { FormControl } from "@chakra-ui/form-control";
 import { VStack } from "@chakra-ui/layout";
-import { Input } from "@chakra-ui/input";
 import { Button, Text } from "@chakra-ui/react";
-import { Select } from "@chakra-ui/select";
 import { useForm } from "react-hook-form";
 import TitleText from "../components/common/titleText";
 import { addDoc, collection } from "@firebase/firestore";
 import { db } from "../src/firebase";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../hooks/authProvider";
+import { AuthContext } from "../hooks/provider/authProvider";
 import { useRouter } from "next/router";
 import FormList from "../components/input/formList";
 
@@ -47,7 +44,6 @@ const InputData: NextPage = () => {
       setMsg("登録しました");
       reset();
     } catch (e: any) {
-      // 前回はanyだったが急にunknowになった
       if (e.code) {
         setMsg("登録に失敗しました");
       }

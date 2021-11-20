@@ -13,14 +13,14 @@ import InputDataButton from "../components/detail/inputDataButton";
 import { HStack, Text, VStack } from "@chakra-ui/layout";
 import { useContext, useEffect, useState } from "react";
 
-import { AuthContext } from "../hooks/authProvider";
+import { AuthContext } from "../hooks/provider/authProvider";
 import BarChart from "../components/common/barChart";
 import PieChart from "../components/common/pieChart";
-import { DataContext } from "../hooks/dataProvider";
+import { DataContext } from "../hooks/provider/dataProvider";
 import { divideData } from "../util/functions";
 import { ExpenseData, InputData } from "../models/interface";
-import DetailList from "../components/detail/inputDataList";
 import MonthButtonList from "../components/common/monthButtonList";
+import InputDataList from "../components/detail/inputDataList";
 
 const pageLimit = 5;
 
@@ -160,7 +160,7 @@ const Total: NextPage = () => {
               <PieChart pieChart={pieChart} />
             </VStack>
           )}
-          <DetailList detailData={detailData} clickDelete={clickDelete} />
+          <InputDataList detailData={detailData} clickDelete={clickDelete} />
           <HStack w="100%" justify="center" spacing={5}>
             <InputDataButton
               disabled={nowPage === 1}

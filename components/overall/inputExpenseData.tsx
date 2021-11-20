@@ -13,7 +13,7 @@ import { ImHome } from "react-icons/im";
 import { IoIosBasket } from "react-icons/io";
 import { IoFastFoodOutline } from "react-icons/io5";
 import { RiPsychotherapyFill } from "react-icons/ri";
-import { DataContext } from "../../hooks/dataProvider";
+import { DataContext } from "../../hooks/provider/dataProvider";
 import { BalanceDetail, ExpenseData } from "../../models/interface";
 
 interface Props {

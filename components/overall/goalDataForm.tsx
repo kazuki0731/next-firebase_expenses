@@ -2,7 +2,7 @@ import { Box, Text } from "@chakra-ui/layout";
 import { NextPage } from "next";
 import { useContext } from "react";
 import { UseFormRegister } from "react-hook-form";
-import { DataContext } from "../../hooks/dataProvider";
+import { DataContext } from "../../hooks/provider/dataProvider";
 import { AllGoalData } from "../../models/interface";
 import ExpenseForm from "./expenseForm";
 import IncomeForm from "./incomeForm";

@@ -6,7 +6,7 @@ import { onAuthStateChanged, signOut } from "@firebase/auth";
 import { auth } from "../../src/firebase";
 import { useRouter } from "next/router";
 import { useContext } from "react";
-import { AuthContext } from "../../hooks/authProvider";
+import { AuthContext } from "../../hooks/provider/authProvider";
 
 const Header: NextPage = () => {
   const { currentUser, setCurrentUser } = useContext<any>(AuthContext);

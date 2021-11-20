@@ -8,7 +8,7 @@ import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import BalancePrice from "../components/overall/balancePrice";
 import MonthButton from "../components/common/monthButtonList";
-import { AuthContext } from "../hooks/authProvider";
+import { AuthContext } from "../hooks/provider/authProvider";
 import {
   AllGoalData,
   BalanceDetail,
@@ -16,7 +16,7 @@ import {
   IncomeData,
 } from "../models/interface";
 import PieChart from "../components/common/pieChart";
-import { DataContext } from "../hooks/dataProvider";
+import { DataContext } from "../hooks/provider/dataProvider";
 import { monthlyInputData } from "../hooks/api/getInputData";
 import BarChart from "../components/common/barChart";
 import { divideData } from "../util/functions";
@@ -31,19 +31,14 @@ const Overall: NextPage = () => {
   const { nowMonth, setNowMonth, barChart, pieChart, setPieChart } =
     useContext(DataContext);
 
-  // 目標金額の合計（num）
   const [goalExpenses, setGoalExpenses] = useState(0);
 
-  // 収入の合計（num）
   const [goalIncomes, setGoalIncomes] = useState(0);
 
-  // 収支計算の合計（num）
   const [totalBalance, setTotalBalanse] = useState(0);
 
-  // 目標金額の合計から実際の支出合計を引いたもの
   const [allBalance, setAllBalance] = useState<number>(0);
 
-  // 実際に入力した支出金額（obj）
   const [expenseDetail, setExpenseDetail] = useState<ExpenseData>({
     daily: 0,
     food: 0,
@@ -53,7 +48,6 @@ const Overall: NextPage = () => {
     totalPrice: 0,
   });
 
-  // 目標金額（expenses）から実際の現在支出（expenseData）を引いた金額（obj）
   const [balanceDetail, setBalanceDetail] = useState<BalanceDetail>({
     dailyBalance: 0,
     foodBalance: 0,

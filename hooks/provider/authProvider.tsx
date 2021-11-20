@@ -6,14 +6,14 @@ import {
   useEffect,
   useState,
 } from "react";
-import { Props } from "../models/interface";
+import { Props } from "../../models/interface";
 import { onAuthStateChanged } from "@firebase/auth";
-import router from "next/router";
-import { auth } from "../src/firebase";
+import { useRouter } from "next/router";
+import { auth } from "../../src/firebase";
 
 export const AuthContext = createContext(
   {} as {
-    currentUser: {} | null
+    currentUser: {} | null;
     setCurrentUser: Dispatch<SetStateAction<{} | null>>;
     nowMonth: number;
     setNowMonth: Dispatch<SetStateAction<number>>;
@@ -23,6 +23,7 @@ export const AuthContext = createContext(
 const AuthProvider: NextPage<Props> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<null | {}>(null);
   const [nowMonth, setNowMonth] = useState<number>(new Date().getMonth() + 1);
+  const router = useRouter();
 
   useEffect(() => {
     const unsubscribed = onAuthStateChanged(auth, (user) => {

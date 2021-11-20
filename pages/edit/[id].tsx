@@ -3,15 +3,11 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import TitleText from "../../components/common/titleText";
 import Container from "../../components/common/container";
-import { HStack, Text, VStack } from "@chakra-ui/layout";
+import { Text, VStack } from "@chakra-ui/layout";
 import { useEffect, useState } from "react";
 import { doc, getDoc, updateDoc } from "@firebase/firestore";
 import { db } from "../../src/firebase";
 import { useForm } from "react-hook-form";
-import { FormControl } from "@chakra-ui/form-control";
-import { Input } from "@chakra-ui/input";
-import { Select } from "@chakra-ui/select";
-import { Button } from "@chakra-ui/button";
 import FormList from "../../components/edit/formList";
 import FormButton from "../../components/edit/formButton";
 
@@ -69,7 +65,7 @@ const Edit: NextPage = () => {
         <form onSubmit={handleSubmit(changeData)}>
           <VStack w="70%" m="0 auto" justifyContent="center">
             <FormList register={register} />
-            <FormButton clickBack={clickBack}  />
+            <FormButton clickBack={clickBack} />
           </VStack>
         </form>
         {msg && <Text mt={1}>{msg}</Text>}

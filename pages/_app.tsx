@@ -1,12 +1,10 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
-
 import Header from "../components/common/header";
-import AuthProvider from "../hooks/authProvider";
+import AuthProvider from "../hooks/provider/authProvider";
 import { theme } from "../styles/theme";
 import { RecoilRoot } from "recoil";
-import DataProvider from "../hooks/dataProvider";
-import { useEffect } from "react";
+import DataProvider from "../hooks/provider/dataProvider";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
