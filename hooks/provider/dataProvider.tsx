@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { createContext, useEffect, useState } from "react";
 import { Props } from "../../models/interface";
-import { allInputData } from "../api/getInputData";
+import { allInputData } from "../api/inputDataQuery";
 import { useMediaQuery } from "@chakra-ui/react";
 
 

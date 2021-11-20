@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "contexts/simulateProvider.jsx", "next.config.js"  ],
+, "contexts/simulateProvider.jsx", "next.config.js", "hooks/api/inputData.Queryts"  ],
   "exclude": [
     "node_modules"
   ]

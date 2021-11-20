@@ -17,10 +17,10 @@ import {
 } from "../models/interface";
 import PieChart from "../components/common/pieChart";
 import { DataContext } from "../hooks/provider/dataProvider";
-import { monthlyInputData } from "../hooks/api/getInputData";
+import { monthlyInputData } from "../hooks/api/inputDataQuery";
 import BarChart from "../components/common/barChart";
 import { divideData } from "../util/functions";
-import { getBalanceData, updateBalanceData } from "../hooks/api/getBalanceData";
+import { getBalanceData, updateBalanceData } from "../hooks/api/balanceDataQuery";
 import GoalDataForm from "../components/overall/goalDataForm";
 import InputExpenseData from "../components/overall/inputExpenseData";
 
@@ -30,15 +30,10 @@ const Overall: NextPage = () => {
   const { currentUser } = useContext(AuthContext);
   const { nowMonth, setNowMonth, barChart, pieChart, setPieChart } =
     useContext(DataContext);
-
   const [goalExpenses, setGoalExpenses] = useState(0);
-
   const [goalIncomes, setGoalIncomes] = useState(0);
-
   const [totalBalance, setTotalBalanse] = useState(0);
-
   const [allBalance, setAllBalance] = useState<number>(0);
-
   const [expenseDetail, setExpenseDetail] = useState<ExpenseData>({
     daily: 0,
     food: 0,

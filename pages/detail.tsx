@@ -7,7 +7,7 @@ import {
   monthlyInputData,
   monthlyNextData,
   monthlyPrevData,
-} from "../hooks/api/getInputData";
+} from "../hooks/api/inputDataQuery";
 import InputDataButton from "../components/detail/inputDataButton";
 
 import { HStack, Text, VStack } from "@chakra-ui/layout";

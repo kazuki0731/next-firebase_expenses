@@ -3,8 +3,8 @@ import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import TitleText from "../components/common/titleText";
 import Container from "../components/common/container";
-import { VStack } from "@chakra-ui/layout";
-import { FormControl, FormLabel } from "@chakra-ui/form-control";                                                 
+import { Text, VStack } from "@chakra-ui/layout";
+import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Button } from "@chakra-ui/button";
 import { NextPage } from "next";
@@ -54,6 +54,7 @@ const Login: NextPage = () => {
       }
     }
   };
+  console.log(msg);
   return (
     <>
       <Head>
@@ -86,6 +87,7 @@ const Login: NextPage = () => {
                   />
                 </FormControl>
                 <Button type="submit">ログイン</Button>
+                <Text color="red">{msg && msg}</Text>
               </VStack>
             </form>
           </Container>
