@@ -15,7 +15,7 @@ import { VStack } from "@chakra-ui/layout";
 import { NextPage } from "next";
 import { UseFormRegister } from "react-hook-form";
 import { AllGoalData } from "../../models/interface";
-import { DataContext } from "../../hooks/provider/dataProvider";
+import { DataContext } from "../../hooks/dataProvider";
 import { useContext } from "react";
 
 interface Props {

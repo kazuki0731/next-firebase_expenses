@@ -1,9 +1,8 @@
 import { NextPage } from "next";
 import { createContext, useEffect, useState } from "react";
-import { Props } from "../../models/interface";
-import { allInputData } from "../api/inputDataQuery";
+import { Children } from "../models/interface";
+import { allInputData } from "../apiCaller/inputDataQuery";
 import { useMediaQuery } from "@chakra-ui/react";
-
 
 export const DataContext = createContext(
   {} as {
@@ -33,7 +32,7 @@ interface Chart {
     | [];
 }
 
-const DataProvider: NextPage<Props> = ({ children }) => {
+const DataProvider: NextPage<Children> = ({ children }) => {
   const [nowMonth, setNowMonth] = useState<number>(new Date().getMonth() + 1);
   const [yearlyData, setYearlyData] = useState<number[]>([]);
   const [isLarger] = useMediaQuery("(min-width: 768px)");
@@ -87,7 +86,7 @@ const DataProvider: NextPage<Props> = ({ children }) => {
     setPieChart,
     barChart,
     setBarChart,
-    isLarger
+    isLarger,
   };
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 };

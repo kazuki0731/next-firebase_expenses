@@ -14,8 +14,8 @@ import {
   where,
 } from "@firebase/firestore";
 
-import InputData from "../../pages/input";
-import { db } from "../../src/firebase";
+import InputData from "../pages/input";
+import { db } from "../src/firebase";
 
 const pageLimit = 5;
 

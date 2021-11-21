@@ -7,17 +7,17 @@ import {
   monthlyInputData,
   monthlyNextData,
   monthlyPrevData,
-} from "../hooks/api/inputDataQuery";
+} from "../apiCaller/inputDataQuery";
 import InputDataButton from "../components/detail/inputDataButton";
 
 import { HStack, Text, VStack } from "@chakra-ui/layout";
 import { useContext, useEffect, useState } from "react";
 
-import { AuthContext } from "../hooks/provider/authProvider";
+import { AuthContext } from "../hooks/authProvider";
 import BarChart from "../components/common/barChart";
 import PieChart from "../components/common/pieChart";
-import { DataContext } from "../hooks/provider/dataProvider";
-import { divideData } from "../util/functions";
+import { DataContext } from "../hooks/dataProvider";
+import { divideData } from "../hooks/functions";
 import { ExpenseData, InputData } from "../models/interface";
 import MonthButtonList from "../components/common/monthButtonList";
 import InputDataList from "../components/detail/inputDataList";
@@ -25,7 +25,7 @@ import InputDataList from "../components/detail/inputDataList";
 const pageLimit = 5;
 
 const Total: NextPage = () => {
-  const { currentUser } = useContext<any>(AuthContext);
+  const { currentUser } = useContext(AuthContext);
   const { nowMonth, setNowMonth, barChart, pieChart, setPieChart } =
     useContext(DataContext);
   const { isLarger } = useContext(DataContext);

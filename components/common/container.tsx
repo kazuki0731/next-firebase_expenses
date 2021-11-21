@@ -1,8 +1,8 @@
 import { Box } from "@chakra-ui/layout";
 import { NextPage } from "next";
-import { Props } from "../../models/interface";
+import { Children } from "../../models/interface";
 
-const Container: NextPage<Props> = ({ children }) => {
+const Container: NextPage<Children> = ({ children }) => {
   return (
     <Box
       bg="blackAlpha.200"

@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import { useMediaQuery } from "@chakra-ui/react";
 import MonthButton from "./monthButton";
 import { useContext } from "react";
-import { DataContext } from "../../hooks/provider/dataProvider";
+import { DataContext } from "../../hooks/dataProvider";
 
 interface Props {
   clickShowOtherMonth: Function;

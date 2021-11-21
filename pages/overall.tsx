@@ -8,7 +8,7 @@ import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import BalancePrice from "../components/overall/balancePrice";
 import MonthButton from "../components/common/monthButtonList";
-import { AuthContext } from "../hooks/provider/authProvider";
+import { AuthContext } from "../hooks/authProvider";
 import {
   AllGoalData,
   BalanceDetail,
@@ -16,11 +16,11 @@ import {
   IncomeData,
 } from "../models/interface";
 import PieChart from "../components/common/pieChart";
-import { DataContext } from "../hooks/provider/dataProvider";
-import { monthlyInputData } from "../hooks/api/inputDataQuery";
+import { DataContext } from "../hooks/dataProvider";
+import { monthlyInputData } from "../apiCaller/inputDataQuery";
 import BarChart from "../components/common/barChart";
-import { divideData } from "../util/functions";
-import { getBalanceData, updateBalanceData } from "../hooks/api/balanceDataQuery";
+import { divideData } from "../hooks/functions";
+import { getBalanceData, updateBalanceData } from "../apiCaller/balanceDataQuery";
 import GoalDataForm from "../components/overall/goalDataForm";
 import InputExpenseData from "../components/overall/inputExpenseData";
 

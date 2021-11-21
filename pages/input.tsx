@@ -2,16 +2,17 @@ import Head from "next/head";
 import { NextPage } from "next";
 import Container from "../components/common/container";
 import { VStack } from "@chakra-ui/layout";
-import { Button, Text } from "@chakra-ui/react";
+import { Button, Text, Box } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import TitleText from "../components/common/titleText";
 import { addDoc, collection } from "@firebase/firestore";
 import { db } from "../src/firebase";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../hooks/provider/authProvider";
+import { AuthContext } from "../hooks/authProvider";
 import { useRouter } from "next/router";
 import FormList from "../components/input/formList";
-import { postData } from "../hooks/api/inputDataQuery";
+import { postData } from "../apiCaller/inputDataQuery";
+import FormSpace from "../components/common/formSpace";
 
 interface FormData {
   price: number;
@@ -51,11 +52,11 @@ const InputData: NextPage = () => {
       {currentUser && (
         <>
           <TitleText>Input</TitleText>
-          <Container>
+          <FormSpace>
             <form onSubmit={handleSubmit(submitData)}>
-              <VStack w="70%" m="0 auto" spacing={6}>
+              <VStack spacing={6}>
                 <FormList register={register} errors={errors} />
-                <Button type="submit">保存</Button>
+                <Button type="submit">送信する</Button>
               </VStack>
             </form>
             {msg && (
@@ -63,7 +64,7 @@ const InputData: NextPage = () => {
                 {msg}
               </Text>
             )}
-          </Container>
+          </FormSpace>
         </>
       )}
     </>

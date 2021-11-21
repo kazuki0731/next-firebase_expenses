@@ -1,21 +1,10 @@
 import type { NextPage } from "next";
 import { Box, HStack, Button } from "@chakra-ui/react";
 import PageLink from "./pageLink";
-import { onAuthStateChanged, signOut } from "@firebase/auth";
-
-import { auth } from "../../src/firebase";
-import { useRouter } from "next/router";
-import { useContext } from "react";
-import { AuthContext } from "../../hooks/provider/authProvider";
+import { Logout } from "../../hooks/clickEvent";
 
 const Header: NextPage = () => {
-  const { currentUser, setCurrentUser } = useContext<any>(AuthContext);
-  const router = useRouter();
-  const clickLogout = () => {
-    signOut(auth);
-    setCurrentUser(null);
-    router.push("/login");
-  };
+  const { currentUser, clickLogout } = Logout();
   return (
     <>
       <Box bg="tomato" p={1}>

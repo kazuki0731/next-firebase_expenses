@@ -6,10 +6,10 @@ import {
   useEffect,
   useState,
 } from "react";
-import { Props } from "../../models/interface";
+import { Children } from "../models/interface";
 import { onAuthStateChanged } from "@firebase/auth";
 import { useRouter } from "next/router";
-import { auth } from "../../src/firebase";
+import { auth } from "../src/firebase";
 
 export const AuthContext = createContext(
   {} as {
@@ -20,7 +20,7 @@ export const AuthContext = createContext(
   }
 );
 
-const AuthProvider: NextPage<Props> = ({ children }) => {
+const AuthProvider: NextPage<Children> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<null | {}>(null);
   const [nowMonth, setNowMonth] = useState<number>(new Date().getMonth() + 1);
   const router = useRouter();

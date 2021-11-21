@@ -4,7 +4,7 @@ import { Button, Divider } from "@chakra-ui/react";
 import dayjs from "dayjs";
 import { NextPage } from "next";
 import { useContext } from "react";
-import { DataContext } from "../../hooks/provider/dataProvider";
+import { DataContext } from "../../hooks/dataProvider";
 import { InputData } from "../../models/interface";
 import PageLink from "../common/pageLink";
 
