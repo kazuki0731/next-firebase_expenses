@@ -3,21 +3,14 @@ import {
   collection,
   deleteDoc,
   doc,
-  endBefore,
   getDocs,
-  limit,
-  limitToLast,
   orderBy,
   query,
   QuerySnapshot,
-  startAfter,
   where,
 } from "@firebase/firestore";
 
-import InputData from "../pages/input";
 import { db } from "../src/firebase";
-
-const pageLimit = 5;
 
 interface InputData {
   id: string;
@@ -61,7 +54,9 @@ export const allInputData = async () => {
   }
 };
 
-export const monthlyInputData = async (month: string) => {
+export const monthlyInputData = async (
+  month: string
+): Promise<{ data: InputData[] } | undefined> => {
   const data: InputData[] = [];
   try {
     const q = query(
@@ -73,74 +68,8 @@ export const monthlyInputData = async (month: string) => {
 
     const snapShot = await getDocs(q);
     getSnap(snapShot, data);
-    const nextDoc = snapShot.docs[pageLimit - 1];
     return {
       data,
-      nextDoc,
-    };
-  } catch (e) {
-    console.log(e);
-  }
-};
-
-export const monthlyNextData = async (
-  month: string,
-  pageLimit: number,
-  nextData: {}
-) => {
-  const data: InputData[] = [];
-  try {
-    const q = query(
-      collection(db, "spendings"),
-      where("date", ">=", `2021-${month}-01`),
-      where("date", "<=", `2021-${month}-31`),
-      orderBy("date", "asc"),
-      limit(pageLimit),
-      startAfter(nextData)
-    );
-
-    const snapShot = await getDocs(q);
-    const snapData = getSnap(snapShot, data);
-
-    const nextDoc = snapShot.docs[snapShot.docs.length - 1];
-    const prevDoc = snapShot.docs[0];
-
-    return {
-      snapData,
-      nextDoc,
-      prevDoc,
-    };
-  } catch (e) {
-    console.log(e);
-  }
-};
-
-export const monthlyPrevData = async (
-  month: string,
-  pageLimit: number,
-  prevData: {}
-) => {
-  const data: InputData[] = [];
-  try {
-    const q = query(
-      collection(db, "spendings"),
-      where("date", ">=", `2021-${month}-01`),
-      where("date", "<=", `2021-${month}-31`),
-      orderBy("date", "asc"),
-      limitToLast(pageLimit),
-      endBefore(prevData)
-    );
-
-    const snapShot = await getDocs(q);
-    getSnap(snapShot, data);
-
-    const nextDoc = snapShot.docs[snapShot.docs.length - 1];
-    const prevDoc = snapShot.docs[0];
-
-    return {
-      data,
-      nextDoc,
-      prevDoc,
     };
   } catch (e) {
     console.log(e);

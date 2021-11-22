@@ -1,15 +1,11 @@
 import Head from "next/head";
 import { NextPage } from "next";
-import Container from "../components/common/container";
 import { VStack } from "@chakra-ui/layout";
-import { Button, Text, Box } from "@chakra-ui/react";
+import { Button, Text } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import TitleText from "../components/common/titleText";
-import { addDoc, collection } from "@firebase/firestore";
-import { db } from "../src/firebase";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../hooks/authProvider";
-import { useRouter } from "next/router";
 import FormList from "../components/input/formList";
 import { postData } from "../apiCaller/inputDataQuery";
 import FormSpace from "../components/common/formSpace";
@@ -28,8 +24,7 @@ const InputData: NextPage = () => {
     reset,
     formState: { errors },
   } = useForm<FormData>();
-  const { currentUser } = useContext<any>(AuthContext);
-  const router = useRouter();
+  const { currentUser } = useContext(AuthContext);
   const [msg, setMsg] = useState("");
 
   const submitData = async (data: FormData) => {
@@ -37,12 +32,6 @@ const InputData: NextPage = () => {
     setMsg(messge.text);
     reset();
   };
-
-  useEffect(() => {
-    if (!currentUser) {
-      router.push("/login");
-    }
-  }, []);
 
   return (
     <>
@@ -54,9 +43,11 @@ const InputData: NextPage = () => {
           <TitleText>Input</TitleText>
           <FormSpace>
             <form onSubmit={handleSubmit(submitData)}>
-              <VStack spacing={6}>
+              <VStack spacing={4} alignItems="left">
                 <FormList register={register} errors={errors} />
-                <Button type="submit">送信する</Button>
+                <Button type="submit" h="40px">
+                  送信
+                </Button>
               </VStack>
             </form>
             {msg && (

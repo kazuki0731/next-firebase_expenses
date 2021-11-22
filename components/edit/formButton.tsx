@@ -9,9 +9,13 @@ interface Props {
 
 const FormButton: NextPage<Props> = ({ clickBack }) => {
   return (
-    <HStack>
-      <Button type="submit">変更する</Button>
-      <Button onClick={clickBack}>戻る</Button>
+    <HStack w="100%" justify="center">
+      <Button w="50%" type="submit">
+        変更する
+      </Button>
+      <Button w="50%" onClick={clickBack}>
+        戻る
+      </Button>
     </HStack>
   );
 };

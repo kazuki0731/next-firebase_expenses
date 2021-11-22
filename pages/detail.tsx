@@ -2,15 +2,10 @@ import Container from "../components/common/container";
 import { NextPage } from "next";
 import Head from "next/head";
 import TitleText from "../components/common/titleText";
-import {
-  deleteData,
-  monthlyInputData,
-  monthlyNextData,
-  monthlyPrevData,
-} from "../apiCaller/inputDataQuery";
+import { deleteData, monthlyInputData } from "../apiCaller/inputDataQuery";
 import InputDataButton from "../components/detail/inputDataButton";
 
-import { HStack, Text, VStack } from "@chakra-ui/layout";
+import { Box, HStack, Text, VStack } from "@chakra-ui/layout";
 import { useContext, useEffect, useState } from "react";
 
 import { AuthContext } from "../hooks/authProvider";
@@ -21,19 +16,27 @@ import { divideData } from "../hooks/functions";
 import { ExpenseData, InputData } from "../models/interface";
 import MonthButtonList from "../components/common/monthButtonList";
 import InputDataList from "../components/detail/inputDataList";
+import FilterList from "../components/detail/filterList";
+import { useForm } from "react-hook-form";
 
 const pageLimit = 5;
 
+interface FormData {
+  category: string;
+  order: string;
+}
+
 const Total: NextPage = () => {
+  const { register, handleSubmit, reset } = useForm<FormData>();
   const { currentUser } = useContext(AuthContext);
   const { nowMonth, setNowMonth, barChart, pieChart, setPieChart } =
     useContext(DataContext);
   const { isLarger } = useContext(DataContext);
 
-  const [prevData, setPrevData] = useState({});
-  const [nextData, setNextData] = useState({});
+  const [dataByCategory, setDataByCategory] = useState<InputData[]>([]);
   const [nowPage, setNowPage] = useState(1);
   const [maxPage, setMaxPage] = useState(1);
+  const [monthlyAllData, setMonthlyAllData] = useState<InputData[]>([]);
   const [detailData, setDetailData] = useState<InputData[]>([]);
   const [expenseData, setExpenseData] = useState<ExpenseData>({
     daily: 0,
@@ -43,6 +46,11 @@ const Total: NextPage = () => {
     otherExpense: 0,
     totalPrice: 0,
   });
+
+  const defaultValues: FormData = {
+    category: "すべて",
+    order: "date",
+  };
 
   const getDetailData = async (
     month: string | string[] | number | undefined
@@ -56,13 +64,14 @@ const Total: NextPage = () => {
       otherExpense: 0,
       totalPrice: 0,
     };
-    const result = await monthlyInputData(month);
 
-    if (result) {
-      divideData(result.data, allexpenseData);
-      const limitedData = result.data.slice(0, pageLimit);
+    const { data }: any = await monthlyInputData(month);
+    if (data) {
+      divideData(data, allexpenseData);
       const { food, daily, rent, util, otherExpense } = allexpenseData;
-      const pageLen = Math.ceil(result.data.length / pageLimit);
+
+      const limitedData = data.slice(0, pageLimit);
+      const pageLen = Math.ceil(data.length / pageLimit);
       setMaxPage(pageLen);
 
       setPieChart({
@@ -81,8 +90,9 @@ const Total: NextPage = () => {
           },
         ],
       });
+      setMonthlyAllData(data);
+      setDataByCategory(data);
       setDetailData(limitedData);
-      setNextData(result.nextDoc);
       setExpenseData(allexpenseData);
     }
   };
@@ -101,35 +111,25 @@ const Total: NextPage = () => {
     }
     setNowMonth(otherMonth);
     getDetailData(otherMonth);
-    setNextData({});
     setNowPage(1);
+    reset(defaultValues);
   };
 
-  const clickGetNextData = async (
-    month: string | string[] | number | undefined
-  ) => {
-    month = ("0" + month).slice(-2);
-    const result = await monthlyNextData(month, pageLimit, nextData);
-
-    if (result) {
-      setNextData(result.nextDoc);
-      setPrevData(result.prevDoc);
-      setDetailData(result.snapData);
-      setNowPage(nowPage + 1);
-    }
+  const clickGetNextData = async () => {
+    const limitedData = dataByCategory.slice(
+      nowPage * pageLimit,
+      (nowPage + 1) * pageLimit
+    );
+    setDetailData(limitedData);
+    setNowPage(nowPage + 1);
   };
 
-  const clickGetPrevData = async (
-    month: string | string[] | number | undefined
-  ) => {
-    month = ("0" + month).slice(-2);
-    const result = await monthlyPrevData(month, pageLimit, prevData);
-
-    if (result) {
-      setDetailData(result.data);
-      setNextData(result.nextDoc);
-      setPrevData(result.prevDoc);
-    }
+  const clickGetPrevData = async () => {
+    const limitedData = dataByCategory.slice(
+      (nowPage - 2) * pageLimit,
+      (nowPage - 1) * pageLimit
+    );
+    setDetailData(limitedData);
     setNowPage(nowPage - 1);
   };
 
@@ -145,42 +145,56 @@ const Total: NextPage = () => {
       </Head>
       <TitleText>{nowMonth}月</TitleText>
       {currentUser && (
-        <Container>
-          <Text mb={5} fontWeight="semibold">
-            総計: {expenseData.totalPrice}円
-          </Text>
-          {isLarger ? (
-            <HStack mb={5} justify="center" spacing={10}>
-              <BarChart barChart={barChart} />
-              <PieChart pieChart={pieChart} />
+        <>
+          <Container>
+            <Text mb={5} fontWeight="semibold">
+              総計: {expenseData.totalPrice}円
+            </Text>
+            {isLarger ? (
+              <HStack mb={5} justify="center" spacing={10}>
+                <BarChart barChart={barChart} />
+                <PieChart pieChart={pieChart} />
+              </HStack>
+            ) : (
+              <VStack mb={5} justify="center" spacing={10}>
+                <BarChart barChart={barChart} />
+                <PieChart pieChart={pieChart} />
+              </VStack>
+            )}
+            <Box w="82%" m="10px auto">
+              <FilterList
+                handleSubmit={handleSubmit}
+                register={register}
+                setMaxPage={setMaxPage}
+                setDetailData={setDetailData}
+                setDataByCategory={setDataByCategory}
+                setNowPage={setNowPage}
+                monthlyAllData={monthlyAllData}
+                pageLimit={pageLimit}
+              />
+            </Box>
+            <InputDataList detailData={detailData} clickDelete={clickDelete} />
+            <HStack w="100%" justify="center" spacing={5}>
+              <InputDataButton
+                disabled={nowPage === 1}
+                clickHandle={clickGetPrevData}
+              >
+                &lt;&lt;前の5件
+              </InputDataButton>
+              <InputDataButton
+                disabled={nowPage === maxPage}
+                clickHandle={clickGetNextData}
+              >
+                次の5件&gt;&gt;
+              </InputDataButton>
             </HStack>
-          ) : (
-            <VStack mb={5} justify="center" spacing={10}>
-              <BarChart barChart={barChart} />
-              <PieChart pieChart={pieChart} />
-            </VStack>
-          )}
-          <InputDataList detailData={detailData} clickDelete={clickDelete} />
-          <HStack w="100%" justify="center" spacing={5}>
-            <InputDataButton
-              disabled={nowPage === 1}
-              clickHandle={() => clickGetPrevData(nowMonth)}
-            >
-              &lt;&lt;前の5件
-            </InputDataButton>
-            <InputDataButton
-              disabled={nowPage === maxPage}
-              clickHandle={() => clickGetNextData(nowMonth)}
-            >
-              次の5件&gt;&gt;
-            </InputDataButton>
-          </HStack>
-        </Container>
+          </Container>
+          <MonthButtonList
+            clickShowOtherMonth={clickShowOtherMonth}
+            clickShowNowMonth={() => setNowMonth(new Date().getMonth() + 1)}
+          />
+        </>
       )}
-      <MonthButtonList
-        clickShowOtherMonth={clickShowOtherMonth}
-        clickShowNowMonth={() => setNowMonth(new Date().getMonth() + 1)}
-      />
     </>
   );
 };

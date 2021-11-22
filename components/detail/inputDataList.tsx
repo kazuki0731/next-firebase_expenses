@@ -17,7 +17,7 @@ const InputDataList: NextPage<Props> = ({ detailData, clickDelete }) => {
   const { isLarger } = useContext(DataContext);
   return (
     <Box>
-      <UnorderedList w="90%" m="0 auto 10px auto" listStyleType="none">
+      <UnorderedList w="80%" m="0 auto 10px auto" listStyleType="none">
         {detailData.map((data) => (
           <Box key={data.id}>
             <ListItem>
@@ -56,14 +56,14 @@ const InputDataList: NextPage<Props> = ({ detailData, clickDelete }) => {
                 </>
               ) : (
                 <>
-                  <HStack justify="center">
+                  <HStack justify="flex-start">
                     <Box fontSize="16px">
                       <span> {dayjs(data.date).format("MM/DD(ddd)")} </span>
                       <span> {data.text} </span>
                       <span> ({data.category})</span>
                     </Box>
                   </HStack>
-                  <HStack justify="center">
+                  <HStack justify="flex-end">
                     <Box fontSize="16px">
                       <span> {data.price}円 </span>
                       <PageLink

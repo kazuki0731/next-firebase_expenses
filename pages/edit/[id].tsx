@@ -2,7 +2,6 @@ import Head from "next/head";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import TitleText from "../../components/common/titleText";
-import Container from "../../components/common/container";
 import { Text, VStack } from "@chakra-ui/layout";
 import { useEffect, useState } from "react";
 import { doc, getDoc, updateDoc } from "@firebase/firestore";
@@ -10,6 +9,7 @@ import { db } from "../../src/firebase";
 import { useForm } from "react-hook-form";
 import FormList from "../../components/edit/formList";
 import FormButton from "../../components/edit/formButton";
+import FormSpace from "../../components/common/formSpace";
 
 interface FormData {
   price: number;
@@ -61,15 +61,15 @@ const Edit: NextPage = () => {
         <title>total</title>
       </Head>
       <TitleText>編集</TitleText>
-      <Container>
+      <FormSpace>
         <form onSubmit={handleSubmit(changeData)}>
-          <VStack w="70%" m="0 auto" justifyContent="center">
+          <VStack spacing={4} alignItems="flex-start">
             <FormList register={register} />
             <FormButton clickBack={clickBack} />
           </VStack>
         </form>
         {msg && <Text mt={1}>{msg}</Text>}
-      </Container>
+      </FormSpace>
     </>
   );
 };

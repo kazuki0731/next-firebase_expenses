@@ -18,6 +18,7 @@ import { AllGoalData } from "../../models/interface";
 import { DataContext } from "../../hooks/dataProvider";
 import { useContext } from "react";
 
+
 interface Props {
   register: UseFormRegister<AllGoalData>;
 }

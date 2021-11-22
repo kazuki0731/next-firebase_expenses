@@ -20,7 +20,10 @@ import { DataContext } from "../hooks/dataProvider";
 import { monthlyInputData } from "../apiCaller/inputDataQuery";
 import BarChart from "../components/common/barChart";
 import { divideData } from "../hooks/functions";
-import { getBalanceData, updateBalanceData } from "../apiCaller/balanceDataQuery";
+import {
+  getBalanceData,
+  updateBalanceData,
+} from "../apiCaller/balanceDataQuery";
 import GoalDataForm from "../components/overall/goalDataForm";
 import InputExpenseData from "../components/overall/inputExpenseData";
 
@@ -177,78 +180,80 @@ const Overall: NextPage = () => {
       </Head>
       <TitleText>{nowMonth}月</TitleText>
       {currentUser && (
-        <Container>
-          <BalancePrice
-            incomes={goalIncomes}
-            expenses={expenseDetail.totalPrice}
-            balance={totalBalance}
+        <>
+          <Container>
+            <BalancePrice
+              incomes={goalIncomes}
+              expenses={expenseDetail.totalPrice}
+              balance={totalBalance}
+            />
+            {isLarger ? (
+              <Box>
+                <HStack mb={5} justify="center" spacing={10}>
+                  <BarChart barChart={barChart} />
+                  <PieChart pieChart={pieChart} />
+                </HStack>
+                <HStack mt={3} alignItems="flex-start">
+                  <GoalDataForm
+                    isExpense={isExpense}
+                    goalExpenses={goalExpenses}
+                    goalIncomes={goalIncomes}
+                    register={register}
+                  />
+                  <InputExpenseData
+                    expenseDetail={expenseDetail}
+                    balanceDetail={balanceDetail}
+                    allBalance={allBalance}
+                  />
+                </HStack>
+              </Box>
+            ) : (
+              <Box>
+                <VStack mb={5} justify="center" spacing={10}>
+                  <BarChart barChart={barChart} />
+                  <PieChart pieChart={pieChart} />
+                </VStack>
+                <VStack mb={3} alignItems="flex-start">
+                  <GoalDataForm
+                    isExpense={isExpense}
+                    goalExpenses={goalExpenses}
+                    goalIncomes={goalIncomes}
+                    register={register}
+                  />
+                  <InputExpenseData
+                    expenseDetail={expenseDetail}
+                    balanceDetail={balanceDetail}
+                    allBalance={allBalance}
+                  />
+                </VStack>
+              </Box>
+            )}
+            <HStack m="10px 0" spacing={10} justify="center">
+              <Button
+                w={isLarger ? "110px" : "80px"}
+                h={isLarger ? "45px" : "32px"}
+                type="submit"
+                fontSize={isLarger ? "16px" : "12px"}
+                onClick={handleSubmit((data) => submitData(data, nowMonth))}
+              >
+                変更を保存
+              </Button>
+              <Button
+                w={isLarger ? "110px" : "80px"}
+                h={isLarger ? "45px" : "32px"}
+                fontSize={isLarger ? "16px" : "12px"}
+                onClick={() => setIsExpense(!isExpense)}
+              >
+                支出/収入
+              </Button>
+            </HStack>
+          </Container>
+          <MonthButton
+            clickShowOtherMonth={clickShowOtherMonth}
+            clickShowNowMonth={() => setNowMonth(new Date().getMonth() + 1)}
           />
-          {isLarger ? (
-            <Box>
-              <HStack mb={5} justify="center" spacing={10}>
-                <BarChart barChart={barChart} />
-                <PieChart pieChart={pieChart} />
-              </HStack>
-              <HStack mt={3} alignItems="flex-start">
-                <GoalDataForm
-                  isExpense={isExpense}
-                  goalExpenses={goalExpenses}
-                  goalIncomes={goalIncomes}
-                  register={register}
-                />
-                <InputExpenseData
-                  expenseDetail={expenseDetail}
-                  balanceDetail={balanceDetail}
-                  allBalance={allBalance}
-                />
-              </HStack>
-            </Box>
-          ) : (
-            <Box>
-              <VStack mb={5} justify="center" spacing={10}>
-                <BarChart barChart={barChart} />
-                <PieChart pieChart={pieChart} />
-              </VStack>
-              <VStack mb={3} alignItems="flex-start">
-                <GoalDataForm
-                  isExpense={isExpense}
-                  goalExpenses={goalExpenses}
-                  goalIncomes={goalIncomes}
-                  register={register}
-                />
-                <InputExpenseData
-                  expenseDetail={expenseDetail}
-                  balanceDetail={balanceDetail}
-                  allBalance={allBalance}
-                />
-              </VStack>
-            </Box>
-          )}
-          <HStack m="10px 0" spacing={10} justify="center">
-            <Button
-              w={isLarger ? "110px" : "80px"}
-              h={isLarger ? "45px" : "32px"}
-              type="submit"
-              fontSize={isLarger ? "16px" : "12px"}
-              onClick={handleSubmit((data) => submitData(data, nowMonth))}
-            >
-              変更を保存
-            </Button>
-            <Button
-              w={isLarger ? "110px" : "80px"}
-              h={isLarger ? "45px" : "32px"}
-              fontSize={isLarger ? "16px" : "12px"}
-              onClick={() => setIsExpense(!isExpense)}
-            >
-              支出/収入
-            </Button>
-          </HStack>
-        </Container>
+        </>
       )}
-      <MonthButton
-        clickShowOtherMonth={clickShowOtherMonth}
-        clickShowNowMonth={() => setNowMonth(new Date().getMonth() + 1)}
-      />
     </>
   );
 };

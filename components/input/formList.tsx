@@ -37,7 +37,7 @@ const FormList: NextPage<Props> = ({ register, errors }) => {
       </FormControl>
       <FormControl id="category" w="60%">
         <Select bg="white" required {...register("category")}>
-          <option value="">カテゴリを選択</option>
+          <option value="">カテゴリ</option>
           <option value="日用品">日用品</option>
           <option value="食費">食費</option>
           <option value="家賃">家賃</option>

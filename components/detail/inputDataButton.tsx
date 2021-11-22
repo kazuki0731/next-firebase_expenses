@@ -11,6 +11,7 @@ interface Props {
 
 const InputDataButton: NextPage<Props> = ({ children, disabled, clickHandle }) => {
   const { isLarger } = useContext(DataContext);
+  
 
   return (
     <Button

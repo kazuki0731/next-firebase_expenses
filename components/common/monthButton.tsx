@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import React, { MouseEventHandler, useContext } from "react";
 import { DataContext } from "../../hooks/dataProvider";
 
+
 interface Props {
   children: React.ReactNode;
   clickHandle: MouseEventHandler<HTMLButtonElement>;
