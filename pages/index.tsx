@@ -5,9 +5,9 @@ import TitleText from "../components/common/titleText";
 const Home: NextPage = () => {
   return (
     <>
-      <Head>
+      {/* <Head>
         <title>Top</title>
-      </Head>
+      </Head> */}
       <TitleText>Top</TitleText>
     </>
   );

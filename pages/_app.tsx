@@ -5,6 +5,7 @@ import AuthProvider from "../hooks/authProvider";
 import { theme } from "../styles/theme";
 import { RecoilRoot } from "recoil";
 import DataProvider from "../hooks/dataProvider";
+import Head from "next/head";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -13,6 +14,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         <DataProvider>
           <RecoilRoot>
             <Header />
+            <Head>
+              <title>TopPage</title>
+              <link rel="shortcut icon" href="/images/ie.png" />
+            </Head>
             <Component {...pageProps} />
           </RecoilRoot>
         </DataProvider>
