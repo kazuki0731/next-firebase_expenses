@@ -16,7 +16,7 @@ import { divideData } from "../hooks/functions";
 import { ExpenseData, InputData } from "../models/interface";
 import MonthButtonList from "../components/common/monthButtonList";
 import InputDataList from "../components/detail/inputDataList";
-import FilterList from "../components/detail/filterList";
+import FilterList from "../components/detail/selectForm";
 import { useForm } from "react-hook-form";
 
 const pageLimit = 5;

@@ -139,6 +139,7 @@ const FilterList: NextPage<Props> = ({
         <Select
           w={isLarger ? "140px" : "120px"}
           h={isLarger ? "40px" : "35px"}
+          fontSize={isLarger ? "16px" : "13px"}
           bg="white"
           required
           {...register("order")}
