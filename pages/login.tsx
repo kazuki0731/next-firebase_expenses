@@ -2,7 +2,6 @@ import Head from "next/head";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import TitleText from "../components/common/titleText";
-import Container from "../components/common/container";
 import { Text, VStack } from "@chakra-ui/layout";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
@@ -12,6 +11,7 @@ import { useRouter } from "next/router";
 import { auth } from "../src/firebase";
 import { signInWithEmailAndPassword } from "@firebase/auth";
 import { AuthContext } from "../hooks/authProvider";
+import FormSpace from "../components/common/formSpace";
 
 interface FormData {
   email: string;
@@ -63,9 +63,9 @@ const Login: NextPage = () => {
       {!isLogin && (
         <>
           <TitleText>ログイン</TitleText>
-          <Container>
+          <FormSpace>
             <form onSubmit={handleSubmit(submitData)}>
-              <VStack w="70%" m="0 auto" spacing={6}>
+              <VStack w="90%" m="0 auto" spacing={6}>
                 <FormControl id="email">
                   <FormLabel>メールアドレス:</FormLabel>
                   <Input
@@ -90,7 +90,7 @@ const Login: NextPage = () => {
                 <Text color="red">{msg && msg}</Text>
               </VStack>
             </form>
-          </Container>
+          </FormSpace>
         </>
       )}
     </>
