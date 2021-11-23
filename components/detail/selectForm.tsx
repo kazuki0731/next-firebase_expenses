@@ -2,10 +2,9 @@ import { FormControl } from "@chakra-ui/form-control";
 import { HStack } from "@chakra-ui/layout";
 import { Select } from "@chakra-ui/select";
 import { NextPage } from "next";
-import { Dispatch, SetStateAction, useContext } from "react";
+import { useContext } from "react";
 import { UseFormHandleSubmit, UseFormRegister } from "react-hook-form";
 import { DataContext } from "../../hooks/dataProvider";
-import { InputData } from "../../models/interface";
 
 interface FormData {
   category: string;
@@ -15,115 +14,32 @@ interface FormData {
 interface Props {
   handleSubmit: UseFormHandleSubmit<FormData>;
   register: UseFormRegister<FormData>;
-  setMaxPage: Dispatch<SetStateAction<number>>;
-  setDetailData: Dispatch<SetStateAction<InputData[]>>;
-  setDataByCategory: Dispatch<SetStateAction<InputData[]>>;
-  setNowPage: Dispatch<SetStateAction<number>>;
-  monthlyAllData: InputData[];
-  pageLimit: number;
+  changeCategory: ({ category, order }: FormData) => void;
 }
 
 const FilterList: NextPage<Props> = ({
   handleSubmit,
   register,
-  setMaxPage,
-  setDetailData,
-  setDataByCategory,
-  setNowPage,
-  monthlyAllData,
-  pageLimit,
+  changeCategory,
 }) => {
   const { isLarger } = useContext(DataContext);
-
-  const changeCategory = ({ category, order }: FormData) => {
-    if (category === "すべて") {
-      if (order === "asc") {
-        const newData = [...monthlyAllData];
-        newData.sort((a, b) => {
-          if (a.price > b.price) {
-            return 1;
-          } else {
-            return -1;
-          }
-        });
-        const limitedData = newData.slice(0, pageLimit);
-        setDataByCategory(newData);
-        setDetailData(limitedData);
-      } else if (order === "desc") {
-        const newData = [...monthlyAllData];
-        newData.sort((a, b) => {
-          if (a.price < b.price) {
-            return 1;
-          } else {
-            return -1;
-          }
-        });
-        const limitedData = newData.slice(0, pageLimit);
-        setDataByCategory(newData);
-        setDetailData(limitedData);
-      } else {
-        const limitedData = monthlyAllData.slice(0, pageLimit);
-        setDetailData(limitedData);
-        setDataByCategory(monthlyAllData);
-      }
-      const pageLen = Math.ceil(monthlyAllData.length / pageLimit);
-      setMaxPage(pageLen);
-      setNowPage(1);
-    } else {
-      const categorizedData = monthlyAllData.filter((data) => {
-        return data.category === category;
-      });
-      if (order === "asc") {
-        const newData = [...categorizedData];
-        newData.sort((a, b) => {
-          if (a.price > b.price) {
-            return 1;
-          } else {
-            return -1;
-          }
-        });
-        const limitedData = newData.slice(0, pageLimit);
-        setDataByCategory(newData);
-        setDetailData(limitedData);
-      } else if (order === "desc") {
-        const newData = [...categorizedData];
-        newData.sort((a, b) => {
-          if (a.price < b.price) {
-            return 1;
-          } else {
-            return -1;
-          }
-        });
-        const limitedData = newData.slice(0, pageLimit);
-        setDataByCategory(newData);
-        setDetailData(limitedData);
-      } else {
-        const limitedData = categorizedData.slice(0, pageLimit);
-        setDataByCategory(categorizedData);
-        setDetailData(limitedData);
-      }
-      const pageLen = Math.ceil(categorizedData.length / pageLimit);
-      setMaxPage(pageLen);
-      setNowPage(1);
-    }
-  };
 
   return (
     <HStack spacing={2}>
       <FormControl
-        w={isLarger ? "140px" : "120px"}
+        w={isLarger ? "140px" : "110px"}
         id="category"
         onChange={handleSubmit(changeCategory)}
       >
         <Select
           bg="white"
-          w={isLarger ? "140px" : "120px"}
+          w={isLarger ? "140px" : "110px"}
           h={isLarger ? "40px" : "35px"}
           fontSize={isLarger ? "16px" : "13px"}
           required
           {...register("category")}
         >
-          <option value="すべて">全カテゴリ</option>
+          <option value="すべて">カテゴリ</option>
           <option value="日用品">日用品</option>
           <option value="食費">食費</option>
           <option value="家賃">家賃</option>
@@ -132,12 +48,12 @@ const FilterList: NextPage<Props> = ({
         </Select>
       </FormControl>
       <FormControl
-        w={isLarger ? "140px" : "120px"}
+        w={isLarger ? "140px" : "110px"}
         id="category"
         onChange={handleSubmit(changeCategory)}
       >
         <Select
-          w={isLarger ? "140px" : "120px"}
+          w={isLarger ? "140px" : "110px"}
           h={isLarger ? "40px" : "35px"}
           fontSize={isLarger ? "16px" : "13px"}
           bg="white"

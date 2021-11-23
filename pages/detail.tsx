@@ -13,13 +13,12 @@ import BarChart from "../components/common/barChart";
 import PieChart from "../components/common/pieChart";
 import { DataContext } from "../hooks/dataProvider";
 import { divideData } from "../hooks/functions";
-import { ExpenseData, InputData } from "../models/interface";
+import { ExpenseData } from "../models/interface";
 import MonthButtonList from "../components/common/monthButtonList";
 import InputDataList from "../components/detail/inputDataList";
 import FilterList from "../components/detail/selectForm";
 import { useForm } from "react-hook-form";
-
-const pageLimit = 5;
+import SortAndSelecData from "../hooks/sortAndSelectData";
 
 interface FormData {
   category: string;
@@ -29,15 +28,21 @@ interface FormData {
 const Total: NextPage = () => {
   const { register, handleSubmit, reset } = useForm<FormData>();
   const { currentUser } = useContext(AuthContext);
-  const { nowMonth, setNowMonth, barChart, pieChart, setPieChart } =
-    useContext(DataContext);
   const { isLarger } = useContext(DataContext);
+  const { nowMonth, setNowMonth, barChart, pieChart, setPieChart, pageLimit } =
+    useContext(DataContext);
+  const {
+    dataByCategory,
+    setDataByCategory,
+    detailData,
+    setDetailData,
+    maxPage,
+    setMaxPage,
+    setMonthlyAllData,
+    changeCategory,
+  } = SortAndSelecData();
 
-  const [dataByCategory, setDataByCategory] = useState<InputData[]>([]);
   const [nowPage, setNowPage] = useState(1);
-  const [maxPage, setMaxPage] = useState(1);
-  const [monthlyAllData, setMonthlyAllData] = useState<InputData[]>([]);
-  const [detailData, setDetailData] = useState<InputData[]>([]);
   const [expenseData, setExpenseData] = useState<ExpenseData>({
     daily: 0,
     food: 0,
@@ -165,12 +170,7 @@ const Total: NextPage = () => {
               <FilterList
                 handleSubmit={handleSubmit}
                 register={register}
-                setMaxPage={setMaxPage}
-                setDetailData={setDetailData}
-                setDataByCategory={setDataByCategory}
-                setNowPage={setNowPage}
-                monthlyAllData={monthlyAllData}
-                pageLimit={pageLimit}
+                changeCategory={changeCategory}
               />
             </Box>
             <InputDataList detailData={detailData} clickDelete={clickDelete} />

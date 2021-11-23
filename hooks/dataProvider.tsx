@@ -15,6 +15,7 @@ export const DataContext = createContext(
     barChart: Chart;
     setBarChart: React.Dispatch<React.SetStateAction<Chart>>;
     isLarger: boolean;
+    pageLimit: number;
   }
 );
 
@@ -87,6 +88,7 @@ const DataProvider: NextPage<Children> = ({ children }) => {
     barChart,
     setBarChart,
     isLarger,
+    pageLimit: 5,
   };
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 };
