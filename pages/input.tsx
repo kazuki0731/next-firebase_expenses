@@ -28,8 +28,8 @@ const InputData: NextPage = () => {
   const [msg, setMsg] = useState("");
 
   const submitData = async (data: FormData) => {
-    const messge = await postData(data);
-    setMsg(messge.text);
+    const { text } = await postData(data);
+    setMsg(text);
     reset();
   };
 
