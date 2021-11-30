@@ -9,6 +9,7 @@ const Home: NextPage = () => {
         <title>Top</title>
       </Head>
       <TitleText>Top</TitleText>
+      
     </>
   );
 };
