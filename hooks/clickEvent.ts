@@ -1,22 +1,19 @@
 import { signOut } from "@firebase/auth";
 import { useRouter } from "next/router";
 import { useContext } from "react";
-import { auth } from "../src/firebase";
+import { auth } from "../lib/firebase";
 import { AuthContext } from "./authProvider";
 
 export const Logout = () => {
-  const { currentUser, setCurrentUser } = useContext(AuthContext);
+  const { setCurrentUser } = useContext(AuthContext);
   const router = useRouter();
   const clickLogout = () => {
     signOut(auth);
     setCurrentUser(null);
-    router.push("/login");
+    router.push("/");
   };
 
-  return {
-    currentUser,
-    clickLogout,
-  };
+  return { clickLogout };
 };
 
 export const jumpToLink = () => {

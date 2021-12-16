@@ -1,6 +1,6 @@
 import { doc, getDoc, setDoc } from "@firebase/firestore";
 import { ExpenseData, IncomeData } from "../models/interface";
-import { db } from "../src/firebase";
+import { auth, db } from "../lib/firebase";
 import { calcBalanceData } from "../hooks/functions";
 
 export const getBalanceData = async (
@@ -10,7 +10,9 @@ export const getBalanceData = async (
   let expenseTotal = 0;
   let incomeTotal = 0;
   try {
-    const res = await getDoc(doc(db, "balances", `${month}`));
+    const res = await getDoc(
+      doc(db, "users", auth.currentUser.uid, "balances", `${month}月`)
+    );
     let monthlyData = res.data();
     if (!monthlyData) {
       monthlyData = {
@@ -21,6 +23,9 @@ export const getBalanceData = async (
         rent: 0,
         salary: 0,
         util: 0,
+        traffic: 0,
+        enter: 0,
+        tax: 0,
       };
     }
 
@@ -52,15 +57,21 @@ export const updateBalanceData = async (
   expenseDetail: ExpenseData
 ) => {
   try {
-    await setDoc(doc(db, "balances", `${month}`), {
-      daily: expenseGoalData.daily,
-      food: expenseGoalData.food,
-      rent: expenseGoalData.rent,
-      util: expenseGoalData.util,
-      otherExpense: expenseGoalData.otherExpense,
-      salary: incomeGoalData.salary,
-      otherIncome: incomeGoalData.otherIncome,
-    });
+    await setDoc(
+      doc(db, "users", auth.currentUser.uid, "balances", `${month}月`),
+      {
+        daily: expenseGoalData.daily,
+        food: expenseGoalData.food,
+        rent: expenseGoalData.rent,
+        util: expenseGoalData.util,
+        traffic: expenseGoalData.traffic,
+        enter: expenseGoalData.enter,
+        tax: expenseGoalData.tax,
+        otherExpense: expenseGoalData.otherExpense,
+        salary: incomeGoalData.salary,
+        otherIncome: incomeGoalData.otherIncome,
+      }
+    );
 
     const balanceData = calcBalanceData(expenseGoalData, expenseDetail);
 

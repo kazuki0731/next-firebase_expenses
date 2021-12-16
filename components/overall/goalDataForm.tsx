@@ -1,10 +1,11 @@
 import { Box, Text } from "@chakra-ui/layout";
 import { NextPage } from "next";
-import { useContext } from "react";
-import { UseFormRegister } from "react-hook-form";
+import { Dispatch, SetStateAction, useContext } from "react";
+import { UseFormHandleSubmit, UseFormRegister } from "react-hook-form";
 import { DataContext } from "../../hooks/dataProvider";
 import { AllGoalData } from "../../models/interface";
 import ExpenseForm from "./expenseForm";
+import GoalButtons from "./goalButtons";
 import IncomeForm from "./incomeForm";
 
 interface Props {
@@ -12,6 +13,9 @@ interface Props {
   goalExpenses: number;
   goalIncomes: number;
   register: UseFormRegister<AllGoalData>;
+  handleSubmit: UseFormHandleSubmit<AllGoalData>;
+  submitData: (data: AllGoalData, month: number) => Promise<void>;
+  setIsExpense: Dispatch<SetStateAction<boolean>>;
 }
 
 const GoalDataForm: NextPage<Props> = ({
@@ -19,6 +23,9 @@ const GoalDataForm: NextPage<Props> = ({
   goalExpenses,
   goalIncomes,
   register,
+  handleSubmit,
+  submitData,
+  setIsExpense,
 }) => {
   const { isLarger } = useContext(DataContext);
   return (
@@ -38,8 +45,14 @@ const GoalDataForm: NextPage<Props> = ({
         fontSize={isLarger ? "22px" : "18px"}
         mt={2}
       >
-        合計: {isExpense ? goalExpenses : goalIncomes}円
+        {isExpense ? "支出合計: " + goalExpenses : "収入合計: " + goalIncomes}円
       </Text>
+      <GoalButtons
+        handleSubmit={handleSubmit}
+        submitData={submitData}
+        isExpense={isExpense}
+        setIsExpense={setIsExpense}
+      />
     </Box>
   );
 };

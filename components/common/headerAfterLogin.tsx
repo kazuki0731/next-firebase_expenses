@@ -1,19 +1,22 @@
 import type { NextPage } from "next";
-import { Box, HStack, Button } from "@chakra-ui/react";
+import { Box, HStack, Button, Text } from "@chakra-ui/react";
 import PageLink from "./pageLink";
 import { Logout } from "../../hooks/clickEvent";
 import Link from "next/link";
 import { Image } from "@chakra-ui/react";
+import { useContext } from "react";
+import { AuthContext } from "../../hooks/authProvider";
 
-const Header: NextPage = () => {
-  const { currentUser, clickLogout } = Logout();
+const HeaderAfterLogin: NextPage = () => {
+  const { clickLogout } = Logout();
+  const { currentUser } = useContext(AuthContext);
   return (
     <>
       <Box p={1} bg="#fff">
         <Box w="97%" m="0 auto">
           <HStack justify="space-between">
             <HStack spacing={7}>
-              <Link href="/" passHref>
+              <Link href="/top" passHref>
                 <Image
                   src="/images/sample-logo.jpg"
                   width={150}
@@ -44,8 +47,10 @@ const Header: NextPage = () => {
                 全体
               </PageLink>
             </HStack>
-
-            {currentUser ? (
+            <HStack spacing={6}>
+              <Text fontWeight="semibold" fontSize="20px" display="inline">
+                {currentUser?.displayName} さん
+              </Text>
               <Button
                 bg="blue.200"
                 _hover={{ bg: "blue.100" }}
@@ -53,11 +58,7 @@ const Header: NextPage = () => {
               >
                 ログアウト
               </Button>
-            ) : (
-              <PageLink href="/login">
-                <Button>ログイン</Button>
-              </PageLink>
-            )}
+            </HStack>
           </HStack>
         </Box>
       </Box>
@@ -65,4 +66,4 @@ const Header: NextPage = () => {
   );
 };
 
-export default Header;
+export default HeaderAfterLogin;

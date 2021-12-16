@@ -10,14 +10,16 @@ import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { RiPsychotherapyFill } from "react-icons/ri";
 import { VStack } from "@chakra-ui/layout";
 import { NextPage } from "next";
+import { UseFormRegister } from "react-hook-form";
+import { AllGoalData } from "../../models/interface";
 
 interface Props {
-  register: any;
+  register: UseFormRegister<AllGoalData>;
 }
 
 const IncomeForm: NextPage<Props> = ({ register }) => {
   return (
-    <VStack spacing={2} w="90%" m="0 auto" minHeight="232px">
+    <VStack spacing={2} w="90%" m="0 auto">
       <FormControl id="salary">
         <InputGroup>
           <InputLeftAddon fontSize="20px">

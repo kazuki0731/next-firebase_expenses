@@ -9,7 +9,7 @@ interface FormData {
   category: string;
   text: string;
   date: Date;
-}                 
+}
 
 interface Props {
   register: UseFormRegister<FormData>;
@@ -34,7 +34,10 @@ const FormList: NextPage<Props> = ({ register }) => {
           <option value="日用品">日用品</option>
           <option value="食費">食費</option>
           <option value="家賃">家賃</option>
-          <option value="光熱費">光熱費</option>
+          <option value="水道、光熱費">水道、光熱費</option>
+          <option value="交通費">交通費</option>
+          <option value="交際費">交際費</option>
+          <option value="税、保険等">税、保険等</option>
           <option value="その他">その他</option>
         </Select>
       </FormControl>

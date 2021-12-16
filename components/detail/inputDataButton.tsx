@@ -1,7 +1,6 @@
 import { Button } from "@chakra-ui/button";
 import { NextPage } from "next";
-import { MouseEventHandler, useContext } from "react";
-import { DataContext } from "../../hooks/dataProvider";
+import { MouseEventHandler } from "react";
 
 interface Props {
   children: React.ReactNode;
@@ -9,15 +8,16 @@ interface Props {
   clickHandle: MouseEventHandler<HTMLButtonElement>;
 }
 
-const InputDataButton: NextPage<Props> = ({ children, disabled, clickHandle }) => {
-  const { isLarger } = useContext(DataContext);
-  
-
+const InputDataButton: NextPage<Props> = ({
+  children,
+  disabled,
+  clickHandle,
+}) => {
   return (
     <Button
-      w={isLarger ? "130px" : "80px"}
-      h={isLarger ? "45px" : "30px"}
-      fontSize={isLarger ? "18px" : "12px"}
+      w={{ base: "80px", md: "130px" }}
+      h={{ base: "30px", md: "45px" }}
+      fontSize={{ base: "12px", md: "18px" }}
       disabled={disabled}
       onClick={clickHandle}
     >

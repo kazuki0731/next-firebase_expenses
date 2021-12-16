@@ -39,7 +39,7 @@ const InputDataList: NextPage<Props> = ({ detailData, clickDelete }) => {
                         url={`/edit/${data.text}`}
                       >
                         <Button m={1.5} fontSize="14px" h="32px" w="50px">
-                          編集
+                          詳細
                         </Button>
                       </PageLink>
                       <Button
@@ -74,7 +74,7 @@ const InputDataList: NextPage<Props> = ({ detailData, clickDelete }) => {
                         url={`/edit/${data.text}`}
                       >
                         <Button m={1} fontSize="12px" h="22px" w="40px">
-                          編集
+                          詳細
                         </Button>
                       </PageLink>
                       <Button

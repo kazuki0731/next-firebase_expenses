@@ -10,7 +10,7 @@ import {
   where,
 } from "@firebase/firestore";
 
-import { db } from "../src/firebase";
+import { auth, db } from "../lib/firebase";
 
 interface InputData {
   id: string;
@@ -43,7 +43,7 @@ const getSnap = (snapShot: QuerySnapshot, data: InputData[]) => {
 export const allInputData = async () => {
   const data: InputData[] = [];
   try {
-    const q = query(collection(db, "spendings"));
+    const q = query(collection(db, "users", auth.currentUser.uid, "spendings"));
     const snapShot = await getDocs(q);
     getSnap(snapShot, data);
     return {
@@ -60,7 +60,7 @@ export const monthlyInputData = async (
   const data: InputData[] = [];
   try {
     const q = query(
-      collection(db, "spendings"),
+      collection(db, "users", auth.currentUser.uid, "spendings"),
       where("date", ">=", `2021-${month}-01`),
       where("date", "<=", `2021-${month}-31`),
       orderBy("date", "asc")
@@ -77,14 +77,14 @@ export const monthlyInputData = async (
 };
 
 export const deleteData = async (id: string) => {
-  await deleteDoc(doc(db, "spendings", id));
+  await deleteDoc(doc(db, "users", auth.currentUser.uid, "spendings", id));
 };
 
 export const postData = async (data: FormData) => {
   data.price = Number(data.price);
   const { price, category, text, date } = data;
   try {
-    await addDoc(collection(db, "spendings"), {
+    await addDoc(collection(db, "users", auth.currentUser?.uid, "spendings"), {
       price,
       category,
       text,

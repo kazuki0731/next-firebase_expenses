@@ -8,10 +8,11 @@ import { Input } from "@chakra-ui/input";
 import { Button } from "@chakra-ui/button";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { auth } from "../src/firebase";
+import { auth } from "../lib/firebase";
 import { signInWithEmailAndPassword } from "@firebase/auth";
 import { AuthContext } from "../hooks/authProvider";
 import FormSpace from "../components/common/formSpace";
+import PageLink from "../components/common/pageLink";
 
 interface FormData {
   email: string;
@@ -20,16 +21,13 @@ interface FormData {
 
 const Login: NextPage = () => {
   const { register, handleSubmit } = useForm<FormData>();
-  const { currentUser, setCurrentUser } = useContext(AuthContext);
-  const [isLogin, setIsLogin] = useState(true);
+  const { currentUser } = useContext(AuthContext);
   const [msg, setMsg] = useState("");
   const router = useRouter();
 
   useEffect(() => {
     if (currentUser) {
-      router.push("/");
-    } else {
-      setIsLogin(false);
+      router.push("/top");
     }
   }, [currentUser]);
 
@@ -37,7 +35,7 @@ const Login: NextPage = () => {
     const { email, password } = data;
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      router.push("/");
+      router.push("/top");
     } catch (e: any) {
       switch (e.code) {
         case "auth/wrong-password":
@@ -47,7 +45,7 @@ const Login: NextPage = () => {
           setMsg("ユーザーが見つかりません");
           break;
         case "auth/too-many-requests":
-          setMsg("５回間違えたのでしばらく待ってください");
+          setMsg("間違いが多すぎます。ロードし直してください");
           break;
         default:
           setMsg("通信に失敗しました");
@@ -60,7 +58,7 @@ const Login: NextPage = () => {
       <Head>
         <title>Login</title>
       </Head>
-      {!isLogin && (
+      {!currentUser && (
         <>
           <TitleText>ログイン</TitleText>
           <FormSpace>
@@ -87,7 +85,17 @@ const Login: NextPage = () => {
                   />
                 </FormControl>
                 <Button type="submit">ログイン</Button>
-                <Text color="red">{msg && msg}</Text>
+                {msg && <Text color="red">{msg}</Text>}
+                <Text fontSize="16px" w="100%">
+                  新規登録は
+                  <PageLink
+                    href="/signup"
+                    color={"blue.400"}
+                    underline={"underLine"}
+                  >
+                    こちら
+                  </PageLink>
+                </Text>
               </VStack>
             </form>
           </FormSpace>

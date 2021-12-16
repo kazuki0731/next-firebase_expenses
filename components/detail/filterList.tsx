@@ -2,40 +2,37 @@ import { FormControl } from "@chakra-ui/form-control";
 import { HStack } from "@chakra-ui/layout";
 import { Select } from "@chakra-ui/select";
 import { NextPage } from "next";
-import { useContext } from "react";
 import { UseFormHandleSubmit, UseFormRegister } from "react-hook-form";
-import { DataContext } from "../../hooks/dataProvider";
 
 interface FormData {
   category: string;
   order: string;
+  number: string;
 }
 
 interface Props {
   handleSubmit: UseFormHandleSubmit<FormData>;
   register: UseFormRegister<FormData>;
-  changeCategory: ({ category, order }: FormData) => void;
+  changeDisplay: ({ category, order, number }: FormData) => void;
 }
 
 const FilterList: NextPage<Props> = ({
   handleSubmit,
   register,
-  changeCategory,
+  changeDisplay,
 }) => {
-  const { isLarger } = useContext(DataContext);
-
   return (
     <HStack spacing={2}>
       <FormControl
-        w={isLarger ? "140px" : "110px"}
+        w={{ base: "110px", md: "140px" }}
         id="category"
-        onChange={handleSubmit(changeCategory)}
+        onChange={handleSubmit(changeDisplay)}
       >
         <Select
           bg="white"
-          w={isLarger ? "140px" : "110px"}
-          h={isLarger ? "40px" : "35px"}
-          fontSize={isLarger ? "16px" : "13px"}
+          w={{ base: "110px", md: "140px" }}
+          h={{ base: "35px", md: "40px" }}
+          fontSize={{ base: "13px", md: "16px" }}
           required
           {...register("category")}
         >
@@ -44,18 +41,21 @@ const FilterList: NextPage<Props> = ({
           <option value="食費">食費</option>
           <option value="家賃">家賃</option>
           <option value="光熱費">光熱費</option>
+          <option value="交通費">交通費</option>
+          <option value="交際費">交際費</option>
+          <option value="税、保険等">税、保険等</option>
           <option value="その他">その他</option>
         </Select>
       </FormControl>
       <FormControl
-        w={isLarger ? "140px" : "110px"}
+        w={{ base: "110px", md: "140px" }}
         id="category"
-        onChange={handleSubmit(changeCategory)}
+        onChange={handleSubmit(changeDisplay)}
       >
         <Select
-          w={isLarger ? "140px" : "110px"}
-          h={isLarger ? "40px" : "35px"}
-          fontSize={isLarger ? "16px" : "13px"}
+          w={{ base: "110px", md: "140px" }}
+          h={{ base: "35px", md: "40px" }}
+          fontSize={{ base: "13px", md: "16px" }}
           bg="white"
           required
           {...register("order")}
@@ -63,6 +63,24 @@ const FilterList: NextPage<Props> = ({
           <option value="date">日付順</option>
           <option value="desc">高い順</option>
           <option value="asc">安い順</option>
+        </Select>
+      </FormControl>
+      <FormControl
+        w={{ base: "110px", md: "140px" }}
+        id="category"
+        onChange={handleSubmit(changeDisplay)}
+      >
+        <Select
+          w={{ base: "110px", md: "140px" }}
+          h={{ base: "35px", md: "40px" }}
+          fontSize={{ base: "13px", md: "16px" }}
+          bg="white"
+          required
+          {...register("number")}
+        >
+          <option value="5">5件表示</option>
+          <option value="10">10件表示</option>
+          <option value="20">20件表示</option>
         </Select>
       </FormControl>
     </HStack>

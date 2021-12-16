@@ -2,11 +2,9 @@ import Head from "next/head";
 import { NextPage } from "next";
 import TitleText from "../components/common/titleText";
 import Container from "../components/common/container";
-import { Button } from "@chakra-ui/button";
-import { Box, HStack, VStack } from "@chakra-ui/layout";
+import { Box, Flex, HStack, VStack } from "@chakra-ui/layout";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import BalancePrice from "../components/overall/balancePrice";
 import MonthButton from "../components/common/monthButtonList";
 import { AuthContext } from "../hooks/authProvider";
 import {
@@ -26,12 +24,13 @@ import {
 } from "../apiCaller/balanceDataQuery";
 import GoalDataForm from "../components/overall/goalDataForm";
 import InputExpenseData from "../components/overall/inputExpenseData";
+import HeaderAfterLogin from "../components/common/headerAfterLogin";
 
 const Overall: NextPage = () => {
   const { register, handleSubmit, reset } = useForm<AllGoalData>();
-  const { isLarger } = useContext(DataContext);
+
   const { currentUser } = useContext(AuthContext);
-  const { nowMonth, setNowMonth, barChart, pieChart, setPieChart } =
+  const { nowMonth, setNowMonth, barChart, pieChart, setPieChart, isLarger } =
     useContext(DataContext);
   const [goalExpenses, setGoalExpenses] = useState(0);
   const [goalIncomes, setGoalIncomes] = useState(0);
@@ -42,6 +41,9 @@ const Overall: NextPage = () => {
     food: 0,
     rent: 0,
     util: 0,
+    traffic: 0,
+    enter: 0,
+    tax: 0,
     otherExpense: 0,
     totalPrice: 0,
   });
@@ -51,6 +53,9 @@ const Overall: NextPage = () => {
     foodBalance: 0,
     rentBalance: 0,
     utilBalance: 0,
+    trafficBalance: 0,
+    enterBalance: 0,
+    taxBalance: 0,
     otherBalance: 0,
   });
 
@@ -62,6 +67,9 @@ const Overall: NextPage = () => {
       food: 0,
       rent: 0,
       util: 0,
+      traffic: 0,
+      enter: 0,
+      tax: 0,
       otherExpense: 0,
       totalPrice: 0,
     };
@@ -89,19 +97,32 @@ const Overall: NextPage = () => {
       setBalanceDetail(balanceData);
     }
 
-    const { food, daily, rent, util, otherExpense } = allexpenseData;
+    const { food, daily, rent, util, traffic, enter, tax, otherExpense } =
+      allexpenseData;
 
     setPieChart({
-      labels: ["日用品", "食費", "家賃", "光熱費", "その他"],
+      labels: [
+        "日用品",
+        "食費",
+        "家賃",
+        "光熱費",
+        "交通費",
+        "交際費",
+        "税、保険等",
+        "その他",
+      ],
       datasets: [
         {
-          data: [daily, food, rent, util, otherExpense],
+          data: [daily, food, rent, util, traffic, enter, tax, otherExpense],
           backgroundColor: [
-            "rgba(255, 99, 132, 0.4)",
-            "rgba(255, 159, 64, 0.4)",
-            "rgba(255, 205, 86, 0.4)",
-            "rgba(75, 192, 192, 0.4)",
-            "rgba(54, 162, 235, 0.4)",
+            "rgba(255, 0, 0, 0.2)",
+            "rgba(255, 69, 0, 0.2)",
+            "rgba(255, 255, 0, 0.2)",
+            "rgba(0, 128, 0, 0.2)",
+            "rgba(0, 0, 255, 0.2)",
+            "rgba(75, 0, 130, 0.2)",
+            "rgba(238, 130, 238, 0.2)",
+            "#ccc",
           ],
           borderWidth: 1,
         },
@@ -132,13 +153,27 @@ const Overall: NextPage = () => {
       }
     }
 
-    const { daily, food, rent, util, otherExpense, salary, otherIncome } = data;
+    const {
+      daily,
+      food,
+      rent,
+      util,
+      traffic,
+      enter,
+      tax,
+      otherExpense,
+      salary,
+      otherIncome,
+    } = data;
 
     const expenseGoalData: ExpenseData = {
       daily: daily | 0,
       food: food | 0,
       rent: rent | 0,
       util: util | 0,
+      traffic: traffic | 0,
+      enter: enter | 0,
+      tax: tax | 0,
       otherExpense: otherExpense | 0,
     };
 
@@ -178,18 +213,14 @@ const Overall: NextPage = () => {
       <Head>
         <title>overall</title>
       </Head>
+      <HeaderAfterLogin />
       <TitleText>{nowMonth}月</TitleText>
       {currentUser && (
         <>
           <Container>
-            <BalancePrice
-              incomes={goalIncomes}
-              expenses={expenseDetail.totalPrice}
-              balance={totalBalance}
-            />
             {isLarger ? (
               <Box>
-                <HStack mb={5} justify="center" spacing={10}>
+                <HStack mb={5}>
                   <BarChart barChart={barChart} />
                   <PieChart pieChart={pieChart} />
                 </HStack>
@@ -199,11 +230,16 @@ const Overall: NextPage = () => {
                     goalExpenses={goalExpenses}
                     goalIncomes={goalIncomes}
                     register={register}
+                    handleSubmit={handleSubmit}
+                    submitData={submitData}
+                    setIsExpense={setIsExpense}
                   />
+
                   <InputExpenseData
                     expenseDetail={expenseDetail}
                     balanceDetail={balanceDetail}
                     allBalance={allBalance}
+                    totalbalance={totalBalance}
                   />
                 </HStack>
               </Box>
@@ -214,39 +250,24 @@ const Overall: NextPage = () => {
                   <PieChart pieChart={pieChart} />
                 </VStack>
                 <VStack mb={3} alignItems="flex-start">
+                  <InputExpenseData
+                    expenseDetail={expenseDetail}
+                    balanceDetail={balanceDetail}
+                    allBalance={allBalance}
+                    totalbalance={totalBalance}
+                  />
                   <GoalDataForm
                     isExpense={isExpense}
                     goalExpenses={goalExpenses}
                     goalIncomes={goalIncomes}
                     register={register}
-                  />
-                  <InputExpenseData
-                    expenseDetail={expenseDetail}
-                    balanceDetail={balanceDetail}
-                    allBalance={allBalance}
+                    handleSubmit={handleSubmit}
+                    submitData={submitData}
+                    setIsExpense={setIsExpense}
                   />
                 </VStack>
               </Box>
             )}
-            <HStack m="10px 0" spacing={10} justify="center">
-              <Button
-                w={isLarger ? "110px" : "80px"}
-                h={isLarger ? "45px" : "32px"}
-                type="submit"
-                fontSize={isLarger ? "16px" : "12px"}
-                onClick={handleSubmit((data) => submitData(data, nowMonth))}
-              >
-                変更を保存
-              </Button>
-              <Button
-                w={isLarger ? "110px" : "80px"}
-                h={isLarger ? "45px" : "32px"}
-                fontSize={isLarger ? "16px" : "12px"}
-                onClick={() => setIsExpense(!isExpense)}
-              >
-                支出/収入
-              </Button>
-            </HStack>
           </Container>
           <MonthButton
             clickShowOtherMonth={clickShowOtherMonth}

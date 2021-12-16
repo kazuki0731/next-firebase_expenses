@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "contexts/simulateProvider.jsx", "next.config.js", "apiCaller/inputData.Queryts"  ],
+, "contexts/simulateProvider.jsx", "next.config.js", "apiCaller/inputData.Queryts", "lib/firebase.ts"  ],
   "exclude": [
     "node_modules"
   ]

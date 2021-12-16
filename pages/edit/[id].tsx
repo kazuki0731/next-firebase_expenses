@@ -5,7 +5,7 @@ import TitleText from "../../components/common/titleText";
 import { Text, VStack } from "@chakra-ui/layout";
 import { useEffect, useState } from "react";
 import { doc, getDoc, updateDoc } from "@firebase/firestore";
-import { db } from "../../src/firebase";
+import { auth, db } from "../../lib/firebase";
 import { useForm } from "react-hook-form";
 import FormList from "../../components/edit/formList";
 import FormButton from "../../components/edit/formButton";
@@ -25,7 +25,9 @@ const Edit: NextPage = () => {
   const id = router.query.dataId;
 
   const getData = async () => {
-    const res = await getDoc(doc(db, "spendings", `${id}`));
+    const res = await getDoc(
+      doc(db, "users", auth.currentUser.uid, "spendings", `${id}`)
+    );
     reset(res.data());
   };
   useEffect(() => {
@@ -36,13 +38,16 @@ const Edit: NextPage = () => {
     data.price = Number(data.price);
     const { price, category, text, date } = data;
     try {
-      await updateDoc(doc(db, "spendings", `${id}`), {
-        price,
-        category,
-        text,
-        date,
-        createdAt: new Date(),
-      });
+      await updateDoc(
+        doc(db, "users", auth.currentUser.uid, "spendings", `${id}`),
+        {
+          price,
+          category,
+          text,
+          date,
+          createdAt: new Date(),
+        }
+      );
       getData();
 
       setMsg("変更しました");
@@ -60,7 +65,7 @@ const Edit: NextPage = () => {
       <Head>
         <title>total</title>
       </Head>
-      <TitleText>編集</TitleText>
+      <TitleText>詳細</TitleText>
       <FormSpace>
         <form onSubmit={handleSubmit(changeData)}>
           <VStack spacing={4} alignItems="flex-start">

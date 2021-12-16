@@ -15,6 +15,9 @@ export interface AllGoalData {
   food: number;
   rent: number;
   util: number;
+  traffic: number;
+  enter: number;
+  tax: number;
   otherExpense: number;
   salary: number;
   otherIncome: number;
@@ -26,7 +29,11 @@ export interface ExpenseData {
   food: number;
   rent: number;
   util: number;
+  traffic: number;
+  enter: number;
+  tax: number;
   otherExpense: number;
+  // totalPrice?: number;
   [key: string]: number;
 }
 
@@ -40,6 +47,9 @@ export interface BalanceDetail {
   foodBalance: number;
   rentBalance: number;
   utilBalance: number;
+  trafficBalance: number;
+  enterBalance: number;
+  taxBalance: number;
   otherBalance: number;
 }
 

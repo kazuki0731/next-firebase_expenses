@@ -16,7 +16,7 @@ const options = {
   plugins: {
     title: {
       display: true,
-      text: "合計/月",
+      text: "支出/月",
       font: {
         size: 20,
       },
@@ -45,10 +45,10 @@ interface Props {
 
 const BarChart: NextPage<Props> = ({ barChart }) => {
   return (
-    <Box>
+    <Box w={{ base: "260px", md: "50%" }}>
       <Box
-        w={{ base: "260px", md: "420px" }}
-        h={{ base: "200px", md: "300px" }}
+        w={{ base: "260px", lg: "420px" }}
+        h={{ base: "200px", lg: "300px" }}
         m="0 auto"
         bg={"white"}
         boxShadow="dark-lg"

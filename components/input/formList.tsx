@@ -5,6 +5,12 @@ import { Select } from "@chakra-ui/select";
 import { NextPage } from "next";
 import { FieldError, UseFormRegister } from "react-hook-form";
 
+const today = new Date();
+const year = today.getFullYear();
+const month = ("0" + (today.getMonth() + 1)).slice(-2);
+const day = ("0" + today.getDate()).slice(-2);
+const date = `${year}-${month}-${day}`;
+
 interface FormData {
   price: number;
   category: string;
@@ -41,7 +47,10 @@ const FormList: NextPage<Props> = ({ register, errors }) => {
           <option value="日用品">日用品</option>
           <option value="食費">食費</option>
           <option value="家賃">家賃</option>
-          <option value="光熱費">光熱費</option>
+          <option value="水道、光熱費">水道、光熱費</option>
+          <option value="交通費">交通費</option>
+          <option value="交際費">交際費</option>
+          <option value="税、保険等">税、保険等</option>
           <option value="その他">その他</option>
         </Select>
       </FormControl>
@@ -66,7 +75,7 @@ const FormList: NextPage<Props> = ({ register, errors }) => {
           type="date"
           bg="white"
           variant="outline"
-          placeholder="メモ"
+          defaultValue={date}
           required
           {...register("date")}
         />

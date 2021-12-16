@@ -9,6 +9,8 @@ import { AuthContext } from "../hooks/authProvider";
 import FormList from "../components/input/formList";
 import { postData } from "../apiCaller/inputDataQuery";
 import FormSpace from "../components/common/formSpace";
+import HeaderAfterLogin from "../components/common/headerAfterLogin";
+import { DataContext } from "../hooks/dataProvider";
 
 interface FormData {
   price: number;
@@ -25,10 +27,11 @@ const InputData: NextPage = () => {
     formState: { errors },
   } = useForm<FormData>();
   const { currentUser } = useContext(AuthContext);
+  const { getYearlyData } = useContext(DataContext);
   const [msg, setMsg] = useState("");
-
   const submitData = async (data: FormData) => {
     const { text } = await postData(data);
+    getYearlyData();
     setMsg(text);
     reset();
   };
@@ -38,9 +41,10 @@ const InputData: NextPage = () => {
       <Head>
         <title>Input</title>
       </Head>
+      <HeaderAfterLogin />
       {currentUser && (
         <>
-          <TitleText>Input</TitleText>
+          <TitleText>input</TitleText>
           <FormSpace>
             <form onSubmit={handleSubmit(submitData)}>
               <VStack spacing={4} alignItems="left">

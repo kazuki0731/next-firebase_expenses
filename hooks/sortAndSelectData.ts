@@ -5,17 +5,20 @@ import { DataContext } from "./dataProvider";
 interface FormData {
   category: string;
   order: string;
+  number: string;
 }
 
-const SortAndSelecData = () => {
-  const { pageLimit } = useContext(DataContext);
+export const SortAndSelectData = () => {
+  const [pageLimit, setPageLimit] = useState<number>(5);
   const [dataByCategory, setDataByCategory] = useState<InputData[]>([]);
   const [maxPage, setMaxPage] = useState(1);
   const [monthlyAllData, setMonthlyAllData] = useState<InputData[]>([]);
   const [nowPage, setNowPage] = useState(1);
   const [detailData, setDetailData] = useState<InputData[]>([]);
 
-  const changeCategory = ({ category, order }: FormData) => {
+  const changeDisplay = ({ category, order, number }: FormData) => {
+    const displayNumber = Number(number);
+    console.log(pageLimit, displayNumber);
     if (category === "すべて") {
       if (order === "asc") {
         const newData = [...monthlyAllData];
@@ -26,7 +29,7 @@ const SortAndSelecData = () => {
             return -1;
           }
         });
-        const limitedData = newData.slice(0, pageLimit);
+        const limitedData = newData.slice(0, displayNumber);
         setDataByCategory(newData);
         setDetailData(limitedData);
       } else if (order === "desc") {
@@ -38,19 +41,18 @@ const SortAndSelecData = () => {
             return -1;
           }
         });
-        const limitedData = newData.slice(0, pageLimit);
+        const limitedData = newData.slice(0, displayNumber);
         setDataByCategory(newData);
         setDetailData(limitedData);
       } else {
-        const limitedData = monthlyAllData.slice(0, pageLimit);
+        const limitedData = monthlyAllData.slice(0, displayNumber);
         setDetailData(limitedData);
         setDataByCategory(monthlyAllData);
       }
-      const pageLen = Math.ceil(monthlyAllData.length / pageLimit);
+      const pageLen = Math.ceil(monthlyAllData.length / displayNumber);
       setMaxPage(pageLen);
       setNowPage(1);
     } else {
-      console.log(monthlyAllData);
       const categorizedData = monthlyAllData.filter((data) => {
         return data.category === category;
       });
@@ -63,7 +65,7 @@ const SortAndSelecData = () => {
             return -1;
           }
         });
-        const limitedData = newData.slice(0, pageLimit);
+        const limitedData = newData.slice(0, displayNumber);
         setDataByCategory(newData);
         setDetailData(limitedData);
       } else if (order === "desc") {
@@ -75,18 +77,19 @@ const SortAndSelecData = () => {
             return -1;
           }
         });
-        const limitedData = newData.slice(0, pageLimit);
+        const limitedData = newData.slice(0, displayNumber);
         setDataByCategory(newData);
         setDetailData(limitedData);
       } else {
-        const limitedData = categorizedData.slice(0, pageLimit);
+        const limitedData = categorizedData.slice(0, displayNumber);
         setDataByCategory(categorizedData);
         setDetailData(limitedData);
       }
-      const pageLen = Math.ceil(categorizedData.length / pageLimit);
+      const pageLen = Math.ceil(categorizedData.length / displayNumber);
       setMaxPage(pageLen);
       setNowPage(1);
     }
+    setPageLimit(displayNumber);
   };
 
   return {
@@ -100,8 +103,8 @@ const SortAndSelecData = () => {
     setNowPage,
     monthlyAllData,
     setMonthlyAllData,
-    changeCategory,
+    changeDisplay,
+    pageLimit,
+    setPageLimit,
   };
 };
-
-export default SortAndSelecData;

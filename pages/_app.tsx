@@ -1,6 +1,5 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
-import Header from "../components/common/header";
 import AuthProvider from "../hooks/authProvider";
 import { theme } from "../styles/theme";
 import { RecoilRoot } from "recoil";
@@ -10,18 +9,19 @@ import Head from "next/head";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
-      <AuthProvider>
-        <DataProvider>
-          <RecoilRoot>
-            <Header />
-            <Head>
-              <title>TopPage</title>
-              <link rel="shortcut icon" href="/images/ie.png" />
-            </Head>
-            <Component {...pageProps} />
-          </RecoilRoot>
-        </DataProvider>
-      </AuthProvider>
+      <RecoilRoot>
+        <AuthProvider>
+          <DataProvider>
+            <RecoilRoot>
+              <Head>
+                <title>TopPage</title>
+                <link rel="shortcut icon" href="/images/ie.png" />
+              </Head>
+              <Component {...pageProps} />
+            </RecoilRoot>
+          </DataProvider>
+        </AuthProvider>
+      </RecoilRoot>
     </ChakraProvider>
   );
 }

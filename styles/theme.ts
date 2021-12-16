@@ -8,7 +8,7 @@ export const theme = extendTheme({
           "'游ゴシック体', YuGothic, '游ゴシック', 'Yu Gothic', 'メイリオ', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif",
         bg: "gray.200",
         textAlign: "center",
-        fontSize: { base: "1rem", sm: "1.25rem", md: "1.5rem", lg: "1.75rem" },
+        fontSize: { base: "1rem", sm: "1.25rem", md: "1.5rem", lg: "1.5rem" },
         margin: "0 auto",
       },
     },

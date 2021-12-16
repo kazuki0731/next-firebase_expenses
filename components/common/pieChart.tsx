@@ -33,8 +33,14 @@ interface Props {
 
 const PieChart: NextPage<Props> = ({ pieChart }) => {
   return (
-    <Box w={300} h={300} m="0 auto">
-      <Pie data={pieChart} options={pieOptions} />
+    <Box w={{ base: "250px", md: "50%" }}>
+      <Box
+        w={{ base: "250px", lg: "300px" }}
+        h={{ base: "250px", lg: "300px" }}
+        m="0 auto"
+      >
+        <Pie data={pieChart} options={pieOptions} />
+      </Box>
     </Box>
   );
 };

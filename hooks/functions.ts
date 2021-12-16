@@ -16,6 +16,15 @@ export const divideData = (data: InputData[], expenseData: ExpenseData) => {
       case "光熱費":
         expenseData.util += item.price;
         break;
+      case "交通費":
+        expenseData.traffic += item.price;
+        break;
+      case "交際費":
+        expenseData.enter += item.price;
+        break;
+      case "税、保険等":
+        expenseData.tax += item.price;
+        break;
       case "その他":
         expenseData.otherExpense += item.price;
         break;
@@ -33,6 +42,9 @@ export const calcBalanceData = (
   const foodBalance = goalData.food - inputData.food;
   const rentBalance = goalData.rent - inputData.rent;
   const utilBalance = goalData.util - inputData.util;
+  const trafficBalance = goalData.traffic - inputData.traffic;
+  const enterBalance = goalData.enter - inputData.enter;
+  const taxBalance = goalData.tax - inputData.tax;
   const otherBalance = goalData.otherExpense - inputData.otherExpense;
 
   const balanceData = {
@@ -40,6 +52,9 @@ export const calcBalanceData = (
     foodBalance,
     rentBalance,
     utilBalance,
+    trafficBalance,
+    enterBalance,
+    taxBalance,
     otherBalance,
   };
 

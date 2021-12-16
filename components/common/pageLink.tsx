@@ -8,8 +8,7 @@ const PageLink = (props: any) => {
   return (
     <NextLink href={props.href} as={props.url}>
       <Link
-        _hover={{ textDecoration: props.underLine }}
-        color={props.color}
+        _hover={{ textDecoration: props.underline }}
         fontWeight="semibold"
         {...props}
         onClick={clickLink}
