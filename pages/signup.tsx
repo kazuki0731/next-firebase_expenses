@@ -11,7 +11,7 @@ import { auth, db } from "../lib/firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "@firebase/auth";
 import { AuthContext } from "../hooks/authProvider";
 import { useRouter } from "next/router";
-import { doc, setDoc } from "@firebase/firestore";
+import { doc, setDoc, getDoc } from "@firebase/firestore";
 auth.currentUser;
 
 interface FormData {
@@ -45,6 +45,7 @@ const Signup: NextPage = () => {
     const { email, password, name } = data;
     try {
       await createUserWithEmailAndPassword(auth, email, password);
+      console.log(auth.currentUser?.uid);
       await updateProfile(auth.currentUser, {
         displayName: name,
       });
@@ -74,7 +75,7 @@ const Signup: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Login</title>
+        <title>signup</title>
       </Head>
       <TitleText>新規登録</TitleText>
       <FormSpace>
