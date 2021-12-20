@@ -67,7 +67,6 @@ const DataProvider: NextPage<Children> = ({ children }) => {
     datasets: [],
   });
   const [barChart, setBarChart] = useState<Chart>({ labels: [], datasets: [] });
-  console.log("OK");
 
   const getYearlyData = async () => {
     let TotalData: number[] = [];
@@ -124,7 +123,6 @@ const DataProvider: NextPage<Children> = ({ children }) => {
   };
 
   useEffect(() => {
-    console.log("p");
     if (currentUser) {
       getYearlyData();
     }

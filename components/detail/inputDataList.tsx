@@ -33,10 +33,9 @@ const InputDataList: NextPage<Props> = ({ detailData, clickDelete }) => {
                       <span> {data.price}円 </span>
                       <PageLink
                         href={{
-                          pathname: "/edit/[id]",
+                          pathname: `/edit/${data.id}`,
                           query: { dataId: data.id },
                         }}
-                        url={`/edit/${data.text}`}
                       >
                         <Button m={1.5} fontSize="14px" h="32px" w="50px">
                           詳細
