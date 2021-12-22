@@ -18,7 +18,6 @@ export const SortAndSelectData = () => {
 
   const changeDisplay = ({ category, order, number }: FormData) => {
     const displayNumber = Number(number);
-    console.log(pageLimit, displayNumber);
     if (category === "すべて") {
       if (order === "asc") {
         const newData = [...monthlyAllData];
