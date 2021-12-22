@@ -9,8 +9,9 @@ import {
   QuerySnapshot,
   where,
 } from "@firebase/firestore";
-
-import { auth, db } from "../lib/firebase";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { nanoid } from "nanoid";
+import { auth, db, storage } from "../lib/firebase";
 
 interface InputData {
   id: string;
@@ -18,6 +19,7 @@ interface InputData {
   date: string;
   price: number;
   text: string;
+  filePath: string;
 }
 
 interface FormData {
@@ -25,6 +27,7 @@ interface FormData {
   category: string;
   text: string;
   date: Date;
+  files?: File[];
 }
 
 const getSnap = (snapShot: QuerySnapshot, data: InputData[]) => {
@@ -35,6 +38,7 @@ const getSnap = (snapShot: QuerySnapshot, data: InputData[]) => {
       date: doc.data().date,
       price: doc.data().price,
       text: doc.data().text,
+      filePath: doc.data().filePath,
     });
   });
   return data;
@@ -82,19 +86,30 @@ export const deleteData = async (id: string) => {
 
 export const postData = async (data: FormData) => {
   data.price = Number(data.price);
-  const { price, category, text, date } = data;
+  const { price, category, text, date, files } = data;
+  let filePath = "";
   try {
+    if (files?.length !== undefined && files?.length > 0) {
+      const storageRef = ref(
+        storage,
+        `${auth.currentUser.displayName}/${nanoid()}_${files[0].name}`
+      );
+      const fileData = await uploadBytes(storageRef, files[0]);
+      filePath = fileData.ref.fullPath;
+    }
     await addDoc(collection(db, "users", auth.currentUser?.uid, "spendings"), {
       price,
       category,
       text,
       date,
+      filePath,
       createdAt: new Date(),
     });
     return {
       text: "登録しました",
     };
   } catch (e: any) {
+    console.log(e);
     return {
       text: "登録に失敗しました",
     };

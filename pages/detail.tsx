@@ -145,7 +145,6 @@ const Total: NextPage = () => {
   };
 
   useEffect(() => {
-    console.log("d");
     if (currentUser) {
       getDetailData(nowMonth);
     }

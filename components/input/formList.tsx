@@ -3,6 +3,7 @@ import { Input } from "@chakra-ui/input";
 import { Text } from "@chakra-ui/layout";
 import { Select } from "@chakra-ui/select";
 import { NextPage } from "next";
+import React, { Dispatch, SetStateAction } from "react";
 import { FieldError, UseFormRegister } from "react-hook-form";
 
 const today = new Date();
@@ -16,10 +17,14 @@ interface FormData {
   category: string;
   text: string;
   date: Date;
+  files?: File[];
 }
 
 interface Props {
+  files: File[] | null;
+  setFiles: Dispatch<SetStateAction<File[] | null>>;
   register: UseFormRegister<FormData>;
+  showPreview: (e: React.ChangeEvent<HTMLInputElement>) => void;
   errors: {
     price?: FieldError | undefined;
     category?: FieldError | undefined;
@@ -28,7 +33,13 @@ interface Props {
   };
 }
 
-const FormList: NextPage<Props> = ({ register, errors }) => {
+const FormList: NextPage<Props> = ({
+  register,
+  errors,
+  files,
+  setFiles,
+  showPreview,
+}) => {
   return (
     <>
       <FormControl id="price">
@@ -78,6 +89,16 @@ const FormList: NextPage<Props> = ({ register, errors }) => {
           defaultValue={date}
           required
           {...register("date")}
+        />
+      </FormControl>
+      <FormControl id="files">
+        <Input
+          type="file"
+          accept="image/*"
+          bg="white"
+          variant="outline"
+          {...register("files")}
+          onChange={showPreview}
         />
       </FormControl>
     </>

@@ -2,24 +2,30 @@ import Head from "next/head";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import TitleText from "../../components/common/titleText";
-import { Text, VStack } from "@chakra-ui/layout";
+import { Text, VStack, Box } from "@chakra-ui/layout";
+import { Image } from "@chakra-ui/react";
+import { nanoid } from "nanoid";
+
 import { useEffect, useState } from "react";
 import { doc, getDoc, updateDoc } from "@firebase/firestore";
-import { auth, db } from "../../lib/firebase";
+import { auth, db, storage } from "../../lib/firebase";
 import { useForm } from "react-hook-form";
 import FormList from "../../components/edit/formList";
 import FormButton from "../../components/edit/formButton";
 import FormSpace from "../../components/common/formSpace";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 interface FormData {
   price: number;
   category: string;
   text: string;
   date: Date;
+  files?: File[];
 }
 
 const Edit: NextPage = () => {
   const { register, handleSubmit, reset } = useForm<FormData>();
+  const [imageUrl, setImageUrl] = useState<string>("");
   const [msg, setMsg] = useState("");
   const router = useRouter();
   const id = router.query.dataId;
@@ -29,6 +35,12 @@ const Edit: NextPage = () => {
       doc(db, "users", auth.currentUser.uid, "spendings", `${id}`)
     );
     reset(res.data());
+    if (res.data()?.filePath) {
+      const filePath = res.data()?.filePath;
+      const storageRef = ref(storage, filePath);
+      const url = await getDownloadURL(storageRef);
+      setImageUrl(url);
+    }
   };
   useEffect(() => {
     getData();
@@ -36,8 +48,17 @@ const Edit: NextPage = () => {
 
   const changeData = async (data: FormData) => {
     data.price = Number(data.price);
-    const { price, category, text, date } = data;
+    const { price, category, text, date, files } = data;
+    let filePath = null;
     try {
+      if (files) {
+        const storageRef = ref(
+          storage,
+          `${auth.currentUser.displayName}/${nanoid()}_${files[0].name}`
+        );
+        const fileData = await uploadBytes(storageRef, files[0]);
+        filePath = fileData.ref.fullPath;
+      }
       await updateDoc(
         doc(db, "users", auth.currentUser.uid, "spendings", `${id}`),
         {
@@ -45,6 +66,7 @@ const Edit: NextPage = () => {
           category,
           text,
           date,
+          filePath,
           createdAt: new Date(),
         }
       );
@@ -70,6 +92,11 @@ const Edit: NextPage = () => {
         <form onSubmit={handleSubmit(changeData)}>
           <VStack spacing={4} alignItems="flex-start">
             <FormList register={register} />
+            {imageUrl && (
+              <Box>
+                <Image src={imageUrl} alt="upLoadImage" w={400} />
+              </Box>
+            )}
             <FormButton clickBack={clickBack} />
           </VStack>
         </form>

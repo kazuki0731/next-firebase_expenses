@@ -8,6 +8,7 @@ export interface InputData {
   date: string;
   price: number;
   text: string;
+  files?: File[];
 }
 
 export interface AllGoalData {

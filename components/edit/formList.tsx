@@ -9,6 +9,7 @@ interface FormData {
   category: string;
   text: string;
   date: Date;
+  files?: File[];
 }
 
 interface Props {
@@ -61,6 +62,16 @@ const FormList: NextPage<Props> = ({ register }) => {
           {...register("date")}
         />
       </FormControl>
+      {/* <FormControl id="date">
+        <Input
+          type="file"
+          accept="image/*"
+          bg="white"
+          variant="outline"
+          {...register("files")}
+          multiple
+        />
+      </FormControl> */}
     </>
   );
 };
