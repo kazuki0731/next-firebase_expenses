@@ -16,6 +16,8 @@ export const DataContext = createContext(
   {} as {
     nowMonth: number;
     setNowMonth: Dispatch<SetStateAction<number>>;
+    nowYear: number;
+    setNowYear: Dispatch<SetStateAction<number>>;
     yearlyData: number[];
     setYearlyData: Dispatch<SetStateAction<number[]>>;
     pieChart: Chart;
@@ -23,15 +25,16 @@ export const DataContext = createContext(
     barChart: Chart;
     setBarChart: Dispatch<SetStateAction<Chart>>;
     isLarger: boolean;
-    getYearlyData: () => Promise<void>;
-    lastMonthDif: number;
-    setLastMonthDif: (value: SetStateAction<number>) => void;
-    monthlyAvg: MonthlyAvg;
-    setMonthlyAvg: Dispatch<SetStateAction<MonthlyAvg>>;
+    getYearlyData: (year: number) => Promise<void>;
+    lastMonthDiff: number;
+    setLastMonthDiff: (value: SetStateAction<number>) => void;
+    monthlyAvg: number;
+    setMonthlyAvg: Dispatch<SetStateAction<number>>;
   }
 );
 
 const currentMonth = new Date().getMonth() + 1;
+const currentYear = new Date().getFullYear();
 
 interface Chart {
   labels: string[];
@@ -47,20 +50,13 @@ interface Chart {
     | [];
 }
 
-interface MonthlyAvg {
-  totalAvg: number;
-  diff: number;
-}
-
 const DataProvider: NextPage<Children> = ({ children }) => {
   const { currentUser } = useContext(AuthContext);
   const [nowMonth, setNowMonth] = useState<number>(currentMonth);
-  const [lastMonthDif, setLastMonthDif] = useState<number>(0);
+  const [nowYear, setNowYear] = useState<number>(currentYear);
+  const [lastMonthDiff, setLastMonthDiff] = useState<number>(0);
   const [yearlyData, setYearlyData] = useState<number[]>([]);
-  const [monthlyAvg, setMonthlyAvg] = useState<MonthlyAvg>({
-    totalAvg: 0,
-    diff: 0,
-  });
+  const [monthlyAvg, setMonthlyAvg] = useState<number>(0);
   const [isLarger] = useMediaQuery("(min-width: 768px)");
   const [pieChart, setPieChart] = useState<Chart>({
     labels: [],
@@ -68,7 +64,7 @@ const DataProvider: NextPage<Children> = ({ children }) => {
   });
   const [barChart, setBarChart] = useState<Chart>({ labels: [], datasets: [] });
 
-  const getYearlyData = async () => {
+  const getYearlyData = async (year: number) => {
     let TotalData: number[] = [];
     let barLabel: string[] = [];
     for (let i = 1; i <= 12; i++) {
@@ -76,7 +72,7 @@ const DataProvider: NextPage<Children> = ({ children }) => {
       barLabel.push(`${i}月`);
     }
 
-    const result = await allInputData();
+    const result = await allInputData(year);
     if (result) {
       for (let item of result.data) {
         const month = Number(item.date.split("-")[1]);
@@ -100,12 +96,11 @@ const DataProvider: NextPage<Children> = ({ children }) => {
     if (nonZeroTotal.length !== 0) {
       const totalExpense = nonZeroTotal.reduce((a, b) => a + b);
       const totalAvg = Math.round(totalExpense / nonZeroTotal.length);
-      const diff = totalAvg - nowMonthTotal;
-      setLastMonthDif(lastMonthTotal - nowMonthTotal);
-      setMonthlyAvg({ totalAvg, diff });
+      setLastMonthDiff(lastMonthTotal - nowMonthTotal);
+      setMonthlyAvg(totalAvg);
     } else {
-      setLastMonthDif(0);
-      setMonthlyAvg({ totalAvg: 0, diff: 0 });
+      setLastMonthDiff(0);
+      setMonthlyAvg(0);
     }
 
     setBarChart({
@@ -124,7 +119,7 @@ const DataProvider: NextPage<Children> = ({ children }) => {
 
   useEffect(() => {
     if (currentUser) {
-      getYearlyData();
+      getYearlyData(nowYear);
     }
   }, [currentUser]);
 
@@ -139,10 +134,12 @@ const DataProvider: NextPage<Children> = ({ children }) => {
     setBarChart,
     isLarger,
     getYearlyData,
-    lastMonthDif,
-    setLastMonthDif,
+    lastMonthDiff,
+    setLastMonthDiff,
     monthlyAvg,
     setMonthlyAvg,
+    nowYear,
+    setNowYear,
   };
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 };

@@ -22,33 +22,37 @@ const IncomeForm: NextPage<Props> = ({ register }) => {
     <VStack spacing={2} w="90%" m="0 auto">
       <FormControl id="salary">
         <InputGroup>
-          <InputLeftAddon fontSize="20px">
+          <InputLeftAddon
+            w={{ base: "110px", md: "130px" }}
+            fontSize={{ base: "16px", md: "20px" }}
+          >
             <Icon as={FaRegMoneyBillAlt} color="green.500" />
             給料
           </InputLeftAddon>
           <Input
-            fontSize="20px"
+            fontSize={{ base: "16px", md: "20px" }}
             required
             type="number"
             bg="white"
             {...register("salary")}
-            textAlign="right"
           />
           <InputRightAddon>円</InputRightAddon>
         </InputGroup>
       </FormControl>
       <FormControl id="otherIncome">
         <InputGroup>
-          <InputLeftAddon fontSize="20px">
+          <InputLeftAddon
+            w={{ base: "110px", md: "130px" }}
+            fontSize={{ base: "16px", md: "20px" }}
+          >
             <Icon as={RiPsychotherapyFill} color="green.500" />
             その他
           </InputLeftAddon>
           <Input
-            fontSize="20px"
+            fontSize={{ base: "16px", md: "20px" }}
             type="number"
             bg="white"
             {...register("otherIncome")}
-            textAlign="right"
           />
           <InputRightAddon>円</InputRightAddon>
         </InputGroup>

@@ -5,9 +5,10 @@ export interface Children {
 export interface InputData {
   id: string;
   category: string;
+  title: string;
   date: string;
   price: number;
-  text: string;
+  memo: string;
   files?: File[];
 }
 

@@ -1,5 +1,6 @@
 import { DocumentData } from "@firebase/firestore";
 import { ExpenseData, InputData } from "../models/interface";
+import { QuerySnapshot } from "@firebase/firestore";
 
 export const divideData = (data: InputData[], expenseData: ExpenseData) => {
   data.forEach((item) => {
@@ -59,4 +60,19 @@ export const calcBalanceData = (
   };
 
   return balanceData;
+};
+
+export const getSnap = (snapShot: QuerySnapshot, data: InputData[]) => {
+  snapShot.forEach((doc) => {
+    data.push({
+      id: doc.id,
+      title: doc.data().title,
+      category: doc.data().category,
+      date: doc.data().date,
+      price: doc.data().price,
+      memo: doc.data().memo,
+      files: doc.data().files,
+    });
+  });
+  return data;
 };

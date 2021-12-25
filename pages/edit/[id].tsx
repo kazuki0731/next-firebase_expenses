@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import TitleText from "../../components/common/titleText";
 import { Text, VStack, Box } from "@chakra-ui/layout";
-import { Image } from "@chakra-ui/react";
+import { Image, useDisclosure } from "@chakra-ui/react";
 import { nanoid } from "nanoid";
 
 import { useEffect, useState } from "react";
@@ -14,19 +14,27 @@ import FormList from "../../components/edit/formList";
 import FormButton from "../../components/edit/formButton";
 import FormSpace from "../../components/common/formSpace";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import PreviewModal from "../../components/common/previewModal";
 
 interface FormData {
   price: number;
+  title: string;
   category: string;
-  text: string;
+  memo: string;
   date: Date;
   files?: File[];
 }
 
 const Edit: NextPage = () => {
-  const { register, handleSubmit, reset } = useForm<FormData>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>();
   const [imageUrl, setImageUrl] = useState<string>("");
   const [msg, setMsg] = useState("");
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
   const id = router.query.dataId;
 
@@ -35,9 +43,9 @@ const Edit: NextPage = () => {
       doc(db, "users", auth.currentUser.uid, "spendings", `${id}`)
     );
     reset(res.data());
-    if (res.data()?.filePath) {
-      const filePath = res.data()?.filePath;
-      const storageRef = ref(storage, filePath);
+    if (res.data()?.files) {
+      const files = res.data()?.files;
+      const storageRef = ref(storage, files);
       const url = await getDownloadURL(storageRef);
       setImageUrl(url);
     }
@@ -48,25 +56,25 @@ const Edit: NextPage = () => {
 
   const changeData = async (data: FormData) => {
     data.price = Number(data.price);
-    const { price, category, text, date, files } = data;
-    let filePath = null;
+    const { price, title, category, memo, date, files } = data;
     try {
-      if (files) {
-        const storageRef = ref(
-          storage,
-          `${auth.currentUser.displayName}/${nanoid()}_${files[0].name}`
-        );
-        const fileData = await uploadBytes(storageRef, files[0]);
-        filePath = fileData.ref.fullPath;
-      }
+      // if (files) {
+      //   const storageRef = ref(
+      //     storage,
+      //     `${auth.currentUser.displayName}/${nanoid()}_${files[0].name}`
+      //   );
+      //   const fileData = await uploadBytes(storageRef, files[0]);
+      //   files = fileData.ref.fullPath;
+      // }
       await updateDoc(
         doc(db, "users", auth.currentUser.uid, "spendings", `${id}`),
         {
           price,
+          title,
           category,
-          text,
+          memo,
           date,
-          filePath,
+          files,
           createdAt: new Date(),
         }
       );
@@ -91,10 +99,21 @@ const Edit: NextPage = () => {
       <FormSpace>
         <form onSubmit={handleSubmit(changeData)}>
           <VStack spacing={4} alignItems="flex-start">
-            <FormList register={register} />
+            <FormList register={register} errors={errors} />
             {imageUrl && (
-              <Box>
-                <Image src={imageUrl} alt="upLoadImage" w={400} />
+              <Box w="100%">
+                <Box p="7px" w="90%" m="0 auto">
+                  <Image
+                    cursor="pointer"
+                    src={imageUrl}
+                    alt="upLoadImage"
+                    w="100%"
+                    _hover={{
+                      opacity: 0.7,
+                    }}
+                    onClick={onOpen}
+                  />
+                </Box>
               </Box>
             )}
             <FormButton clickBack={clickBack} />
@@ -102,6 +121,17 @@ const Edit: NextPage = () => {
         </form>
         {msg && <Text mt={1}>{msg}</Text>}
       </FormSpace>
+      <PreviewModal isOpen={isOpen} onClose={onClose}>
+        <Image
+          cursor="pointer"
+          src={imageUrl}
+          m="0 auto"
+          alt="preview"
+          w="100%"
+          h="100%"
+          onClick={onOpen}
+        />
+      </PreviewModal>
     </>
   );
 };

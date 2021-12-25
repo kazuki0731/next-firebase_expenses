@@ -7,7 +7,6 @@ const Container: NextPage<Children> = ({ children }) => {
     <Box
       bg="blackAlpha.200"
       w="80%"
-      minH="350px"
       m="0 auto"
       padding={4}
       borderRadius={10}

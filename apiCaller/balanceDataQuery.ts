@@ -5,13 +5,14 @@ import { calcBalanceData } from "../hooks/functions";
 
 export const getBalanceData = async (
   month: string,
+  year: number,
   allexpenseData: ExpenseData
 ) => {
   let expenseTotal = 0;
   let incomeTotal = 0;
   try {
     const res = await getDoc(
-      doc(db, "users", auth.currentUser.uid, "balances", `${month}月`)
+      doc(db, "users", auth.currentUser.uid, "balances", `${year}年-${month}月`)
     );
     let monthlyData = res.data();
     if (!monthlyData) {
@@ -52,13 +53,20 @@ export const getBalanceData = async (
 
 export const updateBalanceData = async (
   month: number,
+  year: number,
   expenseGoalData: ExpenseData,
   incomeGoalData: IncomeData,
   expenseDetail: ExpenseData
 ) => {
   try {
     await setDoc(
-      doc(db, "users", auth.currentUser.uid, "balances", `${month}月`),
+      doc(
+        db,
+        "users",
+        auth.currentUser.uid,
+        "balances",
+        `${year}年-${month}月`
+      ),
       {
         daily: expenseGoalData.daily,
         food: expenseGoalData.food,

@@ -9,45 +9,29 @@ import {
   QuerySnapshot,
   where,
 } from "@firebase/firestore";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes } from "firebase/storage";
 import { nanoid } from "nanoid";
+import { getSnap } from "../hooks/functions";
 import { auth, db, storage } from "../lib/firebase";
-
-interface InputData {
-  id: string;
-  category: string;
-  date: string;
-  price: number;
-  text: string;
-  filePath: string;
-}
+import { InputData } from "../models/interface";
 
 interface FormData {
   price: number;
+  title: string;
   category: string;
-  text: string;
+  memo: string;
   date: Date;
   files?: File[];
 }
 
-const getSnap = (snapShot: QuerySnapshot, data: InputData[]) => {
-  snapShot.forEach((doc) => {
-    data.push({
-      id: doc.id,
-      category: doc.data().category,
-      date: doc.data().date,
-      price: doc.data().price,
-      text: doc.data().text,
-      filePath: doc.data().filePath,
-    });
-  });
-  return data;
-};
-
-export const allInputData = async () => {
+export const allInputData = async (year: number) => {
   const data: InputData[] = [];
   try {
-    const q = query(collection(db, "users", auth.currentUser.uid, "spendings"));
+    const q = query(
+      collection(db, "users", auth.currentUser.uid, "spendings"),
+      where("date", ">=", `${year}-01-01`),
+      where("date", "<=", `${year}-12-31`)
+    );
     const snapShot = await getDocs(q);
     getSnap(snapShot, data);
     return {
@@ -59,17 +43,48 @@ export const allInputData = async () => {
 };
 
 export const monthlyInputData = async (
-  month: string
+  month: number,
+  year: number
 ): Promise<{ data: InputData[] } | undefined> => {
   const data: InputData[] = [];
   try {
     const q = query(
       collection(db, "users", auth.currentUser.uid, "spendings"),
-      where("date", ">=", `2021-${month}-01`),
-      where("date", "<=", `2021-${month}-31`),
+      where("date", ">=", `${year}-${month}-01`),
+      where("date", "<=", `${year}-${month}-31`),
       orderBy("date", "asc")
     );
 
+    const snapShot = await getDocs(q);
+    getSnap(snapShot, data);
+    return {
+      data,
+    };
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const inputDataForCalendar = async () => {
+  const data: InputData[] = [];
+  try {
+    const q = query(collection(db, "users", auth.currentUser.uid, "spendings"));
+    const snapShot = await getDocs(q);
+    getSnap(snapShot, data);
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getDataByCalendar = async (date: string) => {
+  try {
+    const data: InputData[] = [];
+    const q = query(
+      collection(db, "users", auth.currentUser.uid, "spendings"),
+      where("date", "==", `${date}`),
+      orderBy("createdAt", "asc")
+    );
     const snapShot = await getDocs(q);
     getSnap(snapShot, data);
     return {
@@ -86,7 +101,7 @@ export const deleteData = async (id: string) => {
 
 export const postData = async (data: FormData) => {
   data.price = Number(data.price);
-  const { price, category, text, date, files } = data;
+  const { price, title, category, memo, date, files } = data;
   let filePath = "";
   try {
     if (files?.length !== undefined && files?.length > 0) {
@@ -99,10 +114,11 @@ export const postData = async (data: FormData) => {
     }
     await addDoc(collection(db, "users", auth.currentUser?.uid, "spendings"), {
       price,
+      title,
       category,
-      text,
+      memo,
       date,
-      filePath,
+      files: filePath,
       createdAt: new Date(),
     });
     return {

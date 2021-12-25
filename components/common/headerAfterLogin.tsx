@@ -34,6 +34,13 @@ const HeaderAfterLogin: NextPage = () => {
               </PageLink>
               <PageLink
                 underline="underLine"
+                href="/calendar"
+                color="blackAlpha.700"
+              >
+                カレンダー
+              </PageLink>
+              <PageLink
+                underline="underLine"
                 href="/detail"
                 color="blackAlpha.700"
               >

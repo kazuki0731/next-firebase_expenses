@@ -1,8 +1,7 @@
 import { Box, Text } from "@chakra-ui/layout";
 import { NextPage } from "next";
-import { Dispatch, SetStateAction, useContext } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { UseFormHandleSubmit, UseFormRegister } from "react-hook-form";
-import { DataContext } from "../../hooks/dataProvider";
 import { AllGoalData } from "../../models/interface";
 import ExpenseForm from "./expenseForm";
 import GoalButtons from "./goalButtons";
@@ -27,10 +26,9 @@ const GoalDataForm: NextPage<Props> = ({
   submitData,
   setIsExpense,
 }) => {
-  const { isLarger } = useContext(DataContext);
   return (
-    <Box w={isLarger ? "50%" : "100%"}>
-      <Text mb={2}>{isExpense ? "目標" : "収入"}</Text>
+    <Box w={{ base: "100%", md: "50%" }}>
+      <Text mb={2}>{isExpense ? "支出目標" : "収入"}</Text>
       <form>
         {isExpense ? (
           <ExpenseForm register={register} />
@@ -42,7 +40,7 @@ const GoalDataForm: NextPage<Props> = ({
         textAlign="right"
         m="0 auto"
         w="85%"
-        fontSize={isLarger ? "22px" : "18px"}
+        fontSize={{ base: "18px", md: "22px" }}
         mt={2}
       >
         {isExpense ? "支出合計: " + goalExpenses : "収入合計: " + goalIncomes}円

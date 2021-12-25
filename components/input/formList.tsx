@@ -14,8 +14,9 @@ const date = `${year}-${month}-${day}`;
 
 interface FormData {
   price: number;
+  title: string;
   category: string;
-  text: string;
+  memo: string;
   date: Date;
   files?: File[];
 }
@@ -27,10 +28,12 @@ interface Props {
   showPreview: (e: React.ChangeEvent<HTMLInputElement>) => void;
   errors: {
     price?: FieldError | undefined;
+    title?: FieldError | undefined;
     category?: FieldError | undefined;
-    text?: FieldError | undefined;
+    memo?: FieldError | undefined;
     date?: FieldError | undefined;
   };
+  dateFromCalendar?: string | string[];
 }
 
 const FormList: NextPage<Props> = ({
@@ -39,6 +42,7 @@ const FormList: NextPage<Props> = ({
   files,
   setFiles,
   showPreview,
+  dateFromCalendar,
 }) => {
   return (
     <>
@@ -51,6 +55,21 @@ const FormList: NextPage<Props> = ({
           required
           {...register("price")}
         />
+      </FormControl>
+      <FormControl id="title">
+        <Input
+          type="text"
+          bg="white"
+          variant="outline"
+          placeholder="タイトル"
+          required
+          {...register("title", { maxLength: 10 })}
+        />
+        {errors.title && (
+          <Text mt={2} color="red" fontSize="16px">
+            ※10文字以内にしてください
+          </Text>
+        )}
       </FormControl>
       <FormControl id="category" w="60%">
         <Select bg="white" required {...register("category")}>
@@ -71,22 +90,15 @@ const FormList: NextPage<Props> = ({
           bg="white"
           variant="outline"
           placeholder="メモ"
-          required
-          {...register("text", { maxLength: 10 })}
+          {...register("memo")}
         />
-
-        {errors.text && (
-          <Text mt={2} color="red" fontSize="16px">
-            ※10文字以内にしてください
-          </Text>
-        )}
       </FormControl>
       <FormControl id="date">
         <Input
           type="date"
           bg="white"
           variant="outline"
-          defaultValue={date}
+          defaultValue={dateFromCalendar ? dateFromCalendar : date}
           required
           {...register("date")}
         />

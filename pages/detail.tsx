@@ -1,12 +1,7 @@
 import Container from "../components/common/container";
 import { NextPage } from "next";
 import Head from "next/head";
-import TitleText from "../components/common/titleText";
-import {
-  allInputData,
-  deleteData,
-  monthlyInputData,
-} from "../apiCaller/inputDataQuery";
+import { deleteData, monthlyInputData } from "../apiCaller/inputDataQuery";
 import InputDataButton from "../components/detail/inputDataButton";
 
 import { Box, HStack, Text, VStack } from "@chakra-ui/layout";
@@ -31,21 +26,22 @@ interface FormData {
   number: string;
 }
 
-const Total: NextPage = () => {
+const Detail: NextPage = () => {
   const { register, handleSubmit, reset } = useForm<FormData>();
   const { currentUser } = useContext(AuthContext);
   const {
     isLarger,
     nowMonth,
     setNowMonth,
+    nowYear,
+    setNowYear,
     barChart,
     pieChart,
     setPieChart,
     yearlyData,
-    lastMonthDif,
-    setLastMonthDif,
     monthlyAvg,
     setMonthlyAvg,
+    getYearlyData,
   } = useContext(DataContext);
   const {
     dataByCategory,
@@ -96,7 +92,7 @@ const Total: NextPage = () => {
       totalPrice: 0,
     };
 
-    const { data }: any = await monthlyInputData(month);
+    const { data }: any = await monthlyInputData(Number(month), nowYear);
     if (data) {
       divideData(data, allexpenseData);
       const { food, daily, rent, util, traffic, enter, tax, otherExpense } =
@@ -153,21 +149,15 @@ const Total: NextPage = () => {
   const clickShowOtherMonth = (otherMonth: number) => {
     if (otherMonth <= 0) {
       otherMonth = 12;
+      getYearlyData(nowYear - 1);
+      setNowYear(nowYear - 1);
     } else if (otherMonth > 12) {
       otherMonth = 1;
+      getYearlyData(nowYear + 1);
+      setNowYear(nowYear + 1);
     }
 
-    let lastMonthTotal = yearlyData[otherMonth - 2];
-    if (otherMonth === 1) {
-      lastMonthTotal = yearlyData[11];
-    }
-    let nowMonthTotal = yearlyData[otherMonth - 1];
-
-    setMonthlyAvg({
-      totalAvg: monthlyAvg.totalAvg,
-      diff: monthlyAvg.totalAvg - nowMonthTotal,
-    });
-    setLastMonthDif(lastMonthTotal - nowMonthTotal);
+    setMonthlyAvg(monthlyAvg);
     setNowMonth(otherMonth);
     getDetailData(otherMonth);
     setNowPage(1);
@@ -204,42 +194,13 @@ const Total: NextPage = () => {
         <title>detail</title>
       </Head>
       <HeaderAfterLogin />
-      <TitleText>{nowMonth}月</TitleText>
+      <MonthButtonList
+        clickShowOtherMonth={clickShowOtherMonth}
+        clickShowNowMonth={() => setNowMonth(new Date().getMonth() + 1)}
+      />
       {currentUser && (
         <>
           <Container>
-            <Box>
-              <Box display="inline">
-                総計:
-                <Text display="inline" fontWeight="semibold">
-                  {" "}
-                  {expenseData.totalPrice}円
-                </Text>
-              </Box>
-              <Box>
-                {nowMonth - 1}月との差:
-                <Text
-                  fontWeight="semibold"
-                  display="inline"
-                  color={lastMonthDif >= 0 ? "blue" : "red"}
-                >
-                  {" "}
-                  {lastMonthDif}円
-                </Text>
-              </Box>
-              <Box>
-                月平均との差:
-                <Text
-                  fontWeight="semibold"
-                  display="inline"
-                  color={monthlyAvg.diff >= 0 ? "blue" : "red"}
-                >
-                  {" "}
-                  {monthlyAvg.diff}円
-                </Text>
-              </Box>
-              <Text></Text>
-            </Box>
             {isLarger ? (
               <HStack mb={5} justify="center" spacing={10}>
                 <BarChart barChart={barChart} />
@@ -251,15 +212,24 @@ const Total: NextPage = () => {
                 <PieChart pieChart={pieChart} />
               </VStack>
             )}
-            <Box w="82%" m="10px auto">
+            <Box w="85%" m="10px auto">
               <FilterList
                 handleSubmit={handleSubmit}
                 register={register}
                 changeDisplay={changeDisplay}
               />
             </Box>
+
             <InputDataList detailData={detailData} clickDelete={clickDelete} />
-            <HStack w="100%" justify="center" spacing={5}>
+            <Text>
+              総支出:
+              <Text as="span" fontWeight="semibold">
+                {" "}
+                {expenseData.totalPrice}
+              </Text>
+              円
+            </Text>
+            <HStack w="100%" justify="center" spacing={5} mt="10px">
               <InputDataButton
                 disabled={nowPage === 1}
                 clickHandle={clickGetPrevData}
@@ -274,14 +244,10 @@ const Total: NextPage = () => {
               </InputDataButton>
             </HStack>
           </Container>
-          <MonthButtonList
-            clickShowOtherMonth={clickShowOtherMonth}
-            clickShowNowMonth={() => setNowMonth(new Date().getMonth() + 1)}
-          />
         </>
       )}
     </>
   );
 };
 
-export default Total;
+export default Detail;

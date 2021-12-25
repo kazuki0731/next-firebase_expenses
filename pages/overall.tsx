@@ -30,8 +30,17 @@ const Overall: NextPage = () => {
   const { register, handleSubmit, reset } = useForm<AllGoalData>();
 
   const { currentUser } = useContext(AuthContext);
-  const { nowMonth, setNowMonth, barChart, pieChart, setPieChart, isLarger } =
-    useContext(DataContext);
+  const {
+    nowMonth,
+    setNowMonth,
+    nowYear,
+    setNowYear,
+    barChart,
+    pieChart,
+    setPieChart,
+    isLarger,
+    getYearlyData,
+  } = useContext(DataContext);
   const [goalExpenses, setGoalExpenses] = useState(0);
   const [goalIncomes, setGoalIncomes] = useState(0);
   const [totalBalance, setTotalBalanse] = useState(0);
@@ -76,13 +85,13 @@ const Overall: NextPage = () => {
 
     month = ("0" + month).slice(-2);
 
-    const monthlyResult = await monthlyInputData(month);
+    const monthlyResult = await monthlyInputData(month, nowYear);
 
     if (monthlyResult) {
       divideData(monthlyResult.data, allexpenseData);
     }
 
-    const goalData = await getBalanceData(month, allexpenseData);
+    const goalData = await getBalanceData(month, nowYear, allexpenseData);
 
     if (goalData) {
       const { monthlyData, expenseTotal, incomeTotal, balanceData } = goalData;
@@ -184,6 +193,7 @@ const Overall: NextPage = () => {
 
     const balanceData = await updateBalanceData(
       month,
+      nowYear,
       expenseGoalData,
       incomeGoalData,
       expenseDetail
@@ -202,8 +212,12 @@ const Overall: NextPage = () => {
   const clickShowOtherMonth = (otherMonth: number) => {
     if (otherMonth <= 0) {
       otherMonth = 12;
+      getYearlyData(nowYear - 1);
+      setNowYear(nowYear - 1);
     } else if (otherMonth > 12) {
       otherMonth = 1;
+      getYearlyData(nowYear + 1);
+      setNowYear(nowYear + 1);
     }
     setNowMonth(otherMonth);
   };
@@ -214,7 +228,10 @@ const Overall: NextPage = () => {
         <title>overall</title>
       </Head>
       <HeaderAfterLogin />
-      <TitleText>{nowMonth}月</TitleText>
+      <MonthButton
+        clickShowOtherMonth={clickShowOtherMonth}
+        clickShowNowMonth={() => setNowMonth(new Date().getMonth() + 1)}
+      />
       {currentUser && (
         <>
           <Container>
@@ -234,7 +251,6 @@ const Overall: NextPage = () => {
                     submitData={submitData}
                     setIsExpense={setIsExpense}
                   />
-
                   <InputExpenseData
                     expenseDetail={expenseDetail}
                     balanceDetail={balanceDetail}
@@ -269,10 +285,6 @@ const Overall: NextPage = () => {
               </Box>
             )}
           </Container>
-          <MonthButton
-            clickShowOtherMonth={clickShowOtherMonth}
-            clickShowNowMonth={() => setNowMonth(new Date().getMonth() + 1)}
-          />
         </>
       )}
     </>

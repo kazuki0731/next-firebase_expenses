@@ -28,7 +28,10 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
     <VStack spacing={2} w="90%" m="0 auto">
       <FormControl id="daily">
         <InputGroup>
-          <InputLeftAddon fontSize={{ base: "16px", md: "20px" }}>
+          <InputLeftAddon
+            w={{ base: "110px", md: "130px" }}
+            fontSize={{ base: "16px", md: "20px" }}
+          >
             <Icon as={IoIosBasket} color="green.500" />
             日用品
           </InputLeftAddon>
@@ -37,14 +40,16 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
             type="number"
             bg="white"
             {...register("daily")}
-            textAlign="right"
           />
           <InputRightAddon>円</InputRightAddon>
         </InputGroup>
       </FormControl>
       <FormControl id="food">
         <InputGroup>
-          <InputLeftAddon fontSize={{ base: "16px", md: "20px" }}>
+          <InputLeftAddon
+            w={{ base: "110px", md: "130px" }}
+            fontSize={{ base: "16px", md: "20px" }}
+          >
             <Icon as={IoFastFoodOutline} color="green.500" />
             食費
           </InputLeftAddon>
@@ -53,14 +58,16 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
             type="number"
             bg="white"
             {...register("food")}
-            textAlign="right"
           />
           <InputRightAddon>円</InputRightAddon>
         </InputGroup>
       </FormControl>
       <FormControl id="rent">
         <InputGroup>
-          <InputLeftAddon fontSize={{ base: "16px", md: "20px" }}>
+          <InputLeftAddon
+            w={{ base: "110px", md: "130px" }}
+            fontSize={{ base: "16px", md: "20px" }}
+          >
             <Icon as={ImHome} color="green.500" />
             家賃
           </InputLeftAddon>
@@ -69,14 +76,16 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
             type="number"
             bg="white"
             {...register("rent")}
-            textAlign="right"
           />
           <InputRightAddon>円</InputRightAddon>
         </InputGroup>
       </FormControl>
       <FormControl id="util">
         <InputGroup>
-          <InputLeftAddon fontSize={{ base: "16px", md: "20px" }}>
+          <InputLeftAddon
+            w={{ base: "110px", md: "130px" }}
+            fontSize={{ base: "16px", md: "20px" }}
+          >
             <Icon as={BsFillLightbulbFill} color="green.500" />
             光熱費
           </InputLeftAddon>
@@ -85,14 +94,16 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
             type="number"
             bg="white"
             {...register("util")}
-            textAlign="right"
           />
           <InputRightAddon>円</InputRightAddon>
         </InputGroup>
       </FormControl>
       <FormControl id="traffic">
         <InputGroup>
-          <InputLeftAddon fontSize={{ base: "16px", md: "20px" }}>
+          <InputLeftAddon
+            w={{ base: "110px", md: "130px" }}
+            fontSize={{ base: "16px", md: "20px" }}
+          >
             <Icon as={AiFillCar} color="green.500" />
             交通費
           </InputLeftAddon>
@@ -101,14 +112,16 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
             type="number"
             bg="white"
             {...register("traffic")}
-            textAlign="right"
           />
           <InputRightAddon>円</InputRightAddon>
         </InputGroup>
       </FormControl>
       <FormControl id="tax">
         <InputGroup>
-          <InputLeftAddon fontSize={{ base: "16px", md: "20px" }}>
+          <InputLeftAddon
+            w={{ base: "110px", md: "130px" }}
+            fontSize={{ base: "16px", md: "20px" }}
+          >
             <Icon as={BiBeer} color="green.500" />
             交際費
           </InputLeftAddon>
@@ -117,14 +130,16 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
             type="number"
             bg="white"
             {...register("tax")}
-            textAlign="right"
           />
           <InputRightAddon>円</InputRightAddon>
         </InputGroup>
       </FormControl>
       <FormControl id="tax">
         <InputGroup>
-          <InputLeftAddon fontSize={{ base: "16px", md: "20px" }}>
+          <InputLeftAddon
+            w={{ base: "110px", md: "130px" }}
+            fontSize={{ base: "16px", md: "20px" }}
+          >
             <Icon as={AiFillInsurance} color="green.500" />
             税、保険
           </InputLeftAddon>
@@ -133,14 +148,16 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
             type="number"
             bg="white"
             {...register("tax")}
-            textAlign="right"
           />
           <InputRightAddon>円</InputRightAddon>
         </InputGroup>
       </FormControl>
       <FormControl id="otherExpense">
         <InputGroup>
-          <InputLeftAddon fontSize={{ base: "16px", md: "20px" }}>
+          <InputLeftAddon
+            w={{ base: "110px", md: "130px" }}
+            fontSize={{ base: "16px", md: "20px" }}
+          >
             <Icon as={RiPsychotherapyFill} color="green.500" />
             その他
           </InputLeftAddon>
@@ -149,7 +166,6 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
             type="number"
             bg="white"
             {...register("otherExpense")}
-            textAlign="right"
           />
           <InputRightAddon>円</InputRightAddon>
         </InputGroup>
