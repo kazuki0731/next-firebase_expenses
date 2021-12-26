@@ -43,7 +43,7 @@ export const allInputData = async (year: number) => {
 };
 
 export const monthlyInputData = async (
-  month: number,
+  month: string,
   year: number
 ): Promise<{ data: InputData[] } | undefined> => {
   const data: InputData[] = [];

@@ -48,11 +48,10 @@ const Overall: NextPage = () => {
   const [expenseDetail, setExpenseDetail] = useState<ExpenseData>({
     daily: 0,
     food: 0,
-    rent: 0,
     util: 0,
     traffic: 0,
     enter: 0,
-    tax: 0,
+    fixed: 0,
     otherExpense: 0,
     totalPrice: 0,
   });
@@ -60,11 +59,10 @@ const Overall: NextPage = () => {
   const [balanceDetail, setBalanceDetail] = useState<BalanceDetail>({
     dailyBalance: 0,
     foodBalance: 0,
-    rentBalance: 0,
     utilBalance: 0,
     trafficBalance: 0,
     enterBalance: 0,
-    taxBalance: 0,
+    fixedBalance: 0,
     otherBalance: 0,
   });
 
@@ -74,16 +72,16 @@ const Overall: NextPage = () => {
     let allexpenseData = {
       daily: 0,
       food: 0,
-      rent: 0,
       util: 0,
       traffic: 0,
       enter: 0,
-      tax: 0,
+      fixed: 0,
       otherExpense: 0,
       totalPrice: 0,
     };
 
     month = ("0" + month).slice(-2);
+    // month = Number(month)
 
     const monthlyResult = await monthlyInputData(month, nowYear);
 
@@ -106,23 +104,22 @@ const Overall: NextPage = () => {
       setBalanceDetail(balanceData);
     }
 
-    const { food, daily, rent, util, traffic, enter, tax, otherExpense } =
+    const { food, daily, util, traffic, enter, fixed, otherExpense } =
       allexpenseData;
 
     setPieChart({
       labels: [
         "日用品",
         "食費",
-        "家賃",
         "光熱費",
         "交通費",
         "交際費",
-        "税、保険等",
+        "固定費",
         "その他",
       ],
       datasets: [
         {
-          data: [daily, food, rent, util, traffic, enter, tax, otherExpense],
+          data: [daily, food, util, traffic, enter, fixed, otherExpense],
           backgroundColor: [
             "rgba(255, 0, 0, 0.2)",
             "rgba(255, 69, 0, 0.2)",
@@ -148,6 +145,7 @@ const Overall: NextPage = () => {
   const submitData = async (data: AllGoalData, month: number) => {
     let expenseTotal = 0;
     let incomeTotal = 0;
+    console.log(data);
 
     for (let key in data) {
       if (!data[key]) {
@@ -165,11 +163,10 @@ const Overall: NextPage = () => {
     const {
       daily,
       food,
-      rent,
       util,
       traffic,
       enter,
-      tax,
+      fixed,
       otherExpense,
       salary,
       otherIncome,
@@ -178,11 +175,10 @@ const Overall: NextPage = () => {
     const expenseGoalData: ExpenseData = {
       daily: daily | 0,
       food: food | 0,
-      rent: rent | 0,
       util: util | 0,
       traffic: traffic | 0,
       enter: enter | 0,
-      tax: tax | 0,
+      fixed: fixed | 0,
       otherExpense: otherExpense | 0,
     };
 

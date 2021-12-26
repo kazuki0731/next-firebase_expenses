@@ -61,11 +61,10 @@ const Detail: NextPage = () => {
   const [expenseData, setExpenseData] = useState<ExpenseData>({
     daily: 0,
     food: 0,
-    rent: 0,
     util: 0,
     traffic: 0,
     enter: 0,
-    tax: 0,
+    fixed: 0,
     otherExpense: 0,
     totalPrice: 0,
   });
@@ -83,19 +82,18 @@ const Detail: NextPage = () => {
     let allexpenseData = {
       daily: 0,
       food: 0,
-      rent: 0,
       util: 0,
       traffic: 0,
       enter: 0,
-      tax: 0,
+      fixed: 0,
       otherExpense: 0,
       totalPrice: 0,
     };
 
-    const { data }: any = await monthlyInputData(Number(month), nowYear);
+    const { data }: any = await monthlyInputData(month, nowYear);
     if (data) {
       divideData(data, allexpenseData);
-      const { food, daily, rent, util, traffic, enter, tax, otherExpense } =
+      const { food, daily, util, traffic, enter, fixed, otherExpense } =
         allexpenseData;
 
       const limitedData = data.slice(0, pageLimit);
@@ -118,7 +116,7 @@ const Detail: NextPage = () => {
         ],
         datasets: [
           {
-            data: [daily, food, rent, util, traffic, enter, tax, otherExpense],
+            data: [daily, food, util, traffic, enter, fixed, otherExpense],
             backgroundColor: [
               "rgba(255, 0, 0, 0.2)",
               "rgba(255, 69, 0, 0.2)",
@@ -188,7 +186,7 @@ const Detail: NextPage = () => {
     getDetailData(nowMonth);
   };
 
-  console.log(currentUser.displayName)
+  console.log(currentUser.displayName);
 
   return (
     <>

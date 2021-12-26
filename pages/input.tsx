@@ -30,7 +30,6 @@ const InputData: NextPage = () => {
     reset,
     formState: { errors },
   } = useForm<FormData>();
-  const [files, setFiles] = useState<File[] | null>([]);
   const [imageUrl, setImageUrl] = useState<string>("");
   const { currentUser } = useContext(AuthContext);
   const { getYearlyData, nowYear } = useContext(DataContext);
@@ -74,8 +73,6 @@ const InputData: NextPage = () => {
                 <FormList
                   register={register}
                   errors={errors}
-                  files={files}
-                  setFiles={setFiles}
                   showPreview={showPreview}
                   dateFromCalendar={dateFromCalendar}
                 />

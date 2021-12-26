@@ -62,24 +62,6 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
           <InputRightAddon>円</InputRightAddon>
         </InputGroup>
       </FormControl>
-      <FormControl id="rent">
-        <InputGroup>
-          <InputLeftAddon
-            w={{ base: "110px", md: "130px" }}
-            fontSize={{ base: "16px", md: "20px" }}
-          >
-            <Icon as={ImHome} color="green.500" />
-            家賃
-          </InputLeftAddon>
-          <Input
-            fontSize={{ base: "16px", md: "20px" }}
-            type="number"
-            bg="white"
-            {...register("rent")}
-          />
-          <InputRightAddon>円</InputRightAddon>
-        </InputGroup>
-      </FormControl>
       <FormControl id="util">
         <InputGroup>
           <InputLeftAddon
@@ -116,7 +98,7 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
           <InputRightAddon>円</InputRightAddon>
         </InputGroup>
       </FormControl>
-      <FormControl id="tax">
+      <FormControl id="enter">
         <InputGroup>
           <InputLeftAddon
             w={{ base: "110px", md: "130px" }}
@@ -129,25 +111,25 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
             fontSize={{ base: "16px", md: "20px" }}
             type="number"
             bg="white"
-            {...register("tax")}
+            {...register("enter")}
           />
           <InputRightAddon>円</InputRightAddon>
         </InputGroup>
       </FormControl>
-      <FormControl id="tax">
+      <FormControl id="fixed">
         <InputGroup>
           <InputLeftAddon
             w={{ base: "110px", md: "130px" }}
             fontSize={{ base: "16px", md: "20px" }}
           >
             <Icon as={AiFillInsurance} color="green.500" />
-            税、保険
+            固定費
           </InputLeftAddon>
           <Input
             fontSize={{ base: "16px", md: "20px" }}
             type="number"
             bg="white"
-            {...register("tax")}
+            {...register("fixed")}
           />
           <InputRightAddon>円</InputRightAddon>
         </InputGroup>

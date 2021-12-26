@@ -22,8 +22,6 @@ interface FormData {
 }
 
 interface Props {
-  files: File[] | null;
-  setFiles: Dispatch<SetStateAction<File[] | null>>;
   register: UseFormRegister<FormData>;
   showPreview: (e: React.ChangeEvent<HTMLInputElement>) => void;
   errors: {
@@ -39,8 +37,6 @@ interface Props {
 const FormList: NextPage<Props> = ({
   register,
   errors,
-  files,
-  setFiles,
   showPreview,
   dateFromCalendar,
 }) => {
@@ -76,11 +72,10 @@ const FormList: NextPage<Props> = ({
           <option value="">カテゴリ</option>
           <option value="日用品">日用品</option>
           <option value="食費">食費</option>
-          <option value="家賃">家賃</option>
           <option value="水道、光熱費">水道、光熱費</option>
           <option value="交通費">交通費</option>
           <option value="交際費">交際費</option>
-          <option value="税、保険等">税、保険等</option>
+          <option value="固定費">固定費</option>
           <option value="その他">その他</option>
         </Select>
       </FormControl>

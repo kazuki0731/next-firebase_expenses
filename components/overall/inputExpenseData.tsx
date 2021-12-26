@@ -32,6 +32,7 @@ const InputExpenseData: NextPage<Props> = ({
   totalbalance,
 }) => {
   const { isLarger } = useContext(DataContext);
+  console.log(expenseDetail);
 
   return (
     <Box w={isLarger ? "50%" : "100%"}>
@@ -64,21 +65,6 @@ const InputExpenseData: NextPage<Props> = ({
               >
                 {balanceDetail.foodBalance >= 0 && "あと"}
                 {balanceDetail.foodBalance}円
-              </Text>
-              )
-            </ListItem>
-            <Divider w="100%" mb="7px" borderColor="black" />
-          </Box>
-          <Box>
-            <ListItem textAlign="right" fontSize={{ base: "18px", lg: "22px" }}>
-              <ListIcon as={ImHome} color="green.500" />
-              {expenseDetail.rent}円 (
-              <Text
-                display="inline"
-                color={balanceDetail.rentBalance >= 0 ? "black" : "red"}
-              >
-                {balanceDetail.rentBalance >= 0 && "あと"}
-                {balanceDetail.rentBalance}円
               </Text>
               )
             </ListItem>
@@ -132,13 +118,13 @@ const InputExpenseData: NextPage<Props> = ({
           <Box>
             <ListItem textAlign="right" fontSize={{ base: "18px", lg: "22px" }}>
               <ListIcon as={AiFillInsurance} color="green.500" />
-              {expenseDetail.tax}円 (
+              {expenseDetail.fixed}円 (
               <Text
                 display="inline"
-                color={balanceDetail.taxBalance >= 0 ? "black" : "red"}
+                color={balanceDetail.fixedBalance >= 0 ? "black" : "red"}
               >
-                {balanceDetail.taxBalance >= 0 && "あと"}
-                {balanceDetail.taxBalance}円
+                {balanceDetail.fixedBalance >= 0 && "あと"}
+                {balanceDetail.fixedBalance}円
               </Text>
               )
             </ListItem>
