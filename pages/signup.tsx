@@ -45,7 +45,6 @@ const Signup: NextPage = () => {
     const { email, password, name } = data;
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      console.log(auth.currentUser?.uid);
       await updateProfile(auth.currentUser, {
         displayName: name,
       });

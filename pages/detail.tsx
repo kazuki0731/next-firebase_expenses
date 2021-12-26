@@ -188,6 +188,8 @@ const Detail: NextPage = () => {
     getDetailData(nowMonth);
   };
 
+  console.log(currentUser.displayName)
+
   return (
     <>
       <Head>

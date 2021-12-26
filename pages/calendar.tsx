@@ -27,7 +27,6 @@ interface Events {
 
 const Calendar: NextPage = () => {
   const { currentUser } = useContext(AuthContext);
-  const { nowYear, nowMonth } = useContext(DataContext);
   const [event, setEvent] = useState<Events[]>([]);
   const router = useRouter();
   const [detailByDate, setDetailByDate] = useState<InputData[]>([]);
