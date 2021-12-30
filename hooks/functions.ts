@@ -5,14 +5,11 @@ import { QuerySnapshot } from "@firebase/firestore";
 export const divideData = (data: InputData[], expenseData: ExpenseData) => {
   data.forEach((item) => {
     switch (item.category) {
-      case "食費":
-        expenseData.food += item.price;
-        break;
       case "日用品":
         expenseData.daily += item.price;
         break;
-      case "光熱費":
-        expenseData.util += item.price;
+      case "食費":
+        expenseData.food += item.price;
         break;
       case "交通費":
         expenseData.traffic += item.price;
@@ -38,7 +35,6 @@ export const calcBalanceData = (
 ) => {
   const dailyBalance = goalData.daily - inputData.daily;
   const foodBalance = goalData.food - inputData.food;
-  const utilBalance = goalData.util - inputData.util;
   const trafficBalance = goalData.traffic - inputData.traffic;
   const enterBalance = goalData.enter - inputData.enter;
   const fixedBalance = goalData.fixed - inputData.fixed;
@@ -47,7 +43,6 @@ export const calcBalanceData = (
   const balanceData = {
     dailyBalance,
     foodBalance,
-    utilBalance,
     trafficBalance,
     enterBalance,
     fixedBalance,
@@ -57,7 +52,10 @@ export const calcBalanceData = (
   return balanceData;
 };
 
-export const getSnap = (snapShot: QuerySnapshot, data: InputData[]) => {
+export const getInputDataSnap = (
+  snapShot: QuerySnapshot,
+  data: InputData[]
+) => {
   snapShot.forEach((doc) => {
     data.push({
       id: doc.id,
@@ -66,6 +64,7 @@ export const getSnap = (snapShot: QuerySnapshot, data: InputData[]) => {
       date: doc.data().date,
       price: doc.data().price,
       memo: doc.data().memo,
+      name: doc.data().name,
       files: doc.data().files,
     });
   });

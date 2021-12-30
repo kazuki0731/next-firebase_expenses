@@ -25,11 +25,12 @@ import {
 import GoalDataForm from "../components/overall/goalDataForm";
 import InputExpenseData from "../components/overall/inputExpenseData";
 import HeaderAfterLogin from "../components/common/headerAfterLogin";
+import { auth } from "../lib/firebase";
 
 const Overall: NextPage = () => {
   const { register, handleSubmit, reset } = useForm<AllGoalData>();
 
-  const { currentUser } = useContext(AuthContext);
+  const { loginUser } = useContext(AuthContext);
   const {
     nowMonth,
     setNowMonth,
@@ -48,7 +49,6 @@ const Overall: NextPage = () => {
   const [expenseDetail, setExpenseDetail] = useState<ExpenseData>({
     daily: 0,
     food: 0,
-    util: 0,
     traffic: 0,
     enter: 0,
     fixed: 0,
@@ -59,7 +59,6 @@ const Overall: NextPage = () => {
   const [balanceDetail, setBalanceDetail] = useState<BalanceDetail>({
     dailyBalance: 0,
     foodBalance: 0,
-    utilBalance: 0,
     trafficBalance: 0,
     enterBalance: 0,
     fixedBalance: 0,
@@ -72,7 +71,6 @@ const Overall: NextPage = () => {
     let allexpenseData = {
       daily: 0,
       food: 0,
-      util: 0,
       traffic: 0,
       enter: 0,
       fixed: 0,
@@ -83,10 +81,10 @@ const Overall: NextPage = () => {
     month = ("0" + month).slice(-2);
     // month = Number(month)
 
-    const monthlyResult = await monthlyInputData(month, nowYear);
+    const monthlyResult = await monthlyInputData(nowYear, month);
 
     if (monthlyResult) {
-      divideData(monthlyResult.data, allexpenseData);
+      divideData(monthlyResult, allexpenseData);
     }
 
     const goalData = await getBalanceData(month, nowYear, allexpenseData);
@@ -104,8 +102,7 @@ const Overall: NextPage = () => {
       setBalanceDetail(balanceData);
     }
 
-    const { food, daily, util, traffic, enter, fixed, otherExpense } =
-      allexpenseData;
+    const { food, daily, traffic, enter, fixed, otherExpense } = allexpenseData;
 
     setPieChart({
       labels: [
@@ -119,7 +116,7 @@ const Overall: NextPage = () => {
       ],
       datasets: [
         {
-          data: [daily, food, util, traffic, enter, fixed, otherExpense],
+          data: [daily, food, traffic, enter, fixed, otherExpense],
           backgroundColor: [
             "rgba(255, 0, 0, 0.2)",
             "rgba(255, 69, 0, 0.2)",
@@ -137,15 +134,14 @@ const Overall: NextPage = () => {
   };
 
   useEffect(() => {
-    if (currentUser) {
+    if (loginUser) {
       getAllData(nowMonth);
     }
-  }, [nowMonth, currentUser]);
+  }, [nowMonth, loginUser]);
 
   const submitData = async (data: AllGoalData, month: number) => {
     let expenseTotal = 0;
     let incomeTotal = 0;
-    console.log(data);
 
     for (let key in data) {
       if (!data[key]) {
@@ -163,7 +159,6 @@ const Overall: NextPage = () => {
     const {
       daily,
       food,
-      util,
       traffic,
       enter,
       fixed,
@@ -175,7 +170,6 @@ const Overall: NextPage = () => {
     const expenseGoalData: ExpenseData = {
       daily: daily | 0,
       food: food | 0,
-      util: util | 0,
       traffic: traffic | 0,
       enter: enter | 0,
       fixed: fixed | 0,
@@ -228,7 +222,7 @@ const Overall: NextPage = () => {
         clickShowOtherMonth={clickShowOtherMonth}
         clickShowNowMonth={() => setNowMonth(new Date().getMonth() + 1)}
       />
-      {currentUser && (
+      {loginUser && (
         <>
           <Container>
             {isLarger ? (

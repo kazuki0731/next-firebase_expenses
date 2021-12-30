@@ -59,11 +59,11 @@ const FormList: NextPage<Props> = ({
           variant="outline"
           placeholder="タイトル"
           required
-          {...register("title", { maxLength: 10 })}
+          {...register("title", { maxLength: 12 })}
         />
         {errors.title && (
           <Text mt={2} color="red" fontSize="16px">
-            ※10文字以内にしてください
+            ※12文字以内にしてください
           </Text>
         )}
       </FormControl>

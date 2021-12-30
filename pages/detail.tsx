@@ -28,7 +28,7 @@ interface FormData {
 
 const Detail: NextPage = () => {
   const { register, handleSubmit, reset } = useForm<FormData>();
-  const { currentUser } = useContext(AuthContext);
+  const { loginUser } = useContext(AuthContext);
   const {
     isLarger,
     nowMonth,
@@ -38,7 +38,6 @@ const Detail: NextPage = () => {
     barChart,
     pieChart,
     setPieChart,
-    yearlyData,
     monthlyAvg,
     setMonthlyAvg,
     getYearlyData,
@@ -61,7 +60,6 @@ const Detail: NextPage = () => {
   const [expenseData, setExpenseData] = useState<ExpenseData>({
     daily: 0,
     food: 0,
-    util: 0,
     traffic: 0,
     enter: 0,
     fixed: 0,
@@ -82,7 +80,6 @@ const Detail: NextPage = () => {
     let allexpenseData = {
       daily: 0,
       food: 0,
-      util: 0,
       traffic: 0,
       enter: 0,
       fixed: 0,
@@ -90,14 +87,15 @@ const Detail: NextPage = () => {
       totalPrice: 0,
     };
 
-    const { data }: any = await monthlyInputData(month, nowYear);
-    if (data) {
-      divideData(data, allexpenseData);
-      const { food, daily, util, traffic, enter, fixed, otherExpense } =
+    const InputData = await monthlyInputData(nowYear, month);
+
+    if (InputData) {
+      divideData(InputData, allexpenseData);
+      const { food, daily, traffic, enter, fixed, otherExpense } =
         allexpenseData;
 
-      const limitedData = data.slice(0, pageLimit);
-      let pageLen = Math.ceil(data.length / pageLimit);
+      const limitedData = InputData.slice(0, pageLimit);
+      let pageLen = Math.ceil(InputData.length / pageLimit);
       if (pageLen === 0) {
         pageLen = 1;
       }
@@ -107,16 +105,15 @@ const Detail: NextPage = () => {
         labels: [
           "日用品",
           "食費",
-          "家賃",
           "水道、光熱費",
           "交通費",
           "交際費",
-          "税、保険等",
+          "固定費",
           "その他",
         ],
         datasets: [
           {
-            data: [daily, food, util, traffic, enter, fixed, otherExpense],
+            data: [daily, food, traffic, enter, fixed, otherExpense],
             backgroundColor: [
               "rgba(255, 0, 0, 0.2)",
               "rgba(255, 69, 0, 0.2)",
@@ -131,18 +128,18 @@ const Detail: NextPage = () => {
           },
         ],
       });
-      setMonthlyAllData(data);
-      setDataByCategory(data);
+      setMonthlyAllData(InputData);
+      setDataByCategory(InputData);
       setDetailData(limitedData);
       setExpenseData(allexpenseData);
     }
   };
 
   useEffect(() => {
-    if (currentUser) {
+    if (loginUser) {
       getDetailData(nowMonth);
     }
-  }, [nowMonth, currentUser]);
+  }, [nowMonth, loginUser]);
 
   const clickShowOtherMonth = (otherMonth: number) => {
     if (otherMonth <= 0) {
@@ -186,8 +183,6 @@ const Detail: NextPage = () => {
     getDetailData(nowMonth);
   };
 
-  console.log(currentUser.displayName);
-
   return (
     <>
       <Head>
@@ -198,7 +193,7 @@ const Detail: NextPage = () => {
         clickShowOtherMonth={clickShowOtherMonth}
         clickShowNowMonth={() => setNowMonth(new Date().getMonth() + 1)}
       />
-      {currentUser && (
+      {loginUser && (
         <>
           <Container>
             {isLarger ? (

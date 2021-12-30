@@ -31,7 +31,7 @@ const InputData: NextPage = () => {
     formState: { errors },
   } = useForm<FormData>();
   const [imageUrl, setImageUrl] = useState<string>("");
-  const { currentUser } = useContext(AuthContext);
+  const { loginUser } = useContext(AuthContext);
   const { getYearlyData, nowYear } = useContext(DataContext);
   const [msg, setMsg] = useState("");
   const router = useRouter();
@@ -40,8 +40,8 @@ const InputData: NextPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const showPreview = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const Url = window.URL.createObjectURL(e.target.files[0]);
-      setImageUrl(Url);
+      const url = window.URL.createObjectURL(e.target.files[0]);
+      setImageUrl(url);
     }
   };
 
@@ -64,7 +64,7 @@ const InputData: NextPage = () => {
         <title>Input</title>
       </Head>
       <HeaderAfterLogin />
-      {currentUser && (
+      {loginUser && (
         <Box>
           <TitleText>input</TitleText>
           <FormSpace>

@@ -6,8 +6,9 @@ import dayjs from "dayjs";
 import { NextPage } from "next";
 import { useContext } from "react";
 import { DataContext } from "../../hooks/dataProvider";
-import { InputData } from "../../models/interface";
+import { GroupUserData, InputData } from "../../models/interface";
 import PageLink from "../common/pageLink";
+import { User } from "firebase/auth";
 
 interface Props {
   detailData: InputData[];

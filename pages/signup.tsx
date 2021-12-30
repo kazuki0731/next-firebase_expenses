@@ -8,7 +8,11 @@ import { NextPage } from "next";
 import Head from "next/head";
 import FormSpace from "../components/common/formSpace";
 import { auth, db } from "../lib/firebase";
-import { createUserWithEmailAndPassword, updateProfile } from "@firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  deleteUser,
+} from "@firebase/auth";
 import { AuthContext } from "../hooks/authProvider";
 import { useRouter } from "next/router";
 import { doc, setDoc, getDoc } from "@firebase/firestore";
@@ -27,7 +31,7 @@ const Signup: NextPage = () => {
     reset,
     formState: { errors },
   } = useForm<FormData>();
-  const { currentUser } = useContext(AuthContext);
+  const { loginUser } = useContext(AuthContext);
   const router = useRouter();
   const [msg, setMsg] = useState("");
   const [memberData, setMemberData] = useState({
@@ -36,7 +40,7 @@ const Signup: NextPage = () => {
   });
 
   useEffect(() => {
-    if (currentUser) {
+    if (loginUser) {
       router.push("/top");
     }
   }, []);
@@ -48,9 +52,12 @@ const Signup: NextPage = () => {
       await updateProfile(auth.currentUser, {
         displayName: name,
       });
-      await setDoc(doc(db, "users", auth.currentUser?.uid), {
-        name,
-      });
+      if (auth.currentUser) {
+        await setDoc(doc(db, "users", auth.currentUser.uid), {
+          name,
+          email,
+        });
+      }
       setMsg("登録できました");
       setMemberData({
         name,
@@ -58,6 +65,7 @@ const Signup: NextPage = () => {
       });
       reset();
     } catch (e: any) {
+      deleteUser(auth.currentUser);
       console.log(e);
       switch (e.code) {
         case "auth/email-already-in-use":

@@ -5,11 +5,11 @@ import HeaderAfterLogin from "../components/common/headerAfterLogin";
 import HeaderBeforeLogin from "../components/common/headerBeforeLogin";
 
 const Top = () => {
-  const { currentUser } = useContext(AuthContext);
+  const { loginUser } = useContext(AuthContext);
 
   return (
     <>
-      {currentUser ? (
+      {loginUser ? (
         <>
           <HeaderAfterLogin />
           <Text>Top（ログイン後の画面）</Text>

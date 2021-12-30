@@ -51,7 +51,7 @@ interface Chart {
 }
 
 const DataProvider: NextPage<Children> = ({ children }) => {
-  const { currentUser } = useContext(AuthContext);
+  const { loginUser } = useContext(AuthContext);
   const [nowMonth, setNowMonth] = useState<number>(currentMonth);
   const [nowYear, setNowYear] = useState<number>(currentYear);
   const [lastMonthDiff, setLastMonthDiff] = useState<number>(0);
@@ -118,10 +118,10 @@ const DataProvider: NextPage<Children> = ({ children }) => {
   };
 
   useEffect(() => {
-    if (currentUser) {
+    if (loginUser) {
       getYearlyData(nowYear);
     }
-  }, [currentUser]);
+  }, [loginUser]);
 
   const value = {
     nowMonth,

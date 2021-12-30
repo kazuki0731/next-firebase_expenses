@@ -11,7 +11,6 @@ import { useContext } from "react";
 import { AiFillCar, AiFillInsurance } from "react-icons/ai";
 import { BiBeer } from "react-icons/bi";
 import { BsFillLightbulbFill } from "react-icons/bs";
-import { ImHome } from "react-icons/im";
 import { IoIosBasket } from "react-icons/io";
 import { IoFastFoodOutline } from "react-icons/io5";
 import { RiPsychotherapyFill } from "react-icons/ri";
@@ -32,7 +31,6 @@ const InputExpenseData: NextPage<Props> = ({
   totalbalance,
 }) => {
   const { isLarger } = useContext(DataContext);
-  console.log(expenseDetail);
 
   return (
     <Box w={isLarger ? "50%" : "100%"}>
@@ -65,21 +63,6 @@ const InputExpenseData: NextPage<Props> = ({
               >
                 {balanceDetail.foodBalance >= 0 && "あと"}
                 {balanceDetail.foodBalance}円
-              </Text>
-              )
-            </ListItem>
-            <Divider w="100%" mb="7px" borderColor="black" />
-          </Box>
-          <Box>
-            <ListItem textAlign="right" fontSize={{ base: "18px", lg: "22px" }}>
-              <ListIcon as={BsFillLightbulbFill} color="green.500" />
-              {expenseDetail.util}円 (
-              <Text
-                display="inline"
-                color={balanceDetail.utilBalance >= 0 ? "black" : "red"}
-              >
-                {balanceDetail.utilBalance >= 0 && "あと"}
-                {balanceDetail.utilBalance}円
               </Text>
               )
             </ListItem>

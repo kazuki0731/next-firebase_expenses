@@ -6,12 +6,11 @@ import {
   getDocs,
   orderBy,
   query,
-  QuerySnapshot,
   where,
 } from "@firebase/firestore";
 import { ref, uploadBytes } from "firebase/storage";
 import { nanoid } from "nanoid";
-import { getSnap } from "../hooks/functions";
+import { getInputDataSnap } from "../hooks/functions";
 import { auth, db, storage } from "../lib/firebase";
 import { InputData } from "../models/interface";
 
@@ -33,7 +32,7 @@ export const allInputData = async (year: number) => {
       where("date", "<=", `${year}-12-31`)
     );
     const snapShot = await getDocs(q);
-    getSnap(snapShot, data);
+    getInputDataSnap(snapShot, data);
     return {
       data,
     };
@@ -43,9 +42,9 @@ export const allInputData = async (year: number) => {
 };
 
 export const monthlyInputData = async (
+  year: number,
   month: string,
-  year: number
-): Promise<{ data: InputData[] } | undefined> => {
+) => {
   const data: InputData[] = [];
   try {
     const q = query(
@@ -56,10 +55,8 @@ export const monthlyInputData = async (
     );
 
     const snapShot = await getDocs(q);
-    getSnap(snapShot, data);
-    return {
-      data,
-    };
+    getInputDataSnap(snapShot, data);
+    return data;
   } catch (e) {
     console.log(e);
   }
@@ -70,7 +67,7 @@ export const inputDataForCalendar = async () => {
   try {
     const q = query(collection(db, "users", auth.currentUser.uid, "spendings"));
     const snapShot = await getDocs(q);
-    getSnap(snapShot, data);
+    getInputDataSnap(snapShot, data);
     return data;
   } catch (e) {
     console.log(e);
@@ -86,7 +83,7 @@ export const getDataByCalendar = async (date: string) => {
       orderBy("createdAt", "asc")
     );
     const snapShot = await getDocs(q);
-    getSnap(snapShot, data);
+    getInputDataSnap(snapShot, data);
     return {
       data,
     };
@@ -112,7 +109,7 @@ export const postData = async (data: FormData) => {
       const fileData = await uploadBytes(storageRef, files[0]);
       filePath = fileData.ref.fullPath;
     }
-    await addDoc(collection(db, "users", auth.currentUser?.uid, "spendings"), {
+    await addDoc(collection(db, "users", auth.currentUser.uid, "spendings"), {
       price,
       title,
       category,

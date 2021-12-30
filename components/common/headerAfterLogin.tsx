@@ -9,7 +9,7 @@ import { AuthContext } from "../../hooks/authProvider";
 
 const HeaderAfterLogin: NextPage = () => {
   const { clickLogout } = Logout();
-  const { currentUser } = useContext(AuthContext);
+  const { loginUser } = useContext(AuthContext);
   return (
     <>
       <Box p={1} bg="#fff">
@@ -55,9 +55,11 @@ const HeaderAfterLogin: NextPage = () => {
               </PageLink>
             </HStack>
             <HStack spacing={6}>
-              <Text fontWeight="semibold" fontSize="20px" display="inline">
-                {currentUser?.displayName} さん
-              </Text>
+              {loginUser && (
+                <Text fontWeight="semibold" fontSize="20px" display="inline">
+                  {loginUser.displayName}さん
+                </Text>
+              )}
               <Button
                 bg="blue.200"
                 _hover={{ bg: "blue.100" }}

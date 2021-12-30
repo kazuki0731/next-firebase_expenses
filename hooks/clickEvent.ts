@@ -5,11 +5,11 @@ import { auth } from "../lib/firebase";
 import { AuthContext } from "./authProvider";
 
 export const Logout = () => {
-  const { setCurrentUser } = useContext(AuthContext);
+  const { setLoginUser } = useContext(AuthContext);
   const router = useRouter();
   const clickLogout = () => {
     signOut(auth);
-    setCurrentUser(null);
+    setLoginUser(null);
     router.push("/");
   };
 

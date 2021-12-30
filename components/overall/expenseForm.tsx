@@ -62,24 +62,6 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
           <InputRightAddon>円</InputRightAddon>
         </InputGroup>
       </FormControl>
-      <FormControl id="util">
-        <InputGroup>
-          <InputLeftAddon
-            w={{ base: "110px", md: "130px" }}
-            fontSize={{ base: "16px", md: "20px" }}
-          >
-            <Icon as={BsFillLightbulbFill} color="green.500" />
-            光熱費
-          </InputLeftAddon>
-          <Input
-            fontSize={{ base: "16px", md: "20px" }}
-            type="number"
-            bg="white"
-            {...register("util")}
-          />
-          <InputRightAddon>円</InputRightAddon>
-        </InputGroup>
-      </FormControl>
       <FormControl id="traffic">
         <InputGroup>
           <InputLeftAddon

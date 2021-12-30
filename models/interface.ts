@@ -9,13 +9,13 @@ export interface InputData {
   date: string;
   price: number;
   memo: string;
+  name: string;
   files?: File[];
 }
 
 export interface AllGoalData {
   daily: number;
   food: number;
-  util: number;
   traffic: number;
   enter: number;
   fixed: number;
@@ -28,7 +28,6 @@ export interface AllGoalData {
 export interface ExpenseData {
   daily: number;
   food: number;
-  util: number;
   traffic: number;
   enter: number;
   fixed: number;
@@ -42,10 +41,14 @@ export interface IncomeData {
   otherIncome: number;
 }
 
+export interface GroupUserData {
+  id: string;
+  name: string;
+}
+
 export interface BalanceDetail {
   dailyBalance: number;
   foodBalance: number;
-  utilBalance: number;
   trafficBalance: number;
   enterBalance: number;
   fixedBalance: number;

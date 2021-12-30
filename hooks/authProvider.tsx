@@ -12,18 +12,18 @@ import { User } from "firebase/auth";
 
 export const AuthContext = createContext(
   {} as {
-    currentUser: any;
-    setCurrentUser: Dispatch<SetStateAction<User | null>>;
+    loginUser: any;
+    setLoginUser: Dispatch<SetStateAction<User | null>>;
   }
 );
 
 const AuthProvider: NextPage = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [loginUser, setLoginUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const unsubscribed = onAuthStateChanged(auth, (user) => {
+    const unsubscribed = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        setCurrentUser(user);
+        setLoginUser(user);
       }
     });
 
@@ -33,8 +33,8 @@ const AuthProvider: NextPage = ({ children }) => {
   }, []);
 
   const value = {
-    currentUser,
-    setCurrentUser,
+    loginUser,
+    setLoginUser,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

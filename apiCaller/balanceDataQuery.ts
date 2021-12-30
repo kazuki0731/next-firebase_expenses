@@ -22,7 +22,6 @@ export const getBalanceData = async (
         otherExpense: 0,
         otherIncome: 0,
         salary: 0,
-        util: 0,
         traffic: 0,
         enter: 0,
         fixed: 0,
@@ -69,7 +68,7 @@ export const updateBalanceData = async (
       {
         daily: expenseGoalData.daily,
         food: expenseGoalData.food,
-        util: expenseGoalData.util,
+
         traffic: expenseGoalData.traffic,
         enter: expenseGoalData.enter,
         fixed: expenseGoalData.fixed,

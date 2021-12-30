@@ -1,11 +1,7 @@
 import { Box, Text, ListItem, HStack } from "@chakra-ui/layout";
 import { useContext, useEffect, useState } from "react";
 import { DataContext } from "../hooks/dataProvider";
-import {
-  deleteData,
-  getDataByCalendar,
-  inputDataForCalendar,
-} from "../apiCaller/inputDataQuery";
+
 import { AuthContext } from "../hooks/authProvider";
 import Head from "next/head";
 import HeaderAfterLogin from "../components/common/headerAfterLogin";
@@ -19,6 +15,11 @@ import Container from "../components/common/container";
 import { useRouter } from "next/router";
 import dayjs from "dayjs";
 import { Button } from "@chakra-ui/react";
+import {
+  deleteData,
+  getDataByCalendar,
+  inputDataForCalendar,
+} from "../apiCaller/inputDataQuery";
 
 interface Events {
   title: string;
@@ -26,7 +27,7 @@ interface Events {
 }
 
 const Calendar: NextPage = () => {
-  const { currentUser } = useContext(AuthContext);
+  const { loginUser } = useContext(AuthContext);
   const [event, setEvent] = useState<Events[]>([]);
   const router = useRouter();
   const [detailByDate, setDetailByDate] = useState<InputData[]>([]);
@@ -50,7 +51,7 @@ const Calendar: NextPage = () => {
       setDetailByDate(detailByDate.data);
     }
     if (detailByDate?.data.length === 0) {
-      const dateFormat = dayjs(e.dateStr).format("MM月DD日");
+      const dateFormat = dayjs(e.dateStr).format("MM月D日");
       if (confirm(`${dateFormat} \r\n 新規登録しますか？`)) {
         router.push({ pathname: "/input", query: { date: e.dateStr } });
       }
@@ -71,23 +72,25 @@ const Calendar: NextPage = () => {
   const clickDelete = (id: string) => {
     deleteData(id);
     const newdetailDate = detailByDate.filter((date) => {
-      console.log(id, date.id);
       return date.id !== id;
     });
     setDetailByDate(newdetailDate);
+    console.log(newdetailDate);
+    getAlldata();
   };
 
   useEffect(() => {
-    if (currentUser) {
+    if (loginUser) {
       getAlldata();
     }
-  }, [currentUser]);
+  }, [loginUser]);
   return (
     <>
       <Head>
         <title>calendar</title>
       </Head>
       <HeaderAfterLogin />
+
       <Box w="1000px" m="20px auto" bg="#fff" fontSize="17px">
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin]}
@@ -102,7 +105,7 @@ const Calendar: NextPage = () => {
           }}
         />
       </Box>
-      {detailByDate.length !== 0 && (
+      {loginUser && detailByDate.length !== 0 && (
         <Container>
           <HStack
             justify="center"

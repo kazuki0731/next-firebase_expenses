@@ -8,16 +8,15 @@ import { AuthContext } from "../hooks/authProvider";
 import { Box, Text } from "@chakra-ui/layout";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
-import { useFnc } from "../hooks/recoilTest";
 
 const Home: NextPage = () => {
-  const { currentUser } = useContext(AuthContext);
+  const { loginUser } = useContext(AuthContext);
   const router = useRouter();
   useEffect(() => {
-    if (currentUser) {
+    if (loginUser) {
       router.push("/top");
     }
-  }, [currentUser]);
+  }, [loginUser]);
 
   return (
     <Box w="100vw" h="90vh" minH="700px" position="relative">
@@ -27,7 +26,6 @@ const Home: NextPage = () => {
       </Head>
       <HeaderBeforeLogin />
       <Box
-        // bg="yellow.200"
         position="absolute"
         top="37%"
         left="50%"
