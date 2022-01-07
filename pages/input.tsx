@@ -3,25 +3,15 @@ import { NextPage } from "next";
 import { VStack } from "@chakra-ui/layout";
 import { Button, Text, Box, Image, useDisclosure } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import TitleText from "../components/common/titleText";
 import { useContext, useState } from "react";
-import { AuthContext } from "../hooks/authProvider";
+import { AuthContext } from "../components/common/hooks/authProvider";
 import FormList from "../components/input/formList";
 import { postData } from "../apiCaller/inputDataQuery";
-import FormSpace from "../components/common/formSpace";
+import FormSpace from "../components/input/formSpace";
 import HeaderAfterLogin from "../components/common/headerAfterLogin";
-import { DataContext } from "../hooks/dataProvider";
 import PreviewModal from "../components/common/previewModal";
 import { useRouter } from "next/router";
-
-interface FormData {
-  price: number;
-  title: string;
-  category: string;
-  memo: string;
-  date: Date;
-  files?: File[];
-}
+import { SubmitFormData } from "../models/interface";
 
 const InputData: NextPage = () => {
   const {
@@ -29,15 +19,14 @@ const InputData: NextPage = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<SubmitFormData>();
   const [imageUrl, setImageUrl] = useState<string>("");
   const { loginUser } = useContext(AuthContext);
-  const { getYearlyData, nowYear } = useContext(DataContext);
   const [msg, setMsg] = useState("");
   const router = useRouter();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const dateFromCalendar = router.query.date;
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const showPreview = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const url = window.URL.createObjectURL(e.target.files[0]);
@@ -45,28 +34,32 @@ const InputData: NextPage = () => {
     }
   };
 
-  const deletePreview = ({ price, title, category, memo, date }: FormData) => {
+  const deletePreview = ({
+    price,
+    title,
+    category,
+    memo,
+    date,
+  }: SubmitFormData) => {
     reset({ price, title, category, memo, date, files: undefined });
     setImageUrl("");
   };
 
-  const submitData = async (data: FormData) => {
+  const submitData = async (data: SubmitFormData) => {
     const { text } = await postData(data);
-    getYearlyData(nowYear);
     setImageUrl("");
     setMsg(text);
-    reset();
+    reset({ date: data.date });
   };
 
   return (
     <>
       <Head>
-        <title>Input</title>
+        <title>input</title>
       </Head>
       <HeaderAfterLogin />
       {loginUser && (
-        <Box>
-          <TitleText>input</TitleText>
+        <Box mt="30px">
           <FormSpace>
             <form onSubmit={handleSubmit(submitData)}>
               <VStack spacing={4} alignItems="left">

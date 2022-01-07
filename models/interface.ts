@@ -1,5 +1,16 @@
+import { FieldError } from "react-hook-form";
+
 export interface Children {
   children: React.ReactNode;
+}
+
+export interface SubmitFormData {
+  price: number;
+  title: string;
+  category: string;
+  memo: string;
+  date: Date;
+  files?: File[];
 }
 
 export interface InputData {
@@ -10,10 +21,11 @@ export interface InputData {
   price: number;
   memo: string;
   name: string;
+  isExpense: boolean;
   files?: File[];
 }
 
-export interface AllGoalData {
+export interface AllCategoryData {
   daily: number;
   food: number;
   traffic: number;
@@ -22,7 +34,9 @@ export interface AllGoalData {
   otherExpense: number;
   salary: number;
   otherIncome: number;
-  [key: string]: number;
+  totalExpensePrice: number;
+  totalIncomePrice: number;
+  totalBalancePrice: number;
 }
 
 export interface ExpenseData {
@@ -32,18 +46,12 @@ export interface ExpenseData {
   enter: number;
   fixed: number;
   otherExpense: number;
-  // totalPrice?: number;
   [key: string]: number;
 }
 
 export interface IncomeData {
   salary: number;
   otherIncome: number;
-}
-
-export interface GroupUserData {
-  id: string;
-  name: string;
 }
 
 export interface BalanceDetail {
@@ -67,4 +75,33 @@ export interface Chart {
         }
       ]
     | [];
+}
+
+export interface BalanceChart {
+  expense: Chart;
+  income: Chart;
+}
+
+export interface Filter {
+  category: string;
+  number: string;
+}
+
+export interface Login {
+  email: string;
+  password: string;
+}
+
+export interface Signup {
+  email: string;
+  password: string;
+  name: string;
+}
+
+export interface Errors {
+  price?: FieldError | undefined;
+  title?: FieldError | undefined;
+  category?: FieldError | undefined;
+  memo?: FieldError | undefined;
+  date?: FieldError | undefined;
 }

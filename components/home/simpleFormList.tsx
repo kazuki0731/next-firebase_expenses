@@ -1,7 +1,7 @@
 import { FormControl } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Text } from "@chakra-ui/layout";
-import { HStack } from "@chakra-ui/react";
+import { Button, HStack } from "@chakra-ui/react";
 import { Select } from "@chakra-ui/select";
 import { NextPage } from "next";
 import React from "react";
@@ -16,17 +16,10 @@ const date = `${year}-${month}-${day}`;
 
 interface Props {
   register: UseFormRegister<SubmitFormData>;
-  showPreview: (e: React.ChangeEvent<HTMLInputElement>) => void;
   errors: Errors;
-  dateFromCalendar?: string | string[];
 }
 
-const FormList: NextPage<Props> = ({
-  register,
-  showPreview,
-  errors,
-  dateFromCalendar,
-}) => {
+const FormList: NextPage<Props> = ({ register, errors }) => {
   return (
     <>
       <FormControl id="price">
@@ -54,50 +47,34 @@ const FormList: NextPage<Props> = ({
           </Text>
         )}
       </FormControl>
-      <HStack justify="space-between">
-        <FormControl id="category" w="60%">
-          <Select bg="white" defaultValue="" required {...register("category")}>
-            <option value="">カテゴリ</option>
-            <option value="日用品">日用品</option>
-            <option value="食費">食費</option>
-            <option value="交通費">交通費</option>
-            <option value="交際費">交際費</option>
-            <option value="固定費">固定費</option>
-            <option value="その他支出">その他（支出）</option>
-            <option value="給料">給料</option>
-            <option value="その他収入">その他（収入）</option>
-          </Select>
-        </FormControl>
-      </HStack>
-      <FormControl id="text">
-        <Input
-          type="text"
-          bg="white"
-          variant="outline"
-          placeholder="メモ"
-          {...register("memo")}
-        />
+      <FormControl id="category" w="60%">
+        <Select bg="white" defaultValue="" required {...register("category")}>
+          <option value="">カテゴリ</option>
+          <option value="日用品">日用品</option>
+          <option value="食費">食費</option>
+          <option value="交通費">交通費</option>
+          <option value="交際費">交際費</option>
+          <option value="固定費">固定費</option>
+          <option value="その他支出">その他（支出）</option>
+          <option value="給料">給料</option>
+          <option value="その他収入">その他（収入）</option>
+        </Select>
       </FormControl>
       <FormControl id="date">
         <Input
           type="date"
           bg="white"
           variant="outline"
-          defaultValue={dateFromCalendar ? dateFromCalendar : date}
+          defaultValue={date}
           required
           {...register("date")}
         />
       </FormControl>
-      <FormControl id="files">
-        <Input
-          type="file"
-          accept="image/*"
-          bg="white"
-          variant="outline"
-          {...register("files")}
-          onChange={showPreview}
-        />
-      </FormControl>
+      <Input type="hidden" {...register("memo")} />
+      <Input type="hidden" {...register("files")} />
+      <Button type="submit" h="40px">
+        送信
+      </Button>
     </>
   );
 };

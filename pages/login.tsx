@@ -10,39 +10,24 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { auth } from "../lib/firebase";
 import { signInWithEmailAndPassword } from "@firebase/auth";
-import { AuthContext } from "../hooks/authProvider";
-import FormSpace from "../components/common/formSpace";
+import { AuthContext } from "../components/common/hooks/authProvider";
+import FormSpace from "../components/input/formSpace";
 import PageLink from "../components/common/pageLink";
-import {
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
-  useDisclosure,
-} from "@chakra-ui/react";
-
-interface FormData {
-  email: string;
-  password: string;
-}
+import { Login } from "../models/interface";
 
 const Login: NextPage = () => {
-  const { register, handleSubmit } = useForm<FormData>();
+  const { register, handleSubmit } = useForm<Login>();
   const { loginUser } = useContext(AuthContext);
   const [msg, setMsg] = useState("");
   const router = useRouter();
-  const { onClose } = useDisclosure();
-  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     if (loginUser) {
-      router.push("/top");
+      router.push("/home");
     }
   }, [loginUser]);
 
-  const submitData = async (data: FormData) => {
+  const submitData = async (data: Login) => {
     const { email, password } = data;
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -109,7 +94,6 @@ const Login: NextPage = () => {
               </VStack>
             </form>
           </FormSpace>
-          
         </>
       )}
     </>

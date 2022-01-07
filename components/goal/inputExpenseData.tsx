@@ -6,31 +6,29 @@ import {
   ListItem,
   Text,
 } from "@chakra-ui/layout";
+import { useMediaQuery } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { useContext } from "react";
 import { AiFillCar, AiFillInsurance } from "react-icons/ai";
 import { BiBeer } from "react-icons/bi";
-import { BsFillLightbulbFill } from "react-icons/bs";
 import { IoIosBasket } from "react-icons/io";
 import { IoFastFoodOutline } from "react-icons/io5";
 import { RiPsychotherapyFill } from "react-icons/ri";
-import { DataContext } from "../../hooks/dataProvider";
+import { DataContext } from "../common/hooks/dataProvider";
 import { BalanceDetail, ExpenseData } from "../../models/interface";
 
 interface Props {
   expenseDetail: ExpenseData;
   balanceDetail: BalanceDetail;
   allBalance: number;
-  totalbalance: number;
 }
 
 const InputExpenseData: NextPage<Props> = ({
   expenseDetail,
   balanceDetail,
   allBalance,
-  totalbalance,
 }) => {
-  const { isLarger } = useContext(DataContext);
+  const [isLarger] = useMediaQuery("(min-width: 768px)");
 
   return (
     <Box w={isLarger ? "50%" : "100%"}>
@@ -130,12 +128,12 @@ const InputExpenseData: NextPage<Props> = ({
           </Box>
         </List>
         <Box mt={3} textAlign="right" fontSize={{ base: "18px", lg: "22px" }}>
-          合計: {expenseDetail.totalPrice}円
+          合計: {expenseDetail.totalExpensePrice}円
         </Box>
         <Text mt="15px" fontSize="25px" fontWeight="semibold" textAlign="right">
-          収支:{" "}
-          <strong style={{ color: totalbalance >= 0 ? "blue" : "red" }}>
-            {totalbalance}
+          目標までの残り:{" "}
+          <strong style={{ color: allBalance >= 0 ? "blue" : "red" }}>
+            {allBalance}
           </strong>{" "}
           円
         </Text>

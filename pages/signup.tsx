@@ -6,23 +6,18 @@ import { VStack, Text, Box } from "@chakra-ui/layout";
 import PageLink from "../components/common/pageLink";
 import { NextPage } from "next";
 import Head from "next/head";
-import FormSpace from "../components/common/formSpace";
+import FormSpace from "../components/input/formSpace";
 import { auth, db } from "../lib/firebase";
 import {
   createUserWithEmailAndPassword,
   updateProfile,
   deleteUser,
 } from "@firebase/auth";
-import { AuthContext } from "../hooks/authProvider";
+import { AuthContext } from "../components/common/hooks/authProvider";
 import { useRouter } from "next/router";
 import { doc, setDoc, getDoc } from "@firebase/firestore";
+import { Signup } from "../models/interface";
 auth.currentUser;
-
-interface FormData {
-  email: string;
-  password: string;
-  name: string;
-}
 
 const Signup: NextPage = () => {
   const {
@@ -30,7 +25,7 @@ const Signup: NextPage = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<Signup>();
   const { loginUser } = useContext(AuthContext);
   const router = useRouter();
   const [msg, setMsg] = useState("");
@@ -41,11 +36,11 @@ const Signup: NextPage = () => {
 
   useEffect(() => {
     if (loginUser) {
-      router.push("/top");
+      router.push("/home");
     }
   }, []);
 
-  const submitData = async (data: FormData) => {
+  const submitData = async (data: Signup) => {
     const { email, password, name } = data;
     try {
       await createUserWithEmailAndPassword(auth, email, password);

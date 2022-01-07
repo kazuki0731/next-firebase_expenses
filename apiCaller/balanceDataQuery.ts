@@ -1,15 +1,14 @@
 import { doc, getDoc, setDoc } from "@firebase/firestore";
 import { ExpenseData, IncomeData } from "../models/interface";
 import { auth, db } from "../lib/firebase";
-import { calcBalanceData } from "../hooks/functions";
+import { calcBalanceData } from "../components/common/hooks/functions";
 
 export const getBalanceData = async (
-  month: string,
+  month: number,
   year: number,
   allexpenseData: ExpenseData
 ) => {
   let expenseTotal = 0;
-  let incomeTotal = 0;
   try {
     const res = await getDoc(
       doc(db, "users", auth.currentUser.uid, "balances", `${year}年-${month}月`)
@@ -29,18 +28,13 @@ export const getBalanceData = async (
     }
 
     for (let key in monthlyData) {
-      if (key === "salary" || key === "otherIncome") {
-        incomeTotal = incomeTotal + monthlyData[key];
-      } else {
-        expenseTotal = expenseTotal + monthlyData[key];
-      }
+      expenseTotal += monthlyData[key];
     }
 
     const balanceData = calcBalanceData(monthlyData, allexpenseData);
 
     return {
       expenseTotal,
-      incomeTotal,
       monthlyData,
       balanceData,
     };
@@ -50,12 +44,12 @@ export const getBalanceData = async (
 };
 
 export const updateBalanceData = async (
-  month: number,
+  month: number | string,
   year: number,
   expenseGoalData: ExpenseData,
-  incomeGoalData: IncomeData,
   expenseDetail: ExpenseData
 ) => {
+  console.log(month);
   try {
     await setDoc(
       doc(
@@ -68,13 +62,10 @@ export const updateBalanceData = async (
       {
         daily: expenseGoalData.daily,
         food: expenseGoalData.food,
-
         traffic: expenseGoalData.traffic,
         enter: expenseGoalData.enter,
         fixed: expenseGoalData.fixed,
         otherExpense: expenseGoalData.otherExpense,
-        salary: incomeGoalData.salary,
-        otherIncome: incomeGoalData.otherIncome,
       }
     );
 

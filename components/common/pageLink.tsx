@@ -1,6 +1,6 @@
 import NextLink from "next/link";
 import { Link } from "@chakra-ui/react";
-import { jumpToLink } from "../../hooks/clickEvent";
+import { jumpToLink } from "./hooks/clickEvent";
 
 const PageLink = (props: any) => {
   const { clickLink } = jumpToLink();

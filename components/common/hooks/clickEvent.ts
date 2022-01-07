@@ -1,7 +1,7 @@
 import { signOut } from "@firebase/auth";
 import { useRouter } from "next/router";
 import { useContext } from "react";
-import { auth } from "../lib/firebase";
+import { auth } from "../../../lib/firebase";
 import { AuthContext } from "./authProvider";
 
 export const Logout = () => {

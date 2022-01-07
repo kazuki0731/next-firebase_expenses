@@ -1,10 +1,10 @@
-import { Box } from "@chakra-ui/layout";
+import { Box, Text } from "@chakra-ui/layout";
 import { NextPage } from "next";
 import { Pie } from "react-chartjs-2";
 
 const pieOptions = {
-  maintainAspectRatio: false,
   responsive: true,
+  maintainAspectRatio: false,
 
   layout: {
     padding: {
@@ -29,16 +29,18 @@ interface Props {
         ]
       | [];
   };
+  chartTitle: string;
 }
 
-const PieChart: NextPage<Props> = ({ pieChart }) => {
+const PieChart: NextPage<Props> = ({ pieChart, chartTitle }) => {
   return (
-    <Box w={{ base: "250px", md: "50%" }}>
+    <Box w={{ base: "100%", md: "50%" }}>
       <Box
-        w={{ base: "250px", lg: "300px" }}
-        h={{ base: "250px", lg: "300px" }}
+        w={{ base: "350px", md: "350px" }}
+        h={{ base: "250px", md: "300px" }}
         m="0 auto"
       >
+        <Text>{chartTitle}</Text>
         <Pie data={pieChart} options={pieOptions} />
       </Box>
     </Box>

@@ -1,8 +1,6 @@
 import { Box, Text, ListItem, HStack } from "@chakra-ui/layout";
 import { useContext, useEffect, useState } from "react";
-import { DataContext } from "../hooks/dataProvider";
-
-import { AuthContext } from "../hooks/authProvider";
+import { AuthContext } from "../components/common/hooks/authProvider";
 import Head from "next/head";
 import HeaderAfterLogin from "../components/common/headerAfterLogin";
 import FullCalendar, { EventClickArg } from "@fullcalendar/react";
@@ -16,10 +14,11 @@ import { useRouter } from "next/router";
 import dayjs from "dayjs";
 import { Button } from "@chakra-ui/react";
 import {
-  deleteData,
+  deleteInputData,
   getDataByCalendar,
   inputDataForCalendar,
 } from "../apiCaller/inputDataQuery";
+import { current } from "../const/date";
 
 interface Events {
   title: string;
@@ -29,20 +28,20 @@ interface Events {
 const Calendar: NextPage = () => {
   const { loginUser } = useContext(AuthContext);
   const [event, setEvent] = useState<Events[]>([]);
-  const router = useRouter();
   const [detailByDate, setDetailByDate] = useState<InputData[]>([]);
+  const router = useRouter();
+
   const getAlldata = async () => {
     const data = await inputDataForCalendar();
-    if (data) {
-      let detailData: Events[] = [];
-      data.forEach((doc, index) => {
-        detailData[index] = {
-          title: `${String(doc.price)}(${doc.category})`,
-          start: doc.date,
-        };
-      });
-      setEvent(detailData);
-    }
+    if (!data) return;
+    let detailData: Events[] = [];
+    data.forEach((doc, index) => {
+      detailData[index] = {
+        title: `${String(doc.price)}(${doc.category})`,
+        start: doc.date,
+      };
+    });
+    setEvent(detailData);
   };
 
   const handleDateClick = async (e: DateClickArg) => {
@@ -51,7 +50,7 @@ const Calendar: NextPage = () => {
       setDetailByDate(detailByDate.data);
     }
     if (detailByDate?.data.length === 0) {
-      const dateFormat = dayjs(e.dateStr).format("MM月D日");
+      const dateFormat = dayjs(e.dateStr).format("M月D日");
       if (confirm(`${dateFormat} \r\n 新規登録しますか？`)) {
         router.push({ pathname: "/input", query: { date: e.dateStr } });
       }
@@ -70,12 +69,11 @@ const Calendar: NextPage = () => {
   };
 
   const clickDelete = (id: string) => {
-    deleteData(id);
-    const newdetailDate = detailByDate.filter((date) => {
+    deleteInputData(id);
+    const newDetailDate = detailByDate.filter((date) => {
       return date.id !== id;
     });
-    setDetailByDate(newdetailDate);
-    console.log(newdetailDate);
+    setDetailByDate(newDetailDate);
     getAlldata();
   };
 
@@ -99,28 +97,32 @@ const Calendar: NextPage = () => {
           eventClick={handleEventClick}
           events={event}
           headerToolbar={{
-            start: "prev",
+            left: "prev next",
             center: "title",
-            end: "next",
+            right: "today",
           }}
+          contentHeight="auto"
+          dayCellClassNames={"cell"}
+          dayHeaderClassNames={"event"}
+          initialDate={`${current.year}-${("0" + current.month).slice(-2)}`}
         />
       </Box>
       {loginUser && detailByDate.length !== 0 && (
         <Container>
-          <HStack
-            justify="center"
-            m="0 auto 10px auto"
-            w="85%"
-            position="relative"
-          >
-            <Text as="h1" fontWeight="semibold">
-              詳細
-            </Text>
-            <Button position="absolute" top="0" right="0" onClick={clickCreate}>
-              新規登録
-            </Button>
-          </HStack>
-          <InputDataList detailData={detailByDate} clickDelete={clickDelete} />
+          <Box w="85%" m="0 auto">
+            <HStack mb="10px" justify="center">
+              <Text as="h1" fontWeight="normal">
+                詳細
+              </Text>
+            </HStack>
+            <InputDataList
+              detailData={detailByDate}
+              clickDelete={clickDelete}
+            />
+            <HStack mb="10px" justify="flex-end">
+              <Button onClick={clickCreate}>新規登録</Button>
+            </HStack>
+          </Box>
         </Container>
       )}
     </>

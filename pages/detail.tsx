@@ -1,47 +1,42 @@
-import Container from "../components/common/container";
 import { NextPage } from "next";
+import Container from "../components/common/container";
 import Head from "next/head";
-import { deleteData, monthlyInputData } from "../apiCaller/inputDataQuery";
+import { deleteInputData, monthlyInputData } from "../apiCaller/inputDataQuery";
 import InputDataButton from "../components/detail/inputDataButton";
-
-import { Box, HStack, Text, VStack } from "@chakra-ui/layout";
+import { Box, HStack, VStack } from "@chakra-ui/layout";
 import { useContext, useEffect, useState } from "react";
-
-import { AuthContext } from "../hooks/authProvider";
-import BarChart from "../components/common/barChart";
-import PieChart from "../components/common/pieChart";
-import { DataContext } from "../hooks/dataProvider";
-import { divideData } from "../hooks/functions";
-import { ExpenseData } from "../models/interface";
+import { AuthContext } from "../components/common/hooks/authProvider";
+import { divideData } from "../components/common/hooks/functions";
 import MonthButtonList from "../components/common/monthButtonList";
 import InputDataList from "../components/detail/inputDataList";
 import FilterList from "../components/detail/filterList";
 import { useForm } from "react-hook-form";
-import { SortAndSelectData } from "../hooks/sortAndSelectData";
+import { SortAndSelectData } from "../components/common/hooks/sortAndSelectData";
 import HeaderAfterLogin from "../components/common/headerAfterLogin";
+import IncomeChart from "../components/common/incomeChart";
+import { current } from "../const/date";
+import { BalanceChart, Filter } from "../models/interface";
+import PieChart from "../components/detail/pieChart";
+import { useMediaQuery } from "@chakra-ui/react";
 
-interface FormData {
-  category: string;
-  order: string;
-  number: string;
-}
+
 
 const Detail: NextPage = () => {
-  const { register, handleSubmit, reset } = useForm<FormData>();
+  const { register, handleSubmit, reset } = useForm<Filter>();
   const { loginUser } = useContext(AuthContext);
-  const {
-    isLarger,
-    nowMonth,
-    setNowMonth,
-    nowYear,
-    setNowYear,
-    barChart,
-    pieChart,
-    setPieChart,
-    monthlyAvg,
-    setMonthlyAvg,
-    getYearlyData,
-  } = useContext(DataContext);
+  const [nowMonth, setNowMonth] = useState<number>(current.month);
+  const [nowYear, setNowYear] = useState<number>(current.year);
+  const [pieChart, setPieChart] = useState<BalanceChart>({
+    expense: {
+      labels: [],
+      datasets: [],
+    },
+    income: {
+      labels: [],
+      datasets: [],
+    },
+  });
+  const [isLarger] = useMediaQuery("(min-width: 768px)");
   const {
     dataByCategory,
     setDataByCategory,
@@ -57,60 +52,36 @@ const Detail: NextPage = () => {
     setPageLimit,
   } = SortAndSelectData();
 
-  const [expenseData, setExpenseData] = useState<ExpenseData>({
-    daily: 0,
-    food: 0,
-    traffic: 0,
-    enter: 0,
-    fixed: 0,
-    otherExpense: 0,
-    totalPrice: 0,
-  });
-
-  const defaultValues: FormData = {
+  const defaultValue: Filter = {
     category: "すべて",
-    order: "date",
     number: "5",
   };
 
-  const getDetailData = async (
-    month: string | string[] | number | undefined
-  ) => {
-    month = ("0" + month).slice(-2);
-    let allexpenseData = {
-      daily: 0,
-      food: 0,
-      traffic: 0,
-      enter: 0,
-      fixed: 0,
-      otherExpense: 0,
-      totalPrice: 0,
-    };
+  const getDetailData = async (month: number) => {
+    const inputData = await monthlyInputData(nowYear, month);
+    if (!inputData) return;
+    const priceDataByCategory = divideData(inputData);
+    const {
+      food,
+      daily,
+      traffic,
+      enter,
+      fixed,
+      otherExpense,
+      salary,
+      otherIncome,
+    } = priceDataByCategory;
 
-    const InputData = await monthlyInputData(nowYear, month);
+    const limitedData = inputData.slice(0, pageLimit);
+    let pageLen = Math.ceil(inputData.length / pageLimit);
+    if (pageLen === 0) {
+      pageLen = 1;
+    }
+    setMaxPage(pageLen);
 
-    if (InputData) {
-      divideData(InputData, allexpenseData);
-      const { food, daily, traffic, enter, fixed, otherExpense } =
-        allexpenseData;
-
-      const limitedData = InputData.slice(0, pageLimit);
-      let pageLen = Math.ceil(InputData.length / pageLimit);
-      if (pageLen === 0) {
-        pageLen = 1;
-      }
-      setMaxPage(pageLen);
-
-      setPieChart({
-        labels: [
-          "日用品",
-          "食費",
-          "水道、光熱費",
-          "交通費",
-          "交際費",
-          "固定費",
-          "その他",
-        ],
+    setPieChart({
+      expense: {
+        labels: ["日用品", "食費", "交通費", "交際費", "固定費", "その他"],
         datasets: [
           {
             data: [daily, food, traffic, enter, fixed, otherExpense],
@@ -120,19 +91,26 @@ const Detail: NextPage = () => {
               "rgba(255, 255, 0, 0.2)",
               "rgba(0, 128, 0, 0.2)",
               "rgba(0, 0, 255, 0.2)",
-              "rgba(75, 0, 130, 0.2)",
-              "rgba(238, 130, 238, 0.2)",
               "#ccc",
             ],
             borderWidth: 1,
           },
         ],
-      });
-      setMonthlyAllData(InputData);
-      setDataByCategory(InputData);
-      setDetailData(limitedData);
-      setExpenseData(allexpenseData);
-    }
+      },
+      income: {
+        labels: ["給料", "その他"],
+        datasets: [
+          {
+            data: [salary, otherIncome],
+            backgroundColor: ["rgba(255, 0, 0, 0.2)", "#ccc"],
+            borderWidth: 1,
+          },
+        ],
+      },
+    });
+    setMonthlyAllData(inputData);
+    setDataByCategory(inputData);
+    setDetailData(limitedData);
   };
 
   useEffect(() => {
@@ -144,20 +122,17 @@ const Detail: NextPage = () => {
   const clickShowOtherMonth = (otherMonth: number) => {
     if (otherMonth <= 0) {
       otherMonth = 12;
-      getYearlyData(nowYear - 1);
       setNowYear(nowYear - 1);
     } else if (otherMonth > 12) {
       otherMonth = 1;
-      getYearlyData(nowYear + 1);
       setNowYear(nowYear + 1);
     }
 
-    setMonthlyAvg(monthlyAvg);
     setNowMonth(otherMonth);
     getDetailData(otherMonth);
     setNowPage(1);
     setPageLimit(5);
-    reset(defaultValues);
+    reset(defaultValue);
   };
 
   const clickGetNextData = async () => {
@@ -178,8 +153,9 @@ const Detail: NextPage = () => {
     setNowPage(nowPage - 1);
   };
 
-  const clickDelete = (id: string) => {
-    deleteData(id);
+  const clickDelete = (id: string | undefined) => {
+    if (!id) return;
+    deleteInputData(id);
     getDetailData(nowMonth);
   };
 
@@ -190,6 +166,8 @@ const Detail: NextPage = () => {
       </Head>
       <HeaderAfterLogin />
       <MonthButtonList
+        nowMonth={nowMonth}
+        nowYear={nowYear}
         clickShowOtherMonth={clickShowOtherMonth}
         clickShowNowMonth={() => setNowMonth(new Date().getMonth() + 1)}
       />
@@ -197,14 +175,14 @@ const Detail: NextPage = () => {
         <>
           <Container>
             {isLarger ? (
-              <HStack mb={5} justify="center" spacing={10}>
-                <BarChart barChart={barChart} />
-                <PieChart pieChart={pieChart} />
+              <HStack alignItems="flex-start" h="350px">
+                <PieChart pieChart={pieChart.expense} chartTitle="支出" />
+                <IncomeChart pieChart={pieChart.income} chartTitle="収入" />
               </HStack>
             ) : (
-              <VStack mb={5} justify="center" spacing={10}>
-                <BarChart barChart={barChart} />
-                <PieChart pieChart={pieChart} />
+              <VStack h="540px" spacing={8}>
+                <PieChart pieChart={pieChart.expense} chartTitle="支出" />
+                <IncomeChart pieChart={pieChart.income} chartTitle="収入" />
               </VStack>
             )}
             <Box w="85%" m="10px auto">
@@ -216,14 +194,6 @@ const Detail: NextPage = () => {
             </Box>
 
             <InputDataList detailData={detailData} clickDelete={clickDelete} />
-            <Text>
-              総支出:
-              <Text as="span" fontWeight="semibold">
-                {" "}
-                {expenseData.totalPrice}
-              </Text>
-              円
-            </Text>
             <HStack w="100%" justify="center" spacing={5} mt="10px">
               <InputDataButton
                 disabled={nowPage === 1}

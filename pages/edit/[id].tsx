@@ -4,26 +4,19 @@ import { useRouter } from "next/router";
 import TitleText from "../../components/common/titleText";
 import { Text, VStack, Box } from "@chakra-ui/layout";
 import { Image, useDisclosure } from "@chakra-ui/react";
-import { nanoid } from "nanoid";
-
 import { useEffect, useState } from "react";
-import { doc, getDoc, updateDoc } from "@firebase/firestore";
-import { auth, db, storage } from "../../lib/firebase";
+import { storage } from "../../lib/firebase";
 import { useForm } from "react-hook-form";
 import FormList from "../../components/edit/formList";
 import FormButton from "../../components/edit/formButton";
-import FormSpace from "../../components/common/formSpace";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import FormSpace from "../../components/input/formSpace";
+import { getDownloadURL, ref } from "firebase/storage";
 import PreviewModal from "../../components/common/previewModal";
-
-interface FormData {
-  price: number;
-  title: string;
-  category: string;
-  memo: string;
-  date: Date;
-  files?: File[];
-}
+import {
+  selectedInputData,
+  updateInputData,
+} from "../../apiCaller/inputDataQuery";
+import { InputData, SubmitFormData } from "../../models/interface";
 
 const Edit: NextPage = () => {
   const {
@@ -31,7 +24,7 @@ const Edit: NextPage = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<SubmitFormData>();
   const [imageUrl, setImageUrl] = useState<string>("");
   const [msg, setMsg] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -39,47 +32,31 @@ const Edit: NextPage = () => {
   const id = router.query.dataId;
 
   const getData = async () => {
-    const res = await getDoc(
-      doc(db, "users", auth.currentUser.uid, "spendings", `${id}`)
-    );
-    reset(res.data());
-    if (res.data()?.files) {
-      const files = res.data()?.files;
-      const storageRef = ref(storage, files);
-      const url = await getDownloadURL(storageRef);
-      setImageUrl(url);
+    if (!id) return;
+    try {
+      const inputData = await selectedInputData(id);
+      reset(inputData.data());
+      if (inputData.data()?.files) {
+        const files = inputData.data()?.files;
+        const storageRef = ref(storage, files);
+        const url = await getDownloadURL(storageRef);
+        setImageUrl(url);
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
+
   useEffect(() => {
     getData();
   }, []);
 
-  const changeData = async (data: FormData) => {
+  const changeData = async (data: InputData) => {
+    if (!id) return;
     data.price = Number(data.price);
-    const { price, title, category, memo, date, files } = data;
     try {
-      // if (files) {
-      //   const storageRef = ref(
-      //     storage,
-      //     `${auth.currentUser.displayName}/${nanoid()}_${files[0].name}`
-      //   );
-      //   const fileData = await uploadBytes(storageRef, files[0]);
-      //   files = fileData.ref.fullPath;
-      // }
-      await updateDoc(
-        doc(db, "users", auth.currentUser.uid, "spendings", `${id}`),
-        {
-          price,
-          title,
-          category,
-          memo,
-          date,
-          files,
-          createdAt: new Date(),
-        }
-      );
+      updateInputData(data, id);
       getData();
-
       setMsg("変更しました");
     } catch (e: any) {
       setMsg("変更に失敗しました");

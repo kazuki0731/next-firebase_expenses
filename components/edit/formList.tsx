@@ -1,7 +1,7 @@
 import { FormControl } from "@chakra-ui/form-control";
 import { Select } from "@chakra-ui/select";
 import { NextPage } from "next";
-import { FieldError, UseFormRegister } from "react-hook-form";
+import {  UseFormRegister } from "react-hook-form";
 import {
   Input,
   InputGroup,
@@ -9,25 +9,11 @@ import {
   InputRightAddon,
 } from "@chakra-ui/input";
 import { Text } from "@chakra-ui/react";
-
-interface FormData {
-  price: number;
-  title: string;
-  category: string;
-  memo: string;
-  date: Date;
-  files?: File[];
-}
+import { Errors, SubmitFormData } from "../../models/interface";
 
 interface Props {
-  register: UseFormRegister<FormData>;
-  errors: {
-    price?: FieldError | undefined;
-    title?: FieldError | undefined;
-    category?: FieldError | undefined;
-    memo?: FieldError | undefined;
-    date?: FieldError | undefined;
-  };
+  register: UseFormRegister<SubmitFormData>;
+  errors: Errors;
 }
 
 const FormList: NextPage<Props> = ({ register, errors }) => {
@@ -73,15 +59,14 @@ const FormList: NextPage<Props> = ({ register, errors }) => {
       )}
       <FormControl id="category" w="60%">
         <Select bg="white" required {...register("category")}>
-          <option value="">カテゴリを選択</option>
           <option value="日用品">日用品</option>
           <option value="食費">食費</option>
-          <option value="家賃">家賃</option>
-          <option value="水道、光熱費">水道、光熱費</option>
           <option value="交通費">交通費</option>
           <option value="交際費">交際費</option>
-          <option value="税、保険等">税、保険等</option>
-          <option value="その他">その他</option>
+          <option value="固定費">固定費</option>
+          <option value="その他支出">その他（支出）</option>
+          <option value="給料">給料</option>
+          <option value="その他収入">その他（収入）</option>
         </Select>
       </FormControl>
       <FormControl id="memo">
@@ -116,16 +101,6 @@ const FormList: NextPage<Props> = ({ register, errors }) => {
           />
         </InputGroup>
       </FormControl>
-      {/* <FormControl id="date">
-        <Input
-          type="file"
-          accept="image/*"
-          bg="white"
-          variant="outline"
-          {...register("files")}
-          multiple
-        />
-      </FormControl> */}
     </>
   );
 };

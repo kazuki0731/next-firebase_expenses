@@ -1,12 +1,11 @@
 import { HStack } from "@chakra-ui/layout";
 import { NextPage } from "next";
 import MonthButton from "./monthButton";
-import { useContext } from "react";
-import { DataContext } from "../../hooks/dataProvider";
-import TitleText from "./titleText";
 import { Heading } from "@chakra-ui/layout";
 
 interface Props {
+  nowMonth: number;
+  nowYear: number;
   clickShowOtherMonth: Function;
   clickShowNowMonth: VoidFunction;
 }
@@ -14,9 +13,9 @@ interface Props {
 const MonthButtonList: NextPage<Props> = ({
   clickShowOtherMonth,
   clickShowNowMonth,
+  nowMonth,
+  nowYear,
 }) => {
-  const { nowMonth, nowYear } = useContext(DataContext);
-
   return (
     <HStack
       spacing={{ base: "10px", md: "20px" }}

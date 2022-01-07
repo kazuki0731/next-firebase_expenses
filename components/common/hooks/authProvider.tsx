@@ -7,12 +7,12 @@ import {
   useState,
 } from "react";
 import { onAuthStateChanged } from "@firebase/auth";
-import { auth } from "../lib/firebase";
+import { auth } from "../../../lib/firebase";
 import { User } from "firebase/auth";
 
 export const AuthContext = createContext(
   {} as {
-    loginUser: any;
+    loginUser: User | null;
     setLoginUser: Dispatch<SetStateAction<User | null>>;
   }
 );

@@ -1,14 +1,10 @@
 import { Box, HStack, ListItem, UnorderedList, Text } from "@chakra-ui/layout";
-import { Button, Divider, Icon } from "@chakra-ui/react";
+import { Button, Divider, Icon, useMediaQuery } from "@chakra-ui/react";
 import { BsCardImage } from "react-icons/bs";
-
 import dayjs from "dayjs";
 import { NextPage } from "next";
-import { useContext } from "react";
-import { DataContext } from "../../hooks/dataProvider";
-import { GroupUserData, InputData } from "../../models/interface";
+import { InputData } from "../../models/interface";
 import PageLink from "../common/pageLink";
-import { User } from "firebase/auth";
 
 interface Props {
   detailData: InputData[];
@@ -16,10 +12,10 @@ interface Props {
 }
 
 const InputDataList: NextPage<Props> = ({ detailData, clickDelete }) => {
-  const { isLarger } = useContext(DataContext);
+  const [isLarger] = useMediaQuery("(min-width: 768px)");
   return (
-    <Box>
-      <UnorderedList w="85%" m="0 auto 10px auto" listStyleType="none">
+    <Box w="85%" m="0 auto">
+      <UnorderedList m="0 auto 10px auto" listStyleType="none">
         {detailData.map((data) => (
           <Box key={data.id}>
             <ListItem>
@@ -29,7 +25,7 @@ const InputDataList: NextPage<Props> = ({ detailData, clickDelete }) => {
                     <HStack spacing={4}>
                       <Text as="span">
                         {" "}
-                        {dayjs(data.date).format("MM/DD(ddd)")}{" "}
+                        {dayjs(data.date).format("M/D(ddd)")}{" "}
                       </Text>
                       <Text as="span"> {data.title} </Text>
                       <Text as="span"> ({data.category})</Text>
@@ -38,7 +34,10 @@ const InputDataList: NextPage<Props> = ({ detailData, clickDelete }) => {
                       {data.files && (
                         <Icon as={BsCardImage} mr="20px" fontSize="27px" />
                       )}
-                      <Text as="span"> {data.price}円 </Text>
+                      <Text color={data.isExpense ? "#000" : "blue"} as="span">
+                        {" "}
+                        {data.price} 円
+                      </Text>
                       <PageLink
                         href={{
                           pathname: `/edit/${data.id}`,
