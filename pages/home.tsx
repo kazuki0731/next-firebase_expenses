@@ -25,7 +25,7 @@ import {
 import dayjs from "dayjs";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import PageLink from "../components/common/pageLink";
-import { divideData } from "../hooks/functions";
+import { divideData } from "../util/functions";
 import SmallPieChart from "../components/home/smallPieChart";
 
 const initCategoryData = {

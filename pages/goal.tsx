@@ -8,7 +8,7 @@ import MonthButton from "../components/common/monthButtonList";
 import { AuthContext } from "../hooks/authProvider";
 import { BalanceDetail, ExpenseData } from "../models/interface";
 import { monthlyInputData } from "../apiCaller/inputDataQuery";
-import { divideData } from "../hooks/functions";
+import { divideData } from "../util/functions";
 import {
   getBalanceData,
   updateBalanceData,
@@ -47,15 +47,12 @@ const Goal: NextPage = () => {
     otherBalance: 0,
   });
 
-  const getAllData = async (month: number) => {
-    const monthlyResult = await monthlyInputData(
-      nowYear,
-      ("0" + month).slice(-2)
-    );
+  const getAllData = async (year: number, month: number) => {
+    const monthlyResult = await monthlyInputData(year, ("0" + month).slice(-2));
     if (!monthlyResult) return;
     const priceDataByCategory = divideData(monthlyResult);
 
-    const goalData = await getBalanceData(month, nowYear, priceDataByCategory);
+    const goalData = await getBalanceData(month, year, priceDataByCategory);
 
     if (!goalData) return;
     const { monthlyData, expenseTotal, balanceData } = goalData;
@@ -70,9 +67,9 @@ const Goal: NextPage = () => {
 
   useEffect(() => {
     if (loginUser) {
-      getAllData(nowMonth);
+      getAllData(nowYear, nowMonth);
     }
-  }, [nowMonth, loginUser]);
+  }, [loginUser]);
 
   const changeBalanceData = async (data: ExpenseData, month: number) => {
     let expenseTotal = 0;
@@ -110,16 +107,24 @@ const Goal: NextPage = () => {
     }
   };
 
-  const clickShowOtherMonth = (otherMonth: number) => {
+  const clickShowOtherMonth = (year: number, otherMonth: number) => {
     if (otherMonth <= 0) {
       otherMonth = 12;
-
-      setNowYear(nowYear - 1);
+      year -= 1;
+      setNowYear(year);
     } else if (otherMonth > 12) {
       otherMonth = 1;
-      setNowYear(nowYear + 1);
+      year += 1;
+      setNowYear(year);
     }
+    getAllData(year, otherMonth);
     setNowMonth(otherMonth);
+  };
+
+  const clickShowCurrentMonth = () => {
+    getAllData(current.year, current.month);
+    setNowMonth(current.month);
+    setNowYear(current.year);
   };
 
   return (
@@ -132,7 +137,7 @@ const Goal: NextPage = () => {
         nowMonth={nowMonth}
         nowYear={nowYear}
         clickShowOtherMonth={clickShowOtherMonth}
-        clickShowNowMonth={() => setNowMonth(new Date().getMonth() + 1)}
+        clickShowCurrentMonth={clickShowCurrentMonth}
       />
       {loginUser && (
         <>

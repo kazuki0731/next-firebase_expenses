@@ -6,7 +6,7 @@ import InputDataButton from "../components/detail/inputDataButton";
 import { Box, HStack, VStack } from "@chakra-ui/layout";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../hooks/authProvider";
-import { divideData } from "../hooks/functions";
+import { divideData } from "../util/functions";
 import MonthButtonList from "../components/common/monthButtonList";
 import InputDataList from "../components/detail/inputDataList";
 import FilterList from "../components/detail/filterList";
@@ -56,8 +56,8 @@ const Detail: NextPage = () => {
     order: "asc",
   };
 
-  const getDetailData = async (month: number) => {
-    const inputData = await monthlyInputData(nowYear, month);
+  const getDetailData = async (year: number, month: number) => {
+    const inputData = await monthlyInputData(year, month);
     if (!inputData) return;
     inputData.sort((a, b) => {
       if (a.date > b.date) {
@@ -77,7 +77,6 @@ const Detail: NextPage = () => {
       salary,
       otherIncome,
     } = priceDataByCategory;
-    console.log(priceDataByCategory);
 
     const limitedData = inputData.slice(0, pageLimit);
     let pageLen = Math.ceil(inputData.length / pageLimit);
@@ -122,24 +121,26 @@ const Detail: NextPage = () => {
 
   useEffect(() => {
     if (loginUser) {
-      getDetailData(nowMonth);
+      getDetailData(nowYear, nowMonth);
     }
-  }, [nowMonth, loginUser]);
+  }, [loginUser]);
 
-  const clickShowOtherMonth = (otherMonth: number) => {
+  const clickShowOtherMonth = (year: number, otherMonth: number) => {
     if (otherMonth <= 0) {
       otherMonth = 12;
-      setNowYear(nowYear - 1);
+      year -= 1;
+      setNowYear(year);
     } else if (otherMonth > 12) {
       otherMonth = 1;
-      setNowYear(nowYear + 1);
+      year += 1;
+      setNowYear(year);
     }
 
     setNowMonth(otherMonth);
-    getDetailData(otherMonth);
     setNowPage(1);
     setPageLimit(5);
     reset(defaultValue);
+    getDetailData(year, otherMonth);
   };
 
   const clickGetNextData = async () => {
@@ -160,10 +161,16 @@ const Detail: NextPage = () => {
     setNowPage(nowPage - 1);
   };
 
+  const clickShowCurrentMonth = () => {
+    getDetailData(current.year, current.month);
+    setNowMonth(current.month);
+    setNowYear(current.year);
+  };
+
   const clickDelete = (id: string | undefined) => {
     if (!id) return;
     deleteInputData(id);
-    getDetailData(nowMonth);
+    getDetailData(nowYear, nowMonth);
   };
 
   return (
@@ -176,7 +183,7 @@ const Detail: NextPage = () => {
         nowMonth={nowMonth}
         nowYear={nowYear}
         clickShowOtherMonth={clickShowOtherMonth}
-        clickShowNowMonth={() => setNowMonth(new Date().getMonth() + 1)}
+        clickShowCurrentMonth={clickShowCurrentMonth}
       />
       {loginUser && (
         <>

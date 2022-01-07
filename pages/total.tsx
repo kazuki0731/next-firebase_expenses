@@ -14,7 +14,7 @@ import {
   allIncomeInputData,
   monthlyInputData,
 } from "../apiCaller/inputDataQuery";
-import { divideData, yearlyAllData } from "../hooks/functions";
+import { divideData, yearlyAllData } from "../util/functions";
 import { current } from "../const/date";
 import { AllCategoryData, Chart } from "../models/interface";
 
@@ -104,22 +104,27 @@ const Total: NextPage = () => {
     }
   }, [loginUser]);
 
-  const clickShowOtherMonth = (otherMonth: number) => {
+  const clickShowOtherMonth = (year: number, otherMonth: number) => {
     if (otherMonth <= 0) {
       otherMonth = 12;
-      getTotalDataByCategory(nowYear - 1, otherMonth);
-      getYearlyData(nowYear - 1, selectedBalance);
-      setNowYear(nowYear - 1);
+      year -= 1;
+      setNowYear(year);
+      getYearlyData(year, selectedBalance);
     } else if (otherMonth > 12) {
       otherMonth = 1;
-      getTotalDataByCategory(nowYear + 1, otherMonth);
-      getYearlyData(nowYear + 1, selectedBalance);
-      setNowYear(nowYear + 1);
-    } else {
-      getTotalDataByCategory(nowYear, otherMonth);
-      getYearlyData(nowYear, selectedBalance);
+      year += 1;
+      setNowYear(year);
+      getYearlyData(year, selectedBalance);
     }
     setNowMonth(otherMonth);
+    getTotalDataByCategory(year, otherMonth);
+  };
+
+  const clickShowCurrentMonth = () => {
+    getTotalDataByCategory(current.year, current.month);
+    getYearlyData(current.year);
+    setNowMonth(current.month);
+    setNowYear(current.year);
   };
 
   const changeBalance = (text: string) => {
@@ -137,7 +142,7 @@ const Total: NextPage = () => {
         nowMonth={nowMonth}
         nowYear={nowYear}
         clickShowOtherMonth={clickShowOtherMonth}
-        clickShowNowMonth={() => setNowMonth(new Date().getMonth() + 1)}
+        clickShowCurrentMonth={clickShowCurrentMonth}
       />
       {loginUser && (
         <>
