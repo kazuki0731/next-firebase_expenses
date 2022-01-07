@@ -1,11 +1,11 @@
 import type { NextPage } from "next";
 import { Box, HStack, Button, Text, Divider } from "@chakra-ui/react";
 import PageLink from "./pageLink";
-import { Logout } from "./hooks/clickEvent";
+import { Logout } from "../../hooks/clickEvent";
 import Link from "next/link";
 import { Image } from "@chakra-ui/react";
 import { useContext } from "react";
-import { AuthContext } from "./hooks/authProvider";
+import { AuthContext } from "../../hooks/authProvider";
 
 const HeaderAfterLogin: NextPage = () => {
   const { clickLogout } = Logout();

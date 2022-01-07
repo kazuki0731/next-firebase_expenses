@@ -1,6 +1,5 @@
 import { Box, Flex, Text } from "@chakra-ui/layout";
 import { NextPage } from "next";
-import { Children } from "../../models/interface";
 
 interface Props {
   children: React.ReactNode;

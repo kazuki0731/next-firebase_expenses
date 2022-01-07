@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
-import { Filter, InputData } from "../../../models/interface";
-import { DataContext } from "./dataProvider";
+import { Filter, InputData } from "../models/interface";
 
 export const SortAndSelectData = () => {
   const [pageLimit, setPageLimit] = useState<number>(5);

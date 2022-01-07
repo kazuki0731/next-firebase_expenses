@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Head from "next/head";
 import HeaderAfterLogin from "../components/common/headerAfterLogin";
 import { NextPage } from "next";
-import { AuthContext } from "../components/common/hooks/authProvider";
+import { AuthContext } from "../hooks/authProvider";
 import Container from "../components/common/container";
 import TotalDataByCategory from "../components/detail/TotalDataByCategory";
 import MonthButtonList from "../components/common/monthButtonList";
@@ -14,7 +14,7 @@ import {
   allIncomeInputData,
   monthlyInputData,
 } from "../apiCaller/inputDataQuery";
-import { divideData, yearlyAllData } from "../components/common/hooks/functions";
+import { divideData, yearlyAllData } from "../hooks/functions";
 import { current } from "../const/date";
 import { AllCategoryData, Chart } from "../models/interface";
 

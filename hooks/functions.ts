@@ -1,5 +1,5 @@
 import { DocumentData } from "@firebase/firestore";
-import { ExpenseData, InputData } from "../../../models/interface";
+import { ExpenseData, InputData } from "../models/interface";
 import { QuerySnapshot } from "@firebase/firestore";
 
 export const divideData = (data: InputData[]) => {

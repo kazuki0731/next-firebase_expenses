@@ -8,13 +8,11 @@ import {
 } from "@chakra-ui/layout";
 import { useMediaQuery } from "@chakra-ui/react";
 import { NextPage } from "next";
-import { useContext } from "react";
 import { AiFillCar, AiFillInsurance } from "react-icons/ai";
 import { BiBeer } from "react-icons/bi";
 import { IoIosBasket } from "react-icons/io";
 import { IoFastFoodOutline } from "react-icons/io5";
 import { RiPsychotherapyFill } from "react-icons/ri";
-import { DataContext } from "../common/hooks/dataProvider";
 import { BalanceDetail, ExpenseData } from "../../models/interface";
 
 interface Props {

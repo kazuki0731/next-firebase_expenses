@@ -13,7 +13,7 @@ import {
   updateProfile,
   deleteUser,
 } from "@firebase/auth";
-import { AuthContext } from "../components/common/hooks/authProvider";
+import { AuthContext } from "../hooks/authProvider";
 import { useRouter } from "next/router";
 import { doc, setDoc, getDoc } from "@firebase/firestore";
 import { Signup } from "../models/interface";

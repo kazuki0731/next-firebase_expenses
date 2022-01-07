@@ -15,10 +15,10 @@ import { BiBeer } from "react-icons/bi";
 import { VStack } from "@chakra-ui/layout";
 import { NextPage } from "next";
 import { UseFormRegister } from "react-hook-form";
-import { AllGoalData } from "../../models/interface";
+import { ExpenseData } from "../../models/interface";
 
 interface Props {
-  register: UseFormRegister<AllGoalData>;
+  register: UseFormRegister<ExpenseData>;
 }
 
 const ExpenseForm: NextPage<Props> = ({ register }) => {

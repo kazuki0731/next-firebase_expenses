@@ -4,7 +4,7 @@ import { VStack } from "@chakra-ui/layout";
 import { Button, Text, Box, Image, useDisclosure } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useContext, useState } from "react";
-import { AuthContext } from "../components/common/hooks/authProvider";
+import { AuthContext } from "../hooks/authProvider";
 import FormList from "../components/input/formList";
 import { postData } from "../apiCaller/inputDataQuery";
 import FormSpace from "../components/input/formSpace";

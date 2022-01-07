@@ -4,7 +4,7 @@ import type { NextPage } from "next";
 import PageLink from "../components/common/pageLink";
 import HeaderBeforeLogin from "../components/common/headerBeforeLogin";
 import { useContext, useEffect } from "react";
-import { AuthContext } from "../components/common/hooks/authProvider";
+import { AuthContext } from "../hooks/authProvider";
 import { Box, Text } from "@chakra-ui/layout";
 import { useRouter } from "next/router";
 

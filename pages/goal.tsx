@@ -5,10 +5,10 @@ import { Box, HStack, VStack } from "@chakra-ui/layout";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import MonthButton from "../components/common/monthButtonList";
-import { AuthContext } from "../components/common/hooks/authProvider";
+import { AuthContext } from "../hooks/authProvider";
 import { BalanceDetail, ExpenseData } from "../models/interface";
 import { monthlyInputData } from "../apiCaller/inputDataQuery";
-import { divideData } from "../components/common/hooks/functions";
+import { divideData } from "../hooks/functions";
 import {
   getBalanceData,
   updateBalanceData,

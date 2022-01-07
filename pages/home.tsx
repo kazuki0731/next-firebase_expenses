@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../components/common/hooks/authProvider";
+import { AuthContext } from "../hooks/authProvider";
 import HeaderAfterLogin from "../components/common/headerAfterLogin";
 import HeaderBeforeLogin from "../components/common/headerBeforeLogin";
 import Head from "next/head";
@@ -25,7 +25,7 @@ import {
 import dayjs from "dayjs";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import PageLink from "../components/common/pageLink";
-import { divideData } from "../components/common/hooks/functions";
+import { divideData } from "../hooks/functions";
 import SmallPieChart from "../components/home/smallPieChart";
 
 const initCategoryData = {

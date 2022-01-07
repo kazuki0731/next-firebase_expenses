@@ -7,14 +7,12 @@ import {
   useEffect,
   useState,
 } from "react";
-import { Children, InputData } from "../../../models/interface";
-import { useMediaQuery } from "@chakra-ui/react";
+import { Children, InputData } from "../models/interface";
 
 export const DataContext = createContext(
   {} as {
     // yearlyData: number[];
     // setYearlyData: Dispatch<SetStateAction<number[]>>;
-    // isLarger: boolean;
     // monthlyAllData: InputData[];
     // setMonthlyAllData: Dispatch<SetStateAction<InputData[]>>;
   }
@@ -23,14 +21,10 @@ export const DataContext = createContext(
 const DataProvider: NextPage<Children> = ({ children }) => {
   // const [monthlyAllData, setMonthlyAllData] = useState<InputData[]>([]);
   // const [yearlyData, setYearlyData] = useState<number[]>([]);
-  // const [isLarger] = useMediaQuery("(min-width: 768px)");
-
-  useEffect(() => {}, []);
 
   const value = {
     // yearlyData,
     // setYearlyData,
-    // isLarger,
     // monthlyAllData,
     // setMonthlyAllData,
   };

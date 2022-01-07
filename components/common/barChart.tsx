@@ -1,8 +1,6 @@
 import { Box } from "@chakra-ui/layout";
 import { NextPage } from "next";
-import { useContext } from "react";
 import { Bar } from "react-chartjs-2";
-import { DataContext } from "./hooks/dataProvider";
 
 interface Props {
   barChart: {

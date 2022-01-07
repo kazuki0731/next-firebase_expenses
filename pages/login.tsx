@@ -10,7 +10,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { auth } from "../lib/firebase";
 import { signInWithEmailAndPassword } from "@firebase/auth";
-import { AuthContext } from "../components/common/hooks/authProvider";
+import { AuthContext } from "../hooks/authProvider";
 import FormSpace from "../components/input/formSpace";
 import PageLink from "../components/common/pageLink";
 import { Login } from "../models/interface";
