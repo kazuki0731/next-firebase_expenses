@@ -9,8 +9,25 @@ export const SortAndSelectData = () => {
   const [nowPage, setNowPage] = useState(1);
   const [detailData, setDetailData] = useState<InputData[]>([]);
 
-  const changeDisplay = ({ category, number }: Filter) => {
+  const changeDisplay = ({ category, number, order }: Filter) => {
     const displayNumber = Number(number);
+    if (order === "asc") {
+      monthlyAllData.sort((a, b) => {
+        if (a.date > b.date) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+    } else {
+      monthlyAllData.sort((a, b) => {
+        if (a.date < b.date) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+    }
     if (category === "すべて") {
       const limitedData = monthlyAllData.slice(0, displayNumber);
       setDetailData(limitedData);

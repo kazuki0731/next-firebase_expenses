@@ -85,6 +85,7 @@ export interface BalanceChart {
 export interface Filter {
   category: string;
   number: string;
+  order: string;
 }
 
 export interface Login {

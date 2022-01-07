@@ -8,7 +8,7 @@ import { Filter } from "../../models/interface";
 interface Props {
   handleSubmit: UseFormHandleSubmit<Filter>;
   register: UseFormRegister<Filter>;
-  changeDisplay: ({ category, number }: Filter) => void;
+  changeDisplay: ({ category, number, order }: Filter) => void;
 }
 
 const FilterList: NextPage<Props> = ({
@@ -58,6 +58,23 @@ const FilterList: NextPage<Props> = ({
           <option value="5">5件表示</option>
           <option value="10">10件表示</option>
           <option value="20">20件表示</option>
+        </Select>
+      </FormControl>
+      <FormControl
+        w={{ base: "110px", md: "160px" }}
+        id="category"
+        onChange={handleSubmit(changeDisplay)}
+      >
+        <Select
+          w={{ base: "110px", md: "160px" }}
+          h={{ base: "35px", md: "40px" }}
+          fontSize={{ base: "13px", md: "16px" }}
+          bg="white"
+          required
+          {...register("order")}
+        >
+          <option value="asc">古い順</option>
+          <option value="desc">新しい順</option>
         </Select>
       </FormControl>
     </HStack>

@@ -109,7 +109,7 @@ const Calendar: NextPage = () => {
       </Box>
       {loginUser && detailByDate.length !== 0 && (
         <Container>
-          <Box w="85%" m="0 auto">
+          <Box w="90%" m="0 auto">
             <HStack mb="10px" justify="center">
               <Text as="h1" fontWeight="normal">
                 詳細
@@ -119,7 +119,7 @@ const Calendar: NextPage = () => {
               detailData={detailByDate}
               clickDelete={clickDelete}
             />
-            <HStack mb="10px" justify="flex-end">
+            <HStack w="90%" m="10px auto" justify="flex-end">
               <Button onClick={clickCreate}>新規登録</Button>
             </HStack>
           </Box>

@@ -14,7 +14,7 @@ interface Props {
 const InputDataList: NextPage<Props> = ({ detailData, clickDelete }) => {
   const [isLarger] = useMediaQuery("(min-width: 768px)");
   return (
-    <Box w="85%" maxW="850px" m="0 auto">
+    <Box w="90%" maxW="850px" m="0 auto">
       <UnorderedList m="0 auto 10px auto" listStyleType="none">
         {detailData.map((data) => (
           <Box key={data.id}>

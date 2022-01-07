@@ -19,8 +19,6 @@ import { BalanceChart, Filter } from "../models/interface";
 import PieChart from "../components/detail/pieChart";
 import { useMediaQuery } from "@chakra-ui/react";
 
-
-
 const Detail: NextPage = () => {
   const { register, handleSubmit, reset } = useForm<Filter>();
   const { loginUser } = useContext(AuthContext);
@@ -55,11 +53,19 @@ const Detail: NextPage = () => {
   const defaultValue: Filter = {
     category: "すべて",
     number: "5",
+    order: "asc",
   };
 
   const getDetailData = async (month: number) => {
     const inputData = await monthlyInputData(nowYear, month);
     if (!inputData) return;
+    inputData.sort((a, b) => {
+      if (a.date > b.date) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
     const priceDataByCategory = divideData(inputData);
     const {
       food,
@@ -71,6 +77,7 @@ const Detail: NextPage = () => {
       salary,
       otherIncome,
     } = priceDataByCategory;
+    console.log(priceDataByCategory);
 
     const limitedData = inputData.slice(0, pageLimit);
     let pageLen = Math.ceil(inputData.length / pageLimit);
@@ -185,7 +192,7 @@ const Detail: NextPage = () => {
                 <IncomeChart pieChart={pieChart.income} chartTitle="収入" />
               </VStack>
             )}
-            <Box w="85%" maxW="850px" m="10px auto">
+            <Box w="90%" maxW="850px" m="10px auto">
               <FilterList
                 handleSubmit={handleSubmit}
                 register={register}
