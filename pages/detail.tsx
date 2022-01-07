@@ -185,7 +185,7 @@ const Detail: NextPage = () => {
                 <IncomeChart pieChart={pieChart.income} chartTitle="収入" />
               </VStack>
             )}
-            <Box w="85%" m="10px auto">
+            <Box w="85%" maxW="850px" m="10px auto">
               <FilterList
                 handleSubmit={handleSubmit}
                 register={register}
