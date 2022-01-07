@@ -110,7 +110,7 @@ const Home: NextPage = () => {
       {loginUser ? (
         <>
           <HeaderAfterLogin />
-          <HStack w="100%" justify="center" spacing="20px" m="20px auto">
+          <HStack w="100%" justify="center" spacing="30px" m="30px auto">
             <SimpleFormSpace text="かんたん入力">
               <form onSubmit={handleSubmit(submitData)}>
                 <VStack spacing="10px" alignItems="left">
@@ -163,7 +163,7 @@ const Home: NextPage = () => {
               </Box>
             </SimpleFormSpace>
           </HStack>
-          <HStack w="100%" justify="center" spacing="20px" m="20px auto">
+          <HStack w="100%" justify="center" spacing="30px" m="30px auto">
             <SimpleFormSpace text={`${new Date().getMonth() + 1}月の収支`}>
               <Box mt="60px">
                 <HStack justify="space-between">

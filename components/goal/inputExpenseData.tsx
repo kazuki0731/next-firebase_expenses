@@ -35,7 +35,7 @@ const InputExpenseData: NextPage<Props> = ({
         <List spacing={3}>
           <Box>
             <Divider w="100%" mb="7px" borderColor="black" />
-            <ListItem textAlign="right" fontSize={{ base: "18px", lg: "22px" }}>
+            <ListItem textAlign="right" fontSize={{ base: "18px", md: "22px" }}>
               <ListIcon as={IoIosBasket} color="green.500" />
               {expenseDetail.daily}円 (
               <Text
@@ -50,7 +50,7 @@ const InputExpenseData: NextPage<Props> = ({
             <Divider w="100%" mb="7px" borderColor="black" />
           </Box>
           <Box>
-            <ListItem textAlign="right" fontSize={{ base: "18px", lg: "22px" }}>
+            <ListItem textAlign="right" fontSize={{ base: "18px", md: "22px" }}>
               <ListIcon as={IoFastFoodOutline} color="green.500" />
               {expenseDetail.food}円 (
               <Text
@@ -65,7 +65,7 @@ const InputExpenseData: NextPage<Props> = ({
             <Divider w="100%" mb="7px" borderColor="black" />
           </Box>
           <Box>
-            <ListItem textAlign="right" fontSize={{ base: "18px", lg: "22px" }}>
+            <ListItem textAlign="right" fontSize={{ base: "18px", md: "22px" }}>
               <ListIcon as={AiFillCar} color="green.500" />
               {expenseDetail.traffic}円 (
               <Text
@@ -80,7 +80,7 @@ const InputExpenseData: NextPage<Props> = ({
             <Divider w="100%" mb="7px" borderColor="black" />
           </Box>
           <Box>
-            <ListItem textAlign="right" fontSize={{ base: "18px", lg: "22px" }}>
+            <ListItem textAlign="right" fontSize={{ base: "18px", md: "22px" }}>
               <ListIcon as={BiBeer} color="green.500" />
               {expenseDetail.enter}円 (
               <Text
@@ -95,7 +95,7 @@ const InputExpenseData: NextPage<Props> = ({
             <Divider w="100%" mb="7px" borderColor="black" />
           </Box>
           <Box>
-            <ListItem textAlign="right" fontSize={{ base: "18px", lg: "22px" }}>
+            <ListItem textAlign="right" fontSize={{ base: "18px", md: "22px" }}>
               <ListIcon as={AiFillInsurance} color="green.500" />
               {expenseDetail.fixed}円 (
               <Text
@@ -110,7 +110,7 @@ const InputExpenseData: NextPage<Props> = ({
             <Divider w="100%" mb="7px" borderColor="black" />
           </Box>
           <Box>
-            <ListItem textAlign="right" fontSize={{ base: "18px", lg: "22px" }}>
+            <ListItem textAlign="right" fontSize={{ base: "18px", md: "22px" }}>
               <ListIcon as={RiPsychotherapyFill} color="green.500" />
               {expenseDetail.otherExpense}円 (
               <Text
@@ -125,7 +125,7 @@ const InputExpenseData: NextPage<Props> = ({
             <Divider w="100%" mb="7px" borderColor="black" />
           </Box>
         </List>
-        <Box mt={3} textAlign="right" fontSize={{ base: "18px", lg: "22px" }}>
+        <Box mt={3} textAlign="right" fontSize={{ base: "18px", md: "22px" }}>
           合計: {expenseDetail.totalExpensePrice}円
         </Box>
         <Text mt="15px" fontSize="25px" fontWeight="semibold" textAlign="right">
