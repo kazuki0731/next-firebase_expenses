@@ -13,12 +13,12 @@ interface Props {
 const RecentlyInput: NextPage<Props> = ({ recentInputData }) => {
   return (
     <SimpleSpace text="最近の入出">
-      <Box mt="30px">
+      <Box mt="60px">
         {recentInputData.map((inputData) => (
           <Box key={inputData.id} m="15px auto">
             <HStack
               justify="space-between"
-              fontSize={{ base: "17px", md: "22px" }}
+              fontSize={{ base: "16px", md: "22px" }}
             >
               <Box>
                 <Text as="span">
@@ -35,7 +35,7 @@ const RecentlyInput: NextPage<Props> = ({ recentInputData }) => {
           </Box>
         ))}
       </Box>
-      <Box mt="55px" textAlign="right">
+      <Box mt={{ base: "55px", md: "25px" }} textAlign="right">
         <PageLink href="/calendar">
           <Text color="blue.500" fontSize={{ base: "16px", md: "21px" }}>
             <Icon verticalAlign="text-top" as={BsFillArrowRightCircleFill} />{" "}

@@ -30,9 +30,9 @@ const TotalBalance: NextPage<Props> = ({ recentExpenseData }) => {
         <Divider my="5px" />
       </Box>
 
-      <Box mt="65px" textAlign="right">
+      <Box mt={{ base: "90px", md: "70px" }}  textAlign="right">
         <PageLink href="/total">
-          <Text color="blue.500" fontSize="21px">
+          <Text color="blue.500" fontSize={{ base: "16px", md: "21px" }}>
             <Icon verticalAlign="text-top" as={BsFillArrowRightCircleFill} />{" "}
             詳しく見る
           </Text>

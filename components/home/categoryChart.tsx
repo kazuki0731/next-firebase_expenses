@@ -17,7 +17,7 @@ const CategoryChart: NextPage<Props> = ({ pieChart }) => {
       <SmallPieChart pieChart={pieChart} />
       <Box textAlign="right">
         <PageLink href="/detail">
-          <Text color="blue.500" fontSize="21px">
+          <Text color="blue.500" fontSize={{ base: "16px", md: "21px" }}>
             <Icon verticalAlign="text-top" as={BsFillArrowRightCircleFill} />{" "}
             詳しく見る
           </Text>

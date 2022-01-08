@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { Box, HStack, Button, Text, Divider } from "@chakra-ui/react";
+import { Box, HStack, Button, Text } from "@chakra-ui/react";
 import PageLink from "./pageLink";
 import { Logout } from "../../hooks/clickEvent";
 import Link from "next/link";
@@ -13,7 +13,11 @@ const HeaderAfterLogin: NextPage = () => {
   return (
     <>
       <Box p={1} pb="5px" mb="10px" bg="#fff">
-        <HStack justify="space-between" w="90%" m="0 auto">
+        <HStack
+          justify="space-between"
+          w={{ base: "100%", md: "90%" }}
+          m="0 auto"
+        >
           <HStack spacing={7}>
             <Link href={loginUser ? "/home" : "/"} passHref>
               <Image
@@ -27,12 +31,16 @@ const HeaderAfterLogin: NextPage = () => {
           </HStack>
           <HStack spacing={6}>
             {loginUser && (
-              <Text fontWeight="semibold" fontSize="20px" display="inline">
+              <Text
+                fontWeight="semibold"
+                fontSize={{ base: "12px", md: "18px" }}
+                display="inline"
+              >
                 {loginUser.displayName || "ゲスト"}さん
               </Text>
             )}
             <Button
-              w={{ base: "60px", md: "120px" }}
+              w={{ base: "80px", md: "120px" }}
               h={{ base: "30px", md: "45px" }}
               fontSize={{ base: "12px", md: "18px" }}
               bg="blue.200"

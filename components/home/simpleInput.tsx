@@ -26,19 +26,24 @@ const SimpleInput: NextPage<Props> = ({
   return (
     <SimpleSpace text="かんたん入力">
       <form onSubmit={handleSubmit(submitData)}>
-        <VStack spacing="10px" alignItems="left">
+        <VStack
+          mt={{ base: "10px", md: "0" }}
+          spacing={{ base: "20px", md: "10px" }}
+          alignItems="left"
+        >
           <SimpleFormList register={register} errors={errors} />
         </VStack>
       </form>
       {msg && (
         <Text
+          mt="5px"
           fontSize={{ base: "18px", md: "22px" }}
           color={msg === "登録しました" ? "blue" : "red"}
         >
           {msg}
         </Text>
       )}
-      <Box mt={msg ? "0" : "30px"} textAlign="right">
+      <Box mt={msg ? "-4px" : "30px"} textAlign="right">
         <PageLink href="/detail">
           <Text color="blue.500" fontSize={{ base: "16px", md: "21px" }}>
             <Icon verticalAlign="text-top" as={BsFillArrowRightCircleFill} />{" "}
