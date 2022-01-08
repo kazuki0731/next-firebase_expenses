@@ -88,12 +88,12 @@ const Calendar: NextPage = () => {
       </Head>
       <HeaderAfterLogin />
       <Box
-        w={{ base: "350px", sm: "500px", md: "750px", lg: "1000px" }}
+        w={{ base: "360px", sm: "500px", md: "750px", lg: "1000px" }}
         p="10px"
         bg="#fff"
         m="20px auto"
         border="1px solid #aaa"
-        fontSize={{ base: "8px", sm: "10px", md: "12px", lg: "18px" }}
+        fontSize={{ base: "6px", sm: "10px", md: "12px", lg: "18px" }}
         lineHeight={{ base: "6px", sm: "8px", md: "10px", lg: "14px" }}
       >
         <FullCalendar
