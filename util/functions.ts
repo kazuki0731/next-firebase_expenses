@@ -93,6 +93,7 @@ export const getInputDataSnap = (
       name: doc.data().name,
       files: doc.data().files,
       isExpense: doc.data().isExpense,
+      createdAt: doc.data().createdAt,
     });
   });
   return data;

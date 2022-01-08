@@ -17,24 +17,6 @@ import { getInputDataSnap } from "../util/functions";
 import { auth, db, storage } from "../lib/firebase";
 import { SubmitFormData, InputData } from "../models/interface";
 
-export const allInputData = async (year: number) => {
-  const data: InputData[] = [];
-  try {
-    const q = query(
-      collection(db, "users", auth.currentUser.uid, "spendings"),
-      where("date", ">=", `${year}-01-01`),
-      where("date", "<=", `${year}-12-31`)
-    );
-    const snapShot = await getDocs(q);
-    getInputDataSnap(snapShot, data);
-    return {
-      data,
-    };
-  } catch (e) {
-    console.log(e);
-  }
-};
-
 export const allExpenseInputData = async (year: number) => {
   const data: InputData[] = [];
   try {

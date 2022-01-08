@@ -173,7 +173,6 @@ const Detail: NextPage = () => {
     getDetailData(nowYear, nowMonth);
   };
 
-  console.log(isLarger);
   return (
     <>
       <Head>
