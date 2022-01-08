@@ -88,7 +88,7 @@ const Calendar: NextPage = () => {
       </Head>
       <HeaderAfterLogin />
       <Box
-        w={{ base: "100%", sm: "95%", md: "90%", lg: "85%" }}
+        w={{ base: "100%", sm: "95%", md: "85%", lg: "80%" }}
         p="10px"
         bg="#fff"
         m="20px auto"
