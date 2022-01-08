@@ -77,7 +77,6 @@ export const selectedInputData = async (id: string | string[]) => {
   const inputData = await getDoc(
     doc(db, "users", auth.currentUser.uid, "spendings", `${id}`)
   );
-  console.log(new Date(inputData.data().createdAt.seconds).getMonth());
   return inputData;
 };
 
