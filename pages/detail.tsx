@@ -13,10 +13,10 @@ import FilterList from "../components/detail/filterList";
 import { useForm } from "react-hook-form";
 import { SortAndSelectData } from "../hooks/sortAndSelectData";
 import HeaderAfterLogin from "../components/common/headerAfterLogin";
-import IncomeChart from "../components/common/incomeChart";
+import IncomeChart from "../components/detail/incomeChart";
 import { current } from "../const/date";
 import { BalanceChart, Filter } from "../models/interface";
-import PieChart from "../components/detail/pieChart";
+import PieChart from "../components/common/expenseChart";
 import { useMediaQuery } from "@chakra-ui/react";
 
 const Detail: NextPage = () => {
@@ -173,6 +173,7 @@ const Detail: NextPage = () => {
     getDetailData(nowYear, nowMonth);
   };
 
+  console.log(isLarger);
   return (
     <>
       <Head>
@@ -187,25 +188,36 @@ const Detail: NextPage = () => {
       />
       {loginUser && (
         <>
-          <Container>
-            {isLarger ? (
-              <HStack alignItems="flex-start" h="350px">
-                <PieChart pieChart={pieChart.expense} chartTitle="支出" />
-                <IncomeChart pieChart={pieChart.income} chartTitle="収入" />
-              </HStack>
-            ) : (
-              <VStack h="540px" spacing={8}>
-                <PieChart pieChart={pieChart.expense} chartTitle="支出" />
-                <IncomeChart pieChart={pieChart.income} chartTitle="収入" />
-              </VStack>
-            )}
-            <Box w="90%" maxW="850px" m="10px auto">
-              <FilterList
-                handleSubmit={handleSubmit}
-                register={register}
-                changeDisplay={changeDisplay}
-              />
-            </Box>
+          {isLarger ? (
+            <HStack
+              alignItems="flex-start"
+              h="350px"
+              spacing="5px"
+              w="80%"
+              m="0 auto"
+            >
+              <PieChart pieChart={pieChart.expense} chartTitle="支出" />
+              <IncomeChart pieChart={pieChart.income} chartTitle="収入" />
+            </HStack>
+          ) : (
+            <VStack spacing={8}>
+              <PieChart pieChart={pieChart.expense} chartTitle="支出" />
+              <IncomeChart pieChart={pieChart.income} chartTitle="収入" />
+            </VStack>
+          )}
+          <Box
+            border="1px solid #aaa"
+            p="20px"
+            w="95%"
+            maxW="850px"
+            bg="#fff"
+            m="10px auto"
+          >
+            <FilterList
+              handleSubmit={handleSubmit}
+              register={register}
+              changeDisplay={changeDisplay}
+            />
 
             <InputDataList detailData={detailData} clickDelete={clickDelete} />
             <HStack w="100%" justify="center" spacing={5} mt="10px">
@@ -222,7 +234,7 @@ const Detail: NextPage = () => {
                 次の{pageLimit}件&gt;&gt;
               </InputDataButton>
             </HStack>
-          </Container>
+          </Box>
         </>
       )}
     </>

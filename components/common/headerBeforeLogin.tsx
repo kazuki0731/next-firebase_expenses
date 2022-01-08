@@ -8,13 +8,13 @@ const HeaderBeforeLogin: NextPage = () => {
   return (
     <>
       <Box bg="#fff">
-        <Box m="0 auto" position="relative" w="95%">
+        <Box m="0 auto" py="5px" position="relative" w="95%">
           <HStack justify="center">
             <Link href="/home" passHref>
               <Image
                 src="/images/sample-logo.jpg"
-                width={160}
-                height={50}
+                width={{base: 100, md: 150}}
+                height={{base: 30, md: 50}}
                 alt="logo"
                 cursor="pointer"
               />

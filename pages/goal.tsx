@@ -17,7 +17,7 @@ import GoalDataForm from "../components/goal/goalDataForm";
 import InputExpenseData from "../components/goal/inputExpenseData";
 import HeaderAfterLogin from "../components/common/headerAfterLogin";
 import { current } from "../const/date";
-import { useMediaQuery } from "@chakra-ui/react";
+import { Spacer, useMediaQuery } from "@chakra-ui/react";
 
 const Goal: NextPage = () => {
   const { register, handleSubmit, reset } = useForm<ExpenseData>();
@@ -141,43 +141,41 @@ const Goal: NextPage = () => {
       />
       {loginUser && (
         <>
-          <Container>
-            {isLarger ? (
-              <Box>
-                <HStack mt={3} alignItems="flex-start">
-                  <GoalDataForm
-                    nowMonth={nowMonth}
-                    goalExpenses={goalExpenses}
-                    register={register}
-                    handleSubmit={handleSubmit}
-                    changeBalanceData={changeBalanceData}
-                  />
-                  <InputExpenseData
-                    expenseDetail={expenseDetail}
-                    balanceDetail={balanceDetail}
-                    allBalance={allBalance}
-                  />
-                </HStack>
-              </Box>
-            ) : (
-              <Box>
-                <VStack mb={3} alignItems="flex-start">
-                  <GoalDataForm
-                    nowMonth={nowMonth}
-                    goalExpenses={goalExpenses}
-                    register={register}
-                    handleSubmit={handleSubmit}
-                    changeBalanceData={changeBalanceData}
-                  />
-                  <InputExpenseData
-                    expenseDetail={expenseDetail}
-                    balanceDetail={balanceDetail}
-                    allBalance={allBalance}
-                  />
-                </VStack>
-              </Box>
-            )}
-          </Container>
+          {isLarger ? (
+            <Box m="0 auto" w="85%">
+              <HStack mt={3} alignItems="flex-start">
+                <GoalDataForm
+                  nowMonth={nowMonth}
+                  goalExpenses={goalExpenses}
+                  register={register}
+                  handleSubmit={handleSubmit}
+                  changeBalanceData={changeBalanceData}
+                />
+                <InputExpenseData
+                  expenseDetail={expenseDetail}
+                  balanceDetail={balanceDetail}
+                  allBalance={allBalance}
+                />
+              </HStack>
+            </Box>
+          ) : (
+            <Box>
+              <VStack mb={3} alignItems="flex-start">
+                <GoalDataForm
+                  nowMonth={nowMonth}
+                  goalExpenses={goalExpenses}
+                  register={register}
+                  handleSubmit={handleSubmit}
+                  changeBalanceData={changeBalanceData}
+                />
+                <InputExpenseData
+                  expenseDetail={expenseDetail}
+                  balanceDetail={balanceDetail}
+                  allBalance={allBalance}
+                />
+              </VStack>
+            </Box>
+          )}
         </>
       )}
     </>

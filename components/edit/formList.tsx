@@ -1,22 +1,23 @@
 import { FormControl } from "@chakra-ui/form-control";
 import { Select } from "@chakra-ui/select";
 import { NextPage } from "next";
-import {  UseFormRegister } from "react-hook-form";
+import { UseFormRegister } from "react-hook-form";
 import {
   Input,
   InputGroup,
   InputLeftAddon,
   InputRightAddon,
 } from "@chakra-ui/input";
-import { Text } from "@chakra-ui/react";
-import { Errors, SubmitFormData } from "../../models/interface";
+import { HStack, Text } from "@chakra-ui/react";
+import { Errors, InputData } from "../../models/interface";
 
 interface Props {
-  register: UseFormRegister<SubmitFormData>;
+  register: UseFormRegister<InputData>;
   errors: Errors;
+  createdAt: string;
 }
 
-const FormList: NextPage<Props> = ({ register, errors }) => {
+const FormList: NextPage<Props> = ({ register, errors, createdAt }) => {
   return (
     <>
       <FormControl id="price">
@@ -101,6 +102,10 @@ const FormList: NextPage<Props> = ({ register, errors }) => {
           />
         </InputGroup>
       </FormControl>
+      <HStack w="100%" justify="flex-end" spacing="20px">
+        <Text>作成日時:</Text>
+        <Text>{createdAt}</Text>
+      </HStack>
     </>
   );
 };

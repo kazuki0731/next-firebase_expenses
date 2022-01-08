@@ -26,7 +26,6 @@ const Home: NextPage = () => {
     if (!email || !password) return;
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      console.log("OK");
     } catch (e) {
       console.log(e);
     }

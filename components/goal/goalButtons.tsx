@@ -17,7 +17,7 @@ const GoalButtons: NextPage<Props> = ({
   nowMonth,
 }) => {
   return (
-    <HStack m="10px 0" spacing={10} justify="center">
+    <HStack justify="center">
       <Button
         w={{ base: "80px", md: "110px" }}
         h={{ base: "32px", md: "45px" }}

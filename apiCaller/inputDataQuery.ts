@@ -77,6 +77,7 @@ export const selectedInputData = async (id: string | string[]) => {
   const inputData = await getDoc(
     doc(db, "users", auth.currentUser.uid, "spendings", `${id}`)
   );
+  console.log(new Date(inputData.data().createdAt.seconds).getMonth());
   return inputData;
 };
 
@@ -85,7 +86,6 @@ export const recentlyInputData = async () => {
   const today = ("0" + new Date().getDate()).slice(-2);
   const month = ("0" + (new Date().getMonth() + 1)).slice(-2);
   const year = new Date().getFullYear();
-  console.log(month, year);
   try {
     const q = query(
       collection(db, "users", auth.currentUser.uid, "spendings"),

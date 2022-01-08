@@ -4,13 +4,7 @@ import { Children } from "../../models/interface";
 
 const Container: NextPage<Children> = ({ children }) => {
   return (
-    <Box
-      bg="blackAlpha.200"
-      w="80%"
-      m="0 auto"
-      padding={4}
-      borderRadius={10}
-    >
+    <Box bg="#fff" w="90%" m="0 auto" padding={4}>
       {children}
     </Box>
   );

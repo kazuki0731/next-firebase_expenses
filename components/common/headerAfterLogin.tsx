@@ -12,7 +12,7 @@ const HeaderAfterLogin: NextPage = () => {
   const { loginUser } = useContext(AuthContext);
   return (
     <>
-      <Box p={1} bg="#fff">
+      <Box p={1} pb="5px" mb="10px" bg="#fff">
         <HStack justify="space-between" w="90%" m="0 auto">
           <HStack spacing={7}>
             <Link href="/home" passHref>
@@ -65,6 +65,7 @@ const HeaderAfterLogin: NextPage = () => {
             トータル
           </PageLink>
         </HStack>
+        {/* <Divider borderColor="#000" w="90%" m="10px auto" /> */}
       </Box>
     </>
   );

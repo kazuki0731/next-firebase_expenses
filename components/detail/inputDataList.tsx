@@ -14,97 +14,95 @@ interface Props {
 const InputDataList: NextPage<Props> = ({ detailData, clickDelete }) => {
   const [isLarger] = useMediaQuery("(min-width: 768px)");
   return (
-    <Box w="90%" maxW="850px" m="0 auto">
-      <UnorderedList m="0 auto 10px auto" listStyleType="none">
-        {detailData.map((data) => (
-          <Box key={data.id}>
-            <ListItem>
-              {isLarger ? (
-                <>
-                  <HStack justify="space-between" fontSize="22px">
-                    <HStack spacing={4}>
-                      <Text as="span">
-                        {" "}
-                        {dayjs(data.date).format("M/D(ddd)")}{" "}
-                      </Text>
-                      <Text as="span"> {data.title} </Text>
-                      <Text as="span"> ({data.category})</Text>
-                    </HStack>
-                    <Box>
-                      {data.files && (
-                        <Icon as={BsCardImage} mr="20px" fontSize="27px" />
-                      )}
-                      <Text color={data.isExpense ? "#000" : "blue"} as="span">
-                        {" "}
-                        {data.price} 円
-                      </Text>
-                      <PageLink
-                        href={{
-                          pathname: `/edit/${data.id}`,
-                          query: { dataId: data.id },
-                        }}
-                      >
-                        <Button m={1.5} fontSize="14px" h="32px" w="50px">
-                          詳細
-                        </Button>
-                      </PageLink>
-                      <Button
-                        m={1.5}
-                        fontSize="14px"
-                        h="32px"
-                        w="50px"
-                        onClick={() => clickDelete(data.id)}
-                      >
-                        削除
-                      </Button>
-                    </Box>
-                  </HStack>
-                </>
-              ) : (
-                <>
-                  <HStack justify="flex-start">
-                    <Text fontSize="16px">
-                      <Text as="span">
-                        {" "}
-                        {dayjs(data.date).format("MM/DD(ddd)")}{" "}
-                      </Text>
-                      <Text as="span"> {data.title} </Text>
-                      <Text as="span"> ({data.category})</Text>
+    <UnorderedList m="0 auto 10px auto" listStyleType="none">
+      {detailData.map((data) => (
+        <Box key={data.id}>
+          <ListItem>
+            {isLarger ? (
+              <>
+                <HStack justify="space-between" fontSize="22px">
+                  <HStack spacing={4}>
+                    <Text as="span">
+                      {" "}
+                      {dayjs(data.date).format("M/D(ddd)")}{" "}
                     </Text>
-                    {data.files && <Icon as={BsCardImage} />}
+                    <Text as="span"> {data.title} </Text>
+                    <Text as="span"> ({data.category})</Text>
                   </HStack>
-                  <HStack justify="flex-end">
-                    <Box fontSize="16px">
-                      <Text as="span"> {data.price}円 </Text>
-                      <PageLink
-                        href={{
-                          pathname: `/edit/${data.id}`,
-                          query: { dataId: data.id },
-                        }}
-                      >
-                        <Button m={1} fontSize="12px" h="22px" w="40px">
-                          詳細
-                        </Button>
-                      </PageLink>
-                      <Button
-                        m={1}
-                        fontSize="12px"
-                        h="22px"
-                        w="40px"
-                        onClick={() => clickDelete(data.id)}
-                      >
-                        削除
+                  <Box>
+                    {data.files && (
+                      <Icon as={BsCardImage} mr="20px" fontSize="27px" />
+                    )}
+                    <Text color={data.isExpense ? "#000" : "blue"} as="span">
+                      {" "}
+                      {data.price} 円
+                    </Text>
+                    <PageLink
+                      href={{
+                        pathname: `/edit/${data.id}`,
+                        query: { dataId: data.id },
+                      }}
+                    >
+                      <Button m={1.5} fontSize="14px" h="32px" w="50px">
+                        詳細
                       </Button>
-                    </Box>
-                  </HStack>
-                </>
-              )}
-            </ListItem>
-            <Divider borderColor="black" />
-          </Box>
-        ))}
-      </UnorderedList>
-    </Box>
+                    </PageLink>
+                    <Button
+                      m={1.5}
+                      fontSize="14px"
+                      h="32px"
+                      w="50px"
+                      onClick={() => clickDelete(data.id)}
+                    >
+                      削除
+                    </Button>
+                  </Box>
+                </HStack>
+              </>
+            ) : (
+              <>
+                <HStack justify="flex-start">
+                  <Text fontSize="16px">
+                    <Text as="span">
+                      {" "}
+                      {dayjs(data.date).format("MM/DD(ddd)")}{" "}
+                    </Text>
+                    <Text as="span"> {data.title} </Text>
+                    <Text as="span"> ({data.category})</Text>
+                  </Text>
+                  {data.files && <Icon as={BsCardImage} />}
+                </HStack>
+                <HStack justify="flex-end">
+                  <Box fontSize="16px">
+                    <Text as="span"> {data.price}円 </Text>
+                    <PageLink
+                      href={{
+                        pathname: `/edit/${data.id}`,
+                        query: { dataId: data.id },
+                      }}
+                    >
+                      <Button m={1} fontSize="12px" h="22px" w="40px">
+                        詳細
+                      </Button>
+                    </PageLink>
+                    <Button
+                      m={1}
+                      fontSize="12px"
+                      h="22px"
+                      w="40px"
+                      onClick={() => clickDelete(data.id)}
+                    >
+                      削除
+                    </Button>
+                  </Box>
+                </HStack>
+              </>
+            )}
+          </ListItem>
+          <Divider borderColor="black" />
+        </Box>
+      ))}
+    </UnorderedList>
   );
 };
 

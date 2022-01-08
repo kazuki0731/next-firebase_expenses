@@ -32,9 +32,15 @@ interface Props {
   chartTitle: string;
 }
 
-const PieChart: NextPage<Props> = ({ pieChart, chartTitle }) => {
+const ExpenseChart: NextPage<Props> = ({ pieChart, chartTitle }) => {
   return (
-    <Box w={{ base: "100%", md: "50%" }}>
+    <Box
+      w={{ base: "350px", md: "50%" }}
+      border="1px solid #aaa"
+      bg="#fff"
+      h={{ base: "280px", md: "350px" }}
+      m="0 auto"
+    >
       <Box
         w={{ base: "350px", md: "350px" }}
         h={{ base: "250px", md: "300px" }}
@@ -47,4 +53,4 @@ const PieChart: NextPage<Props> = ({ pieChart, chartTitle }) => {
   );
 };
 
-export default PieChart;
+export default ExpenseChart;

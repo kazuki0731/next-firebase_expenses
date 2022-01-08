@@ -29,12 +29,16 @@ const InputExpenseData: NextPage<Props> = ({
   const [isLarger] = useMediaQuery("(min-width: 768px)");
 
   return (
-    <Box w={isLarger ? "50%" : "100%"}>
-      <Text mb={3}>現在の支出</Text>
-      <Box w="80%" m="0 auto">
-        <List spacing={3}>
+    <Box
+      border="1px solid #aaa"
+      bg="#fff"
+      w={isLarger ? "50%" : "100%"}
+      h="435px"
+    >
+      <Text mt="10px">現在の支出</Text>
+      <Box w="80%" m="15px auto">
+        <List spacing="13px">
           <Box>
-            <Divider w="100%" mb="7px" borderColor="black" />
             <ListItem textAlign="right" fontSize={{ base: "18px", md: "22px" }}>
               <ListIcon as={IoIosBasket} color="green.500" />
               {expenseDetail.daily}円 (

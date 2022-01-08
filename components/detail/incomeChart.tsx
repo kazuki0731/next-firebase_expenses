@@ -34,7 +34,12 @@ interface Props {
 
 const IncomeChart: NextPage<Props> = ({ pieChart, chartTitle }) => {
   return (
-    <Box w={{ base: "60%", md: "50%" }}>
+    <Box
+      w={{ base: "350px", md: "50%" }}
+      border="1px solid #aaa"
+      bg="#fff"
+      h={{ base: "280px", md: "350px" }}
+    >
       <Box
         w={{ base: "220px", md: "265px" }}
         h={{ base: "250px", md: "300px" }}

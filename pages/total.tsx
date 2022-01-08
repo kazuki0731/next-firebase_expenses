@@ -3,11 +3,10 @@ import Head from "next/head";
 import HeaderAfterLogin from "../components/common/headerAfterLogin";
 import { NextPage } from "next";
 import { AuthContext } from "../hooks/authProvider";
-import Container from "../components/common/container";
 import TotalDataByCategory from "../components/detail/TotalDataByCategory";
 import MonthButtonList from "../components/common/monthButtonList";
 import BarChart from "../components/common/barChart";
-import { HStack } from "@chakra-ui/react";
+import { Box, HStack, Text } from "@chakra-ui/react";
 import SelectButton from "../components/total/selectButton";
 import {
   allExpenseInputData,
@@ -146,37 +145,16 @@ const Total: NextPage = () => {
       />
       {loginUser && (
         <>
-          <Container>
-            <HStack spacing={5} w="550px" m="0 auto">
-              <SelectButton
-                selectedBalance={selectedBalance}
-                text="支出"
-                changeBalance={changeBalance}
-              >
-                支出
-              </SelectButton>
-              <SelectButton
-                selectedBalance={selectedBalance}
-                text="収入"
-                changeBalance={changeBalance}
-              >
-                収入
-              </SelectButton>
-              <SelectButton
-                selectedBalance={selectedBalance}
-                text="収支"
-                changeBalance={changeBalance}
-              >
-                収支
-              </SelectButton>
-            </HStack>
+          <Box m="0 auto" w="650px" pt="15px" pb="20px" position="relative">
             <BarChart
               monthlyAvg={monthlyAvg}
               nowYear={nowYear}
               barChart={barChart}
+              selectedBalance={selectedBalance}
+              changeBalance={changeBalance}
             />
-            <TotalDataByCategory allDataByCategory={allDataBycategory} />
-          </Container>
+          </Box>
+          <TotalDataByCategory allDataByCategory={allDataBycategory} />
         </>
       )}
     </>

@@ -22,14 +22,13 @@ interface Props {
 
 const TotalDataByCategory: NextPage<Props> = ({ allDataByCategory }) => {
   return (
-    <Box>
+    <Box w="90%" m="20px auto">
       <HStack alignItems="flex-start">
-        <Box w="50%">
+        <Box w="50%" h="360px" pt="10px" bg="#fff" border="1px solid #aaa">
           <Text mb={3}>支出</Text>
           <Box w="90%" m="0 auto">
             <List spacing={3}>
               <Box>
-                <Divider w="100%" mb="7px" borderColor="black" />
                 <ListItem
                   textAlign="right"
                   fontSize={{ base: "18px", lg: "22px" }}
@@ -122,11 +121,10 @@ const TotalDataByCategory: NextPage<Props> = ({ allDataByCategory }) => {
             </List>
           </Box>
         </Box>
-        <Box w="50%">
+        <Box w="50%" h="360px" pt="10px" bg="#fff" border="1px solid #aaa">
           <Text mb={3}>収入</Text>
           <VStack h="273px" justify="space-between">
             <Box w="90%" m="0 auto">
-              <Divider w="100%" mb="7px" borderColor="black" />
               <List spacing={3}>
                 <Box>
                   <ListItem
@@ -160,10 +158,21 @@ const TotalDataByCategory: NextPage<Props> = ({ allDataByCategory }) => {
                 </Box>
               </List>
             </Box>
-            <Box w="90%" border="1px solid #000">
-              <Text>当月収入: {allDataByCategory.totalIncomePrice}円</Text>
-              <Text>当月支出: {allDataByCategory.totalExpensePrice}円</Text>
-              <Text>当月収支: {allDataByCategory.totalBalancePrice}円</Text>
+            <Box w="91%" border="1px solid #000" px="5px">
+              <HStack justify="space-between">
+                <Text as="span">当月収入</Text>
+                <Text as="span">{allDataByCategory.totalIncomePrice}円</Text>
+              </HStack>
+              <Divider my="5px" />
+              <HStack justify="space-between">
+                <Text as="span">当月支出</Text>
+                <Text as="span">{allDataByCategory.totalExpensePrice}円</Text>
+              </HStack>
+              <Divider my="5px" />
+              <HStack justify="space-between">
+                <Text as="span">当月収支</Text>
+                <Text as="span">{allDataByCategory.totalBalancePrice}円</Text>
+              </HStack>
             </Box>
           </VStack>
         </Box>

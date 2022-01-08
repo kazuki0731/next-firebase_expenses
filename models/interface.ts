@@ -22,6 +22,7 @@ export interface InputData {
   memo: string;
   name: string;
   isExpense: boolean;
+  createdAt: string;
   files?: File[];
 }
 

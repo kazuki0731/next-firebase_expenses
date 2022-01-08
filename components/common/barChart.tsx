@@ -1,6 +1,7 @@
-import { Box } from "@chakra-ui/layout";
+import { Box, Text, HStack } from "@chakra-ui/layout";
 import { NextPage } from "next";
 import { Bar } from "react-chartjs-2";
+import SelectButton from "../total/selectButton";
 
 interface Props {
   barChart: {
@@ -18,9 +19,17 @@ interface Props {
   };
   nowYear: number;
   monthlyAvg: number;
+  selectedBalance: string;
+  changeBalance: (text: string) => void;
 }
 
-const BarChart: NextPage<Props> = ({ barChart, nowYear, monthlyAvg }) => {
+const BarChart: NextPage<Props> = ({
+  barChart,
+  nowYear,
+  monthlyAvg,
+  selectedBalance,
+  changeBalance,
+}) => {
   const options = {
     maintainAspectRatio: false,
     responsive: true,
@@ -46,17 +55,49 @@ const BarChart: NextPage<Props> = ({ barChart, nowYear, monthlyAvg }) => {
     },
   };
   return (
-    <Box m="10px auto 20px" w={{ base: "320px", md: "100%" }}>
-      <Box
-        w={{ base: "300px", md: "550px" }}
-        h={{ base: "200px", md: "350px" }}
+    <Box
+      w={{ base: "300px", md: "670px" }}
+      h={{ base: "200px", md: "500px" }}
+      pt="10px"
+      pb="50px"
+      m="0 auto"
+      bg={"white"}
+      boxShadow="dark-lg"
+      rounded="xl"
+    >
+      <Text>推移（年間）</Text>
+      <HStack
+        spacing="10px"
+        justifyContent="flex-end"
         m="0 auto"
-        bg={"white"}
-        boxShadow="dark-lg"
-        rounded="xl"
+        w="100%"
+        position="absolute"
+        top="25px"
+        right="20px"
       >
-        <Bar data={barChart} options={options} />
-      </Box>
+        <SelectButton
+          selectedBalance={selectedBalance}
+          text="支出"
+          changeBalance={changeBalance}
+        >
+          支出
+        </SelectButton>
+        <SelectButton
+          selectedBalance={selectedBalance}
+          text="収入"
+          changeBalance={changeBalance}
+        >
+          収入
+        </SelectButton>
+        <SelectButton
+          selectedBalance={selectedBalance}
+          text="収支"
+          changeBalance={changeBalance}
+        >
+          収支
+        </SelectButton>
+      </HStack>
+      <Bar data={barChart} options={options} />
     </Box>
   );
 };

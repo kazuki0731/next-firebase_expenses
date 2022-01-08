@@ -45,7 +45,7 @@ const InputData: NextPage = () => {
     setImageUrl("");
   };
 
-  const submitData = async (data: SubmitFormData) => {
+  const submitForm = async (data: SubmitFormData) => {
     const { text } = await postData(data);
     setImageUrl("");
     setMsg(text);
@@ -58,10 +58,14 @@ const InputData: NextPage = () => {
         <title>input</title>
       </Head>
       <HeaderAfterLogin />
+
       {loginUser && (
-        <Box mt="30px">
+        <Box mb="20px">
+          <Text fontSize="26px" fontWeight="semibold">
+            入力
+          </Text>
           <FormSpace>
-            <form onSubmit={handleSubmit(submitData)}>
+            <form onSubmit={handleSubmit(submitForm)}>
               <VStack spacing={4} alignItems="left">
                 <FormList
                   register={register}

@@ -21,11 +21,9 @@ const GoalDataForm: NextPage<Props> = ({
   nowMonth,
 }) => {
   return (
-    <Box w={{ base: "100%", md: "50%" }}>
-      <Text mb={2}>目標設定</Text>
-      <form>
-        <ExpenseForm register={register} />
-      </form>
+    <Box border="1px solid #aaa" bg="#fff" w={{ base: "100%", md: "50%" }} h="435px">
+      <Text mt="10px">目標設定</Text>
+      <ExpenseForm register={register} />
       <Text
         textAlign="right"
         m="0 auto"

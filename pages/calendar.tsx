@@ -9,7 +9,6 @@ import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
 import { InputData } from "../models/interface";
 import { NextPage } from "next";
 import InputDataList from "../components/detail/inputDataList";
-import Container from "../components/common/container";
 import { useRouter } from "next/router";
 import dayjs from "dayjs";
 import { Button } from "@chakra-ui/react";
@@ -88,8 +87,14 @@ const Calendar: NextPage = () => {
         <title>calendar</title>
       </Head>
       <HeaderAfterLogin />
-
-      <Box w="1000px" m="20px auto" bg="#fff" fontSize="17px">
+      <Box
+        w="1000px"
+        p="10px"
+        bg="#fff"
+        m="20px auto"
+        border="1px solid #aaa"
+        fontSize="17px"
+      >
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin]}
           locale="ja"
@@ -108,22 +113,18 @@ const Calendar: NextPage = () => {
         />
       </Box>
       {loginUser && detailByDate.length !== 0 && (
-        <Container>
-          <Box w="90%" m="0 auto">
-            <HStack mb="10px" justify="center">
-              <Text as="h1" fontWeight="normal">
-                詳細
-              </Text>
-            </HStack>
-            <InputDataList
-              detailData={detailByDate}
-              clickDelete={clickDelete}
-            />
-            <HStack w="90%" m="10px auto" justify="flex-end">
-              <Button onClick={clickCreate}>新規登録</Button>
-            </HStack>
-          </Box>
-        </Container>
+        <Box w="1000px" m="0 auto" bg="#fff" p="25px" border="1px solid #aaa">
+          <HStack mb="10px" justify="center">
+            <Text as="h1" fontWeight="normal">
+              詳細
+            </Text>
+          </HStack>
+
+          <InputDataList detailData={detailByDate} clickDelete={clickDelete} />
+          <HStack m="10px auto" justify="flex-end">
+            <Button onClick={clickCreate}>新規登録</Button>
+          </HStack>
+        </Box>
       )}
     </>
   );

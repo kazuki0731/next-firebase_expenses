@@ -16,7 +16,8 @@ import {
   selectedInputData,
   updateInputData,
 } from "../../apiCaller/inputDataQuery";
-import { InputData, SubmitFormData } from "../../models/interface";
+import { InputData } from "../../models/interface";
+import HeaderAfterLogin from "../../components/common/headerAfterLogin";
 
 const Edit: NextPage = () => {
   const {
@@ -24,8 +25,9 @@ const Edit: NextPage = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<SubmitFormData>();
+  } = useForm<InputData>();
   const [imageUrl, setImageUrl] = useState<string>("");
+  const [createdAt, setCreatedAt] = useState("");
   const [msg, setMsg] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
@@ -35,13 +37,19 @@ const Edit: NextPage = () => {
     if (!id) return;
     try {
       const inputData = await selectedInputData(id);
+      const createdTime = new Date(inputData.data()?.createdAt.seconds * 1000);
+      setCreatedAt(
+        `${
+          createdTime.getMonth() + 1
+        }月${createdTime.getDate()}日${createdTime.getHours()}時${createdTime.getMinutes()}分`
+      );
+
       reset(inputData.data());
-      if (inputData.data()?.files) {
-        const files = inputData.data()?.files;
-        const storageRef = ref(storage, files);
-        const url = await getDownloadURL(storageRef);
-        setImageUrl(url);
-      }
+      if (!inputData.data()?.files) return;
+      const files = inputData.data()?.files;
+      const storageRef = ref(storage, files);
+      const url = await getDownloadURL(storageRef);
+      setImageUrl(url);
     } catch (e) {
       console.log(e);
     }
@@ -72,11 +80,16 @@ const Edit: NextPage = () => {
       <Head>
         <title>total</title>
       </Head>
+      <HeaderAfterLogin />
       <TitleText>詳細</TitleText>
       <FormSpace>
         <form onSubmit={handleSubmit(changeData)}>
           <VStack spacing={4} alignItems="flex-start">
-            <FormList register={register} errors={errors} />
+            <FormList
+              register={register}
+              errors={errors}
+              createdAt={createdAt}
+            />
             {imageUrl && (
               <Box w="100%">
                 <Box p="7px" w="90%" m="0 auto">
