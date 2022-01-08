@@ -6,12 +6,12 @@ interface Props {
   text: string;
 }
 
-const SimpleFormSpace: NextPage<Props> = ({ children, text }) => {
+const SimpleSpace: NextPage<Props> = ({ children, text }) => {
   return (
     <Flex justify="center">
       <Box
         w={{ base: "300px", md: "400px" }}
-        minH="360px"
+        h="360px"
         p="10px 25px"
         bg="#fff"
         border="1px solid #aaa"
@@ -25,4 +25,4 @@ const SimpleFormSpace: NextPage<Props> = ({ children, text }) => {
   );
 };
 
-export default SimpleFormSpace;
+export default SimpleSpace;

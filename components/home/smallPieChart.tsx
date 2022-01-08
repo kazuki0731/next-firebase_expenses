@@ -33,11 +33,10 @@ interface Props {
 
 const SmallPieChart: NextPage<Props> = ({ pieChart }) => {
   return (
-    <Box w="325px" m="0 auto">
-      <Box w="325px" h="260px">
-        <Pie width="260px" data={pieChart} options={pieOptions} />
-      </Box>
+    <Box w={{ base: "260px", md: "325px" }} h="260px">
+      <Pie data={pieChart} options={pieOptions} />
     </Box>
+    // </Box>
   );
 };
 

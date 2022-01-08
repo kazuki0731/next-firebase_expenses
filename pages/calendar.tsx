@@ -1,4 +1,4 @@
-import { Box, Text, ListItem, HStack } from "@chakra-ui/layout";
+import { Box, Text, HStack } from "@chakra-ui/layout";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../hooks/authProvider";
 import Head from "next/head";
@@ -88,12 +88,13 @@ const Calendar: NextPage = () => {
       </Head>
       <HeaderAfterLogin />
       <Box
-        w="1000px"
+        w={{ base: "350px", sm: "500px", md: "750px", lg: "1000px" }}
         p="10px"
         bg="#fff"
         m="20px auto"
         border="1px solid #aaa"
-        fontSize="17px"
+        fontSize={{ base: "8px", sm: "10px", md: "12px", lg: "18px" }}
+        lineHeight={{ base: "6px", sm: "8px", md: "10px", lg: "14px" }}
       >
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin]}
@@ -113,7 +114,13 @@ const Calendar: NextPage = () => {
         />
       </Box>
       {loginUser && detailByDate.length !== 0 && (
-        <Box w="1000px" m="0 auto" bg="#fff" p="25px" border="1px solid #aaa">
+        <Box
+          w={{ base: "350px", sm: "500px", md: "800px", lg: "1000px" }}
+          m="0 auto"
+          bg="#fff"
+          p="25px"
+          border="1px solid #aaa"
+        >
           <HStack mb="10px" justify="center">
             <Text as="h1" fontWeight="normal">
               詳細

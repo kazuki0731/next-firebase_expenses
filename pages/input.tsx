@@ -113,7 +113,7 @@ const InputData: NextPage = () => {
               </VStack>
             </form>
             {msg && (
-              <Text mt={2} color={msg === "登録しました" ? "black" : "red"}>
+              <Text mt={2} color={msg === "登録しました" ? "blue" : "red"}>
                 {msg}
               </Text>
             )}

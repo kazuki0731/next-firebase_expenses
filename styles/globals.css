@@ -6,3 +6,21 @@
 .event {
   background-color: pink;
 }
+
+@media screen and (max-width: 992px) {
+  .cell {
+    height: 100px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .cell {
+    height: 80px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .cell {
+    height: 50px;
+  }
+}

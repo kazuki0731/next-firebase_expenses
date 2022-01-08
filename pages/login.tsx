@@ -14,6 +14,8 @@ import { AuthContext } from "../hooks/authProvider";
 import FormSpace from "../components/input/formSpace";
 import PageLink from "../components/common/pageLink";
 import { Login } from "../models/interface";
+import HeaderBeforeLogin from "../components/common/headerBeforeLogin";
+import GuestLoginLink from "../components/common/guestLoginLink";
 
 const Login: NextPage = () => {
   const { register, handleSubmit } = useForm<Login>();
@@ -53,12 +55,14 @@ const Login: NextPage = () => {
       <Head>
         <title>Login</title>
       </Head>
+      <HeaderBeforeLogin />
+      <GuestLoginLink />
       {!loginUser && (
         <>
-          <TitleText>ログイン</TitleText>
           <FormSpace>
+            <Text>ログイン</Text>
             <form onSubmit={handleSubmit(submitData)}>
-              <VStack w="90%" m="0 auto" spacing={6}>
+              <VStack w="80%" m="10px auto" spacing={6}>
                 <FormControl id="email">
                   <FormLabel>メールアドレス:</FormLabel>
                   <Input

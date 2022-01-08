@@ -29,6 +29,7 @@ const FormList: NextPage<Props> = ({ register, errors }) => {
           variant="outline"
           placeholder="金額"
           required
+          h={{ base: "30px", md: "35px" }}
           {...register("price")}
         />
       </FormControl>
@@ -39,6 +40,7 @@ const FormList: NextPage<Props> = ({ register, errors }) => {
           variant="outline"
           placeholder="タイトル"
           required
+          h={{ base: "30px", md: "35px" }}
           {...register("title", { maxLength: 12 })}
         />
         {errors.title && (
@@ -48,7 +50,13 @@ const FormList: NextPage<Props> = ({ register, errors }) => {
         )}
       </FormControl>
       <FormControl id="category" w="60%">
-        <Select bg="white" defaultValue="" required {...register("category")}>
+        <Select
+          h={{ base: "30px", md: "35px" }}
+          bg="white"
+          defaultValue=""
+          required
+          {...register("category")}
+        >
           <option value="">カテゴリ</option>
           <option value="日用品">日用品</option>
           <option value="食費">食費</option>
@@ -67,12 +75,13 @@ const FormList: NextPage<Props> = ({ register, errors }) => {
           variant="outline"
           defaultValue={date}
           required
+          h={{ base: "30px", md: "35px" }}
           {...register("date")}
         />
       </FormControl>
       <Input type="hidden" {...register("memo")} />
       <Input type="hidden" {...register("files")} />
-      <Button type="submit" h="40px">
+      <Button type="submit" h={{ base: "30px", md: "35px" }}>
         送信
       </Button>
     </>

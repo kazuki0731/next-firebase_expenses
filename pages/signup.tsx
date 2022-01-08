@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import TitleText from "../components/common/titleText";
 import { Input, FormControl, FormLabel, Button } from "@chakra-ui/react";
 import { VStack, Text, Box } from "@chakra-ui/layout";
 import PageLink from "../components/common/pageLink";
@@ -17,6 +16,8 @@ import { AuthContext } from "../hooks/authProvider";
 import { useRouter } from "next/router";
 import { doc, setDoc, getDoc } from "@firebase/firestore";
 import { Signup } from "../models/interface";
+import HeaderBeforeLogin from "../components/common/headerBeforeLogin";
+import GuestLoginLink from "../components/common/guestLoginLink";
 auth.currentUser;
 
 const Signup: NextPage = () => {
@@ -79,12 +80,14 @@ const Signup: NextPage = () => {
       <Head>
         <title>signup</title>
       </Head>
-      <TitleText>新規登録</TitleText>
+      <HeaderBeforeLogin />
+      <GuestLoginLink />
       <FormSpace>
         {msg !== "登録できました" ? (
           <>
+            <Text>新規登録</Text>
             <form onSubmit={handleSubmit(submitData)}>
-              <VStack w="70%" m="0 auto" spacing={6}>
+              <VStack w="80%" m="10px auto" spacing={6}>
                 <FormControl id="name">
                   <FormLabel>ユーザー名:</FormLabel>
                   <Input
@@ -116,7 +119,7 @@ const Signup: NextPage = () => {
                       },
                     })}
                     bg="white"
-                    placeholder="パスワードを入力してください"
+                    placeholder="パスワードを入力"
                     required
                   />
                 </FormControl>

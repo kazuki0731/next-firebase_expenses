@@ -9,11 +9,13 @@ import {
 import { onAuthStateChanged } from "@firebase/auth";
 import { auth } from "../lib/firebase";
 import { User } from "firebase/auth";
+import { signInWithEmailAndPassword } from "@firebase/auth";
 
 export const AuthContext = createContext(
   {} as {
     loginUser: User | null;
     setLoginUser: Dispatch<SetStateAction<User | null>>;
+    loginAsGuest: () => Promise<void>;
   }
 );
 
@@ -32,9 +34,21 @@ const AuthProvider: NextPage = ({ children }) => {
     };
   }, []);
 
+  const loginAsGuest = async () => {
+    const email = process.env.NEXT_PUBLIC_TESTUSER_EMAIL;
+    const password = process.env.NEXT_PUBLIC_TESTUSER_PASSWORD;
+    if (!email || !password) return;
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const value = {
     loginUser,
     setLoginUser,
+    loginAsGuest,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

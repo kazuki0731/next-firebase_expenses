@@ -15,11 +15,11 @@ const HeaderAfterLogin: NextPage = () => {
       <Box p={1} pb="5px" mb="10px" bg="#fff">
         <HStack justify="space-between" w="90%" m="0 auto">
           <HStack spacing={7}>
-            <Link href="/home" passHref>
+            <Link href={loginUser ? "/home" : "/"} passHref>
               <Image
                 src="/images/sample-logo.jpg"
-                width={150}
-                height={50}
+                width={{ base: 100, md: 150 }}
+                height={{ base: 30, md: 50 }}
                 alt="logo"
                 cursor="pointer"
               />
@@ -32,6 +32,9 @@ const HeaderAfterLogin: NextPage = () => {
               </Text>
             )}
             <Button
+              w={{ base: "60px", md: "120px" }}
+              h={{ base: "30px", md: "45px" }}
+              fontSize={{ base: "12px", md: "18px" }}
               bg="blue.200"
               _hover={{ bg: "blue.100" }}
               onClick={clickLogout}
@@ -65,7 +68,6 @@ const HeaderAfterLogin: NextPage = () => {
             トータル
           </PageLink>
         </HStack>
-        {/* <Divider borderColor="#000" w="90%" m="10px auto" /> */}
       </Box>
     </>
   );
