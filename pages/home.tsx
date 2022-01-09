@@ -102,8 +102,9 @@ const Home: NextPage = () => {
   }, [loginUser]);
 
   const submitData = async (data: SubmitFormData) => {
-    const { text } = await postData(data);
-    setMsg(text);
+    const resultData = await postData(data);
+    if (!resultData) return;
+    setMsg(resultData.text);
     reset();
     getRecentlyInputData();
     getInitTotalData();
@@ -119,7 +120,13 @@ const Home: NextPage = () => {
           <HeaderAfterLogin />
           {isLarger ? (
             <>
-              <HStack w="100%" p="5px" justify="center" spacing="30px" m="30px auto">
+              <HStack
+                w="100%"
+                p="5px"
+                justify="center"
+                spacing="30px"
+                m="30px auto"
+              >
                 <SimpleInput
                   handleSubmit={handleSubmit}
                   register={register}
