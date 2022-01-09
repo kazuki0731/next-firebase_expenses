@@ -18,6 +18,7 @@ import { doc, setDoc, getDoc } from "@firebase/firestore";
 import { Signup } from "../models/interface";
 import HeaderBeforeLogin from "../components/common/headerBeforeLogin";
 import GuestLoginLink from "../components/common/guestLoginLink";
+import { createDisplayName } from "../apiCaller/authQuery";
 auth.currentUser;
 
 const Signup: NextPage = () => {
@@ -45,15 +46,7 @@ const Signup: NextPage = () => {
     const { email, password, name } = data;
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      await updateProfile(auth.currentUser, {
-        displayName: name,
-      });
-      if (auth.currentUser) {
-        await setDoc(doc(db, "users", auth.currentUser.uid), {
-          name,
-          email,
-        });
-      }
+      createDisplayName(auth, email, name);
       setMsg("登録できました");
       setMemberData({
         name,
@@ -61,7 +54,9 @@ const Signup: NextPage = () => {
       });
       reset();
     } catch (e: any) {
-      deleteUser(auth.currentUser);
+      if (auth.currentUser) {
+        deleteUser(auth.currentUser);
+      }
       console.log(e);
       switch (e.code) {
         case "auth/email-already-in-use":
@@ -144,7 +139,7 @@ const Signup: NextPage = () => {
             <Text fontWeight="semibold">{msg}</Text>
             <Text>ニックネーム: {memberData.name} さん</Text>
             <Text>email: {memberData.email}</Text>
-            <PageLink href={"top"} color={"blue.300"} underline={"underLine"}>
+            <PageLink href="/home" color={"blue.300"} underline={"underLine"}>
               会員ページへ
             </PageLink>
           </VStack>

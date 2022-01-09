@@ -18,6 +18,7 @@ import { auth, db, storage } from "../lib/firebase";
 import { SubmitFormData, InputData } from "../models/interface";
 
 export const allExpenseInputData = async (year: number) => {
+  if (!auth.currentUser) return;
   const data: InputData[] = [];
   try {
     const q = query(
@@ -37,6 +38,7 @@ export const allExpenseInputData = async (year: number) => {
 };
 
 export const allIncomeInputData = async (year: number) => {
+  if (!auth.currentUser) return;
   const data: InputData[] = [];
   try {
     const q = query(
@@ -56,6 +58,7 @@ export const allIncomeInputData = async (year: number) => {
 };
 
 export const selectedInputData = async (id: string | string[]) => {
+  if (!auth.currentUser) return;
   const inputData = await getDoc(
     doc(db, "users", auth.currentUser.uid, "spendings", `${id}`)
   );
@@ -63,6 +66,7 @@ export const selectedInputData = async (id: string | string[]) => {
 };
 
 export const recentlyInputData = async () => {
+  if (!auth.currentUser) return;
   const data: InputData[] = [];
   const today = ("0" + new Date().getDate()).slice(-2);
   const month = ("0" + (new Date().getMonth() + 1)).slice(-2);
@@ -70,6 +74,7 @@ export const recentlyInputData = async () => {
   try {
     const q = query(
       collection(db, "users", auth.currentUser.uid, "spendings"),
+      where("date", "<=", `${year}-${month}-${today}`),
       where("date", "<=", `${year}-${month}-${today}`),
       orderBy("date", "desc"),
       limit(4)
@@ -86,6 +91,7 @@ export const monthlyInputData = async (
   year: number,
   month: number | string
 ) => {
+  if (!auth.currentUser) return;
   const data: InputData[] = [];
   month = ("0" + month).slice(-2);
   try {
@@ -105,6 +111,7 @@ export const monthlyInputData = async (
 };
 
 export const recentlyMonthlyInputData = async () => {
+  if (!auth.currentUser) return;
   const data: InputData[] = [];
   const month = ("0" + (new Date().getMonth() + 1)).slice(-2);
   const year = new Date().getFullYear();
@@ -125,6 +132,7 @@ export const recentlyMonthlyInputData = async () => {
 };
 
 export const inputDataForCalendar = async () => {
+  if (!auth.currentUser) return;
   const data: InputData[] = [];
   try {
     const q = query(collection(db, "users", auth.currentUser.uid, "spendings"));
@@ -137,6 +145,7 @@ export const inputDataForCalendar = async () => {
 };
 
 export const getDataByCalendar = async (date: string) => {
+  if (!auth.currentUser) return;
   try {
     const data: InputData[] = [];
     const q = query(
@@ -158,6 +167,7 @@ export const updateInputData = async (
   { price, title, category, memo, date, files, isExpense }: InputData,
   id: string | string[]
 ) => {
+  if (!auth.currentUser) return;
   if (category === "給料" || category === "その他収入") {
     isExpense = false;
   }
@@ -179,10 +189,12 @@ export const updateInputData = async (
 };
 
 export const deleteInputData = async (id: string) => {
+  if (!auth.currentUser) return;
   await deleteDoc(doc(db, "users", auth.currentUser.uid, "spendings", id));
 };
 
 export const postData = async (data: SubmitFormData) => {
+  if (!auth.currentUser) return;
   data.price = Number(data.price);
   const { price, title, category, memo, date, files } = data;
   let isExpense = true;

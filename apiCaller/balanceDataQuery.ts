@@ -8,6 +8,7 @@ export const getBalanceData = async (
   year: number,
   allexpenseData: ExpenseData
 ) => {
+  if (!auth.currentUser) return;
   let expenseTotal = 0;
   try {
     const res = await getDoc(
@@ -49,7 +50,7 @@ export const updateBalanceData = async (
   expenseGoalData: ExpenseData,
   expenseDetail: ExpenseData
 ) => {
-  console.log(month);
+  if (!auth.currentUser) return;
   try {
     await setDoc(
       doc(
