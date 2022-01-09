@@ -37,6 +37,7 @@ const Edit: NextPage = () => {
     if (!id) return;
     try {
       const inputData = await selectedInputData(id);
+      if (!inputData) return;
       const createdTime = new Date(inputData.data()?.createdAt.seconds * 1000);
       setCreatedAt(
         `${
