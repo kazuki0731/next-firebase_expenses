@@ -88,7 +88,7 @@ const Calendar: NextPage = () => {
       </Head>
       <HeaderAfterLogin />
       <Box
-        w={{ base: "100%", sm: "95%", md: "85%", lg: "80%" }}
+        w={{ base: "95%", sm: "95%", md: "85%", lg: "80%" }}
         p="10px"
         bg="#fff"
         m="20px auto"
@@ -115,7 +115,7 @@ const Calendar: NextPage = () => {
       </Box>
       {loginUser && detailByDate.length !== 0 && (
         <Box
-          w={{ base: "100%", sm: "95%", md: "85%", lg: "80%" }}
+          w={{ base: "95%", sm: "95%", md: "85%", lg: "80%" }}
           m="0 auto"
           bg="#fff"
           p="25px"
@@ -130,8 +130,9 @@ const Calendar: NextPage = () => {
           <InputDataList detailData={detailByDate} clickDelete={clickDelete} />
           <HStack m="10px auto" justify="flex-end">
             <Button
+            w={{base: "60px", md: "70px"}}
               h={{ base: "35px", md: "40px" }}
-              fontSize={{ base: "14px", md: "16px" }}
+              fontSize={{ base: "12px", md: "16px" }}
               onClick={clickCreate}
             >
               新規登録
