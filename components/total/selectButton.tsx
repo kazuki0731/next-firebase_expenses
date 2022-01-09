@@ -16,6 +16,9 @@ const SelectButton: NextPage<Props> = ({
   return (
     <Button
       cursor="pointer"
+      w={{base: "45px", md: "60px"}}
+      h={{base: "30px", md: "40px"}}
+      fontSize={{base: "14px", md: "18px"}}
       fontWeight={selectedBalance === text ? "bold" : "normal"}
       onClick={() => changeBalance(text)}
     >

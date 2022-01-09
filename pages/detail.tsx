@@ -1,5 +1,4 @@
 import { NextPage } from "next";
-import Container from "../components/common/container";
 import Head from "next/head";
 import { deleteInputData, monthlyInputData } from "../apiCaller/inputDataQuery";
 import InputDataButton from "../components/detail/inputDataButton";

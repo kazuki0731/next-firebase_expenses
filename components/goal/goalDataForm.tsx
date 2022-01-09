@@ -21,15 +21,23 @@ const GoalDataForm: NextPage<Props> = ({
   nowMonth,
 }) => {
   return (
-    <Box border="1px solid #aaa" bg="#fff" w={{ base: "100%", md: "50%" }} h="435px">
-      <Text mt="10px">目標設定</Text>
+    <Box
+      border="1px solid #aaa"
+      bg="#fff"
+      m="0 auto"
+      w={{ base: "85%", sm: "350px", md: "50%", lg: "50%" }}
+      h="435px"
+    >
+      <Text mt="10px" fontSize={{ base: "18px", md: "20px", lg: "22px" }}>
+        目標設定
+      </Text>
       <ExpenseForm register={register} />
       <Text
         textAlign="right"
         m="0 auto"
         w="85%"
-        fontSize={{ base: "18px", md: "22px" }}
-        mt={2}
+        fontSize={{ base: "18px", md: "19px", lg: "22px" }}
+        my={{ base: "10px", md: "5px" }}
       >
         目標合計: {goalExpenses}円
       </Text>

@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { NextPage } from "next";
-import Container from "../components/common/container";
 import { Box, HStack, VStack } from "@chakra-ui/layout";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -142,8 +141,11 @@ const Goal: NextPage = () => {
       {loginUser && (
         <>
           {isLarger ? (
-            <Box m="0 auto" w="85%">
-              <HStack mt={3} alignItems="flex-start">
+            <Box
+              m="0 auto"
+              w={{ base: "350px", md: "85%", lg: "850px" }}
+            >
+              <HStack m="0 auto" justify="center">
                 <GoalDataForm
                   nowMonth={nowMonth}
                   goalExpenses={goalExpenses}
@@ -160,7 +162,7 @@ const Goal: NextPage = () => {
             </Box>
           ) : (
             <Box>
-              <VStack mb={3} alignItems="flex-start">
+              <VStack mb={3}>
                 <GoalDataForm
                   nowMonth={nowMonth}
                   goalExpenses={goalExpenses}

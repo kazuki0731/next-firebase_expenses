@@ -23,7 +23,7 @@ const MonthButtonList: NextPage<Props> = ({
       position="relative"
       justify="center"
       m="20px auto"
-      w={{ base: "350px", md: "85%", lg: "850px" }}
+      w={{ base: "350px", md: "85%", lg: "700px" }}
     >
       <MonthButton
         clickHandle={() => clickShowOtherMonth(nowYear, nowMonth - 1)}

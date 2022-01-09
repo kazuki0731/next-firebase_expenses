@@ -28,14 +28,14 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
         <FormControl id="daily">
           <InputGroup>
             <InputLeftAddon
-              w={{ base: "110px", md: "130px" }}
-              fontSize={{ base: "16px", md: "20px" }}
+              w={{ base: "110px", md: "100px", lg: "130px" }}
+              fontSize={{ base: "16px", md: "17px", lg: "20px" }}
             >
               <Icon as={IoIosBasket} color="green.500" />
               日用品
             </InputLeftAddon>
             <Input
-              fontSize={{ base: "16px", md: "20px" }}
+              fontSize={{ base: "15px", md: "17px", lg: "20px" }}
               type="number"
               bg="white"
               {...register("daily")}
@@ -46,14 +46,14 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
         <FormControl id="food">
           <InputGroup>
             <InputLeftAddon
-              w={{ base: "110px", md: "130px" }}
-              fontSize={{ base: "16px", md: "20px" }}
+              w={{ base: "110px", md: "100px", lg: "130px" }}
+              fontSize={{ base: "15px", md: "17px", lg: "20px" }}
             >
               <Icon as={IoFastFoodOutline} color="green.500" />
               食費
             </InputLeftAddon>
             <Input
-              fontSize={{ base: "16px", md: "20px" }}
+              fontSize={{ base: "15px", md: "17px", lg: "20px" }}
               type="number"
               bg="white"
               {...register("food")}
@@ -64,14 +64,14 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
         <FormControl id="traffic">
           <InputGroup>
             <InputLeftAddon
-              w={{ base: "110px", md: "130px" }}
-              fontSize={{ base: "16px", md: "20px" }}
+              w={{ base: "110px", md: "100px", lg: "130px" }}
+              fontSize={{ base: "15px", md: "17px", lg: "20px" }}
             >
               <Icon as={AiFillCar} color="green.500" />
               交通費
             </InputLeftAddon>
             <Input
-              fontSize={{ base: "16px", md: "20px" }}
+              fontSize={{ base: "15px", md: "17px", lg: "20px" }}
               type="number"
               bg="white"
               {...register("traffic")}
@@ -82,14 +82,14 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
         <FormControl id="enter">
           <InputGroup>
             <InputLeftAddon
-              w={{ base: "110px", md: "130px" }}
-              fontSize={{ base: "16px", md: "20px" }}
+              w={{ base: "110px", md: "100px", lg: "130px" }}
+              fontSize={{ base: "15px", md: "17px", lg: "20px" }}
             >
               <Icon as={BiBeer} color="green.500" />
               交際費
             </InputLeftAddon>
             <Input
-              fontSize={{ base: "16px", md: "20px" }}
+              fontSize={{ base: "15px", md: "17px", lg: "20px" }}
               type="number"
               bg="white"
               {...register("enter")}
@@ -100,14 +100,14 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
         <FormControl id="fixed">
           <InputGroup>
             <InputLeftAddon
-              w={{ base: "110px", md: "130px" }}
-              fontSize={{ base: "16px", md: "20px" }}
+              w={{ base: "110px", md: "100px", lg: "130px" }}
+              fontSize={{ base: "15px", md: "17px", lg: "20px" }}
             >
               <Icon as={AiFillInsurance} color="green.500" />
               固定費
             </InputLeftAddon>
             <Input
-              fontSize={{ base: "16px", md: "20px" }}
+              fontSize={{ base: "15px", md: "17px", lg: "20px" }}
               type="number"
               bg="white"
               {...register("fixed")}
@@ -118,14 +118,14 @@ const ExpenseForm: NextPage<Props> = ({ register }) => {
         <FormControl id="otherExpense">
           <InputGroup>
             <InputLeftAddon
-              w={{ base: "110px", md: "130px" }}
-              fontSize={{ base: "16px", md: "20px" }}
+              w={{ base: "110px", md: "100px", lg: "130px" }}
+              fontSize={{ base: "15px", md: "17px", lg: "20px" }}
             >
               <Icon as={RiPsychotherapyFill} color="green.500" />
               その他
             </InputLeftAddon>
             <Input
-              fontSize={{ base: "16px", md: "20px" }}
+              fontSize={{ base: "15px", md: "17px", lg: "20px" }}
               type="number"
               bg="white"
               {...register("otherExpense")}

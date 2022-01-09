@@ -2,6 +2,7 @@ import { Box, Text, HStack } from "@chakra-ui/layout";
 import { NextPage } from "next";
 import { Bar } from "react-chartjs-2";
 import SelectButton from "../total/selectButton";
+import { useMediaQuery } from "@chakra-ui/react";
 
 interface Props {
   barChart: {
@@ -31,8 +32,8 @@ const BarChart: NextPage<Props> = ({
   changeBalance,
 }) => {
   const options = {
-    maintainAspectRatio: false,
     responsive: true,
+    maintainAspectRatio: false,
     layout: {
       padding: {
         top: 5,
@@ -54,27 +55,22 @@ const BarChart: NextPage<Props> = ({
       },
     },
   };
+  const [isLarger] = useMediaQuery("(min-width: 768px)");
   return (
     <Box
-      w={{ base: "300px", md: "670px" }}
-      h={{ base: "200px", md: "500px" }}
+      w={{ base: "360px", md: "670px" }}
+      h={{ base: "360px", md: "500px" }}
       pt="10px"
       pb="50px"
       m="0 auto"
       bg={"white"}
       boxShadow="dark-lg"
-      rounded="xl"
+      position="relative"
     >
-      <Text>推移（年間）</Text>
-      <HStack
-        spacing="10px"
-        justifyContent="flex-end"
-        m="0 auto"
-        w="100%"
-        position="absolute"
-        top="25px"
-        right="20px"
-      >
+      <Text textAlign={{ base: "left", md: "center" }} w="80%" m="0 auto">
+        推移（年間）
+      </Text>
+      <HStack spacing="10px" position="absolute" top="10px" right="20px">
         <SelectButton
           selectedBalance={selectedBalance}
           text="支出"

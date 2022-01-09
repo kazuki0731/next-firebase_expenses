@@ -3,11 +3,11 @@ import Head from "next/head";
 import HeaderAfterLogin from "../components/common/headerAfterLogin";
 import { NextPage } from "next";
 import { AuthContext } from "../hooks/authProvider";
-import TotalDataByCategory from "../components/detail/TotalDataByCategory";
+import TotalDataByCategory from "../components/total/totalDataByCategory";
 import MonthButtonList from "../components/common/monthButtonList";
 import BarChart from "../components/common/barChart";
-import { Box, HStack, Text } from "@chakra-ui/react";
-import SelectButton from "../components/total/selectButton";
+import { Box, HStack, Text, VStack } from "@chakra-ui/react";
+import { useMediaQuery } from "@chakra-ui/react";
 import {
   allExpenseInputData,
   allIncomeInputData,
@@ -38,6 +38,7 @@ const Total: NextPage = () => {
   const [barChart, setBarChart] = useState<Chart>({ labels: [], datasets: [] });
   const [yearlyData, setYearlyData] = useState<number[]>([]);
   const [monthlyAvg, setMonthlyAvg] = useState<number>(0);
+  const [isLarger] = useMediaQuery("(min-width: 768px)");
 
   const getTotalDataByCategory = async (year: number, month: number) => {
     const inputData = await monthlyInputData(year, month);
@@ -145,16 +146,17 @@ const Total: NextPage = () => {
       />
       {loginUser && (
         <>
-          <Box m="0 auto" w="650px" pt="15px" pb="20px" position="relative">
-            <BarChart
-              monthlyAvg={monthlyAvg}
-              nowYear={nowYear}
-              barChart={barChart}
-              selectedBalance={selectedBalance}
-              changeBalance={changeBalance}
-            />
-          </Box>
-          <TotalDataByCategory allDataByCategory={allDataBycategory} />
+          {isLarger ? (
+            <Box w={{ base: "350px", md: "85%", lg: "850px" }} m="20px auto">
+              <HStack>
+                <TotalDataByCategory allDataByCategory={allDataBycategory} />
+              </HStack>
+            </Box>
+          ) : (
+            <VStack>
+              <TotalDataByCategory allDataByCategory={allDataBycategory} />
+            </VStack>
+          )}
         </>
       )}
     </>
