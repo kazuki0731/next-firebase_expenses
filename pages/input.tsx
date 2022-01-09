@@ -46,9 +46,10 @@ const InputData: NextPage = () => {
   };
 
   const submitForm = async (data: SubmitFormData) => {
-    const { text } = await postData(data);
+    const resultdata = await postData(data);
+    if (!resultdata) return;
     setImageUrl("");
-    setMsg(text);
+    setMsg(resultdata.text);
     reset({ date: data.date });
   };
 
