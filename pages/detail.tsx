@@ -192,7 +192,7 @@ const Detail: NextPage = () => {
               alignItems="flex-start"
               h="350px"
               spacing="5px"
-              w="80%"
+              w={{ base: "100%", md: "85%", lg: "850px" }}
               m="0 auto"
             >
               <PieChart pieChart={pieChart.expense} chartTitle="支出" />
@@ -207,8 +207,7 @@ const Detail: NextPage = () => {
           <Box
             border="1px solid #aaa"
             p="20px"
-            w="95%"
-            maxW="850px"
+            w={{ base: "350px", sm: "85%", md: "85%", lg: "850px" }}
             bg="#fff"
             m="10px auto"
           >

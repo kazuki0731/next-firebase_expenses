@@ -81,7 +81,9 @@ const Edit: NextPage = () => {
         <title>total</title>
       </Head>
       <HeaderAfterLogin />
-      <TitleText>詳細</TitleText>
+      <Text fontSize="26px" fontWeight="semibold">
+        詳細
+      </Text>
       <FormSpace>
         <form onSubmit={handleSubmit(changeData)}>
           <VStack spacing={4} alignItems="flex-start">

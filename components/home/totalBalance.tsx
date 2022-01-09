@@ -12,7 +12,7 @@ interface Props {
 const TotalBalance: NextPage<Props> = ({ recentExpenseData }) => {
   return (
     <SimpleSpace text={`${new Date().getMonth() + 1}月の収支`}>
-      <Box mt="60px">
+      <Box mt="60px" fontSize={{ base: "19px", lg: "21px" }}>
         <HStack justify="space-between">
           <Text as="span">当月収入:</Text>
           <Text as="span">{recentExpenseData.totalIncomePrice}円</Text>
@@ -30,7 +30,7 @@ const TotalBalance: NextPage<Props> = ({ recentExpenseData }) => {
         <Divider my="5px" />
       </Box>
 
-      <Box mt={{ base: "90px", md: "70px" }}  textAlign="right">
+      <Box mt={{ base: "90px", lg: "70px" }} textAlign="right">
         <PageLink href="/total">
           <Text color="blue.500" fontSize={{ base: "16px", md: "21px" }}>
             <Icon verticalAlign="text-top" as={BsFillArrowRightCircleFill} />{" "}

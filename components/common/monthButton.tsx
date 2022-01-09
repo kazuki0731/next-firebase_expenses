@@ -10,7 +10,7 @@ interface Props {
 const MonthButton: NextPage<Props> = ({ children, clickHandle }) => {
   return (
     <Button
-      w={{ base: "80px", md: "80px" }}
+      w={{ base: "40px", md: "80px" }}
       h={{ base: "30px", md: "45px" }}
       fontSize={{ base: "12px", md: "18px" }}
       bg="gray.300"

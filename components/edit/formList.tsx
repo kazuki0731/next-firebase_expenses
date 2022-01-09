@@ -82,6 +82,7 @@ const FormList: NextPage<Props> = ({ register, errors, createdAt }) => {
             fontSize={{ base: "16px", md: "20px" }}
             type="text"
             bg="white"
+            
             {...register("memo")}
           />
         </InputGroup>
@@ -102,7 +103,12 @@ const FormList: NextPage<Props> = ({ register, errors, createdAt }) => {
           />
         </InputGroup>
       </FormControl>
-      <HStack w="100%" justify="flex-end" spacing="20px">
+      <HStack
+        w="100%"
+        justify="flex-end"
+        spacing="15px"
+        fontSize={{ base: "18px", md: "20px" }}
+      >
         <Text>作成日時:</Text>
         <Text>{createdAt}</Text>
       </HStack>

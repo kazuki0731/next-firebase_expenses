@@ -18,7 +18,7 @@ const RecentlyInput: NextPage<Props> = ({ recentInputData }) => {
           <Box key={inputData.id} m="15px auto">
             <HStack
               justify="space-between"
-              fontSize={{ base: "16px", md: "22px" }}
+              fontSize={{ base: "16px", md: "20px", lg: "22px" }}
             >
               <Box>
                 <Text as="span">

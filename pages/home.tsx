@@ -5,7 +5,15 @@ import HeaderBeforeLogin from "../components/common/headerBeforeLogin";
 import Head from "next/head";
 import { NextPage } from "next";
 
-import { Text, Box, HStack, useMediaQuery, VStack } from "@chakra-ui/react";
+import {
+  Text,
+  Box,
+  HStack,
+  useMediaQuery,
+  VStack,
+  Grid,
+  GridItem,
+} from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import {
   postData,
@@ -111,7 +119,7 @@ const Home: NextPage = () => {
           <HeaderAfterLogin />
           {isLarger ? (
             <>
-              <HStack w="1000px" justify="center" spacing="30px" m="30px auto">
+              <HStack w="100%" p="5px" justify="center" spacing="30px" m="30px auto">
                 <SimpleInput
                   handleSubmit={handleSubmit}
                   register={register}
@@ -121,7 +129,7 @@ const Home: NextPage = () => {
                 />
                 <RecentlyInput recentInputData={recentInputData} />
               </HStack>
-              <HStack w="1000px" justify="center" spacing="30px" m="30px auto">
+              <HStack w="100%" justify="center" spacing="30px" m="30px auto">
                 <TotalBalance recentExpenseData={recentExpenseData} />
                 <CategoryChart pieChart={pieChart} />
               </HStack>

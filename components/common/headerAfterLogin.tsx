@@ -13,11 +13,7 @@ const HeaderAfterLogin: NextPage = () => {
   return (
     <>
       <Box p={1} pb="5px" mb="10px" bg="#fff">
-        <HStack
-          justify="space-between"
-          w={{ base: "100%", md: "90%" }}
-          m="0 auto"
-        >
+        <HStack justify="space-between" w="100%" m="0 auto">
           <HStack spacing={7}>
             <Link href={loginUser ? "/home" : "/"} passHref>
               <Image
@@ -52,7 +48,7 @@ const HeaderAfterLogin: NextPage = () => {
           </HStack>
         </HStack>
 
-        <HStack spacing="50px" w="90%" m="10px auto 0">
+        <HStack spacing="50px" bg="red.200" w="100%" m="10px auto 0">
           <PageLink underline="underLine" href="/home" color="blackAlpha.700">
             ホーム
           </PageLink>

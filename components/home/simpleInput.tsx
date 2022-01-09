@@ -28,7 +28,7 @@ const SimpleInput: NextPage<Props> = ({
       <form onSubmit={handleSubmit(submitData)}>
         <VStack
           mt={{ base: "10px", md: "0" }}
-          spacing={{ base: "20px", md: "10px" }}
+          spacing={{ base: "15px", md: "10px" }}
           alignItems="left"
         >
           <SimpleFormList register={register} errors={errors} />

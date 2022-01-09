@@ -115,7 +115,7 @@ const Calendar: NextPage = () => {
       </Box>
       {loginUser && detailByDate.length !== 0 && (
         <Box
-          w={{ base: "350px", sm: "500px", md: "800px", lg: "1000px" }}
+          w={{ base: "100%", sm: "95%", md: "85%", lg: "80%" }}
           m="0 auto"
           bg="#fff"
           p="25px"
@@ -129,7 +129,13 @@ const Calendar: NextPage = () => {
 
           <InputDataList detailData={detailByDate} clickDelete={clickDelete} />
           <HStack m="10px auto" justify="flex-end">
-            <Button onClick={clickCreate}>新規登録</Button>
+            <Button
+              h={{ base: "35px", md: "40px" }}
+              fontSize={{ base: "14px", md: "16px" }}
+              onClick={clickCreate}
+            >
+              新規登録
+            </Button>
           </HStack>
         </Box>
       )}

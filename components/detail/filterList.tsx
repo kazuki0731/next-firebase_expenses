@@ -17,17 +17,17 @@ const FilterList: NextPage<Props> = ({
   changeDisplay,
 }) => {
   return (
-    <HStack spacing={2}>
+    <HStack spacing="5px" mb="10px">
       <FormControl
-        w={{ base: "110px", md: "150px" }}
+        w={{ base: "100px", md: "150px" }}
         id="category"
         onChange={handleSubmit(changeDisplay)}
       >
         <Select
           bg="white"
-          w={{ base: "110px", md: "150px" }}
-          h={{ base: "35px", md: "40px" }}
-          fontSize={{ base: "13px", md: "15px" }}
+          w={{ base: "100px", md: "150px" }}
+          h={{ base: "30px", md: "40px" }}
+          fontSize={{ base: "12px", md: "15px" }}
           required
           {...register("category")}
         >
@@ -43,14 +43,14 @@ const FilterList: NextPage<Props> = ({
         </Select>
       </FormControl>
       <FormControl
-        w={{ base: "110px", md: "150px" }}
+        w={{ base: "100px", md: "150px" }}
         id="number"
         onChange={handleSubmit(changeDisplay)}
       >
         <Select
-          w={{ base: "110px", md: "150px" }}
-          h={{ base: "35px", md: "40px" }}
-          fontSize={{ base: "13px", md: "15px" }}
+          w={{ base: "100px", md: "150px" }}
+          h={{ base: "30px", md: "40px" }}
+          fontSize={{ base: "12px", md: "15px" }}
           bg="white"
           required
           {...register("number")}
@@ -61,14 +61,14 @@ const FilterList: NextPage<Props> = ({
         </Select>
       </FormControl>
       <FormControl
-        w={{ base: "110px", md: "150px" }}
+        w={{ base: "100px", md: "150px" }}
         id="order"
         onChange={handleSubmit(changeDisplay)}
       >
         <Select
-          w={{ base: "110px", md: "150px" }}
-          h={{ base: "35px", md: "40px" }}
-          fontSize={{ base: "13px", md: "15px" }}
+          w={{ base: "100px", md: "150px" }}
+          h={{ base: "30px", md: "40px" }}
+          fontSize={{ base: "12px", md: "15px" }}
           bg="white"
           required
           {...register("order")}

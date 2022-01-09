@@ -10,7 +10,7 @@ const SimpleSpace: NextPage<Props> = ({ children, text }) => {
   return (
     <Flex justify="center">
       <Box
-        w={{ base: "300px", md: "400px" }}
+        w={{ base: "300px", md: "360px", lg: "400px" }}
         h={{ base: "340px", md: "360px" }}
         p="10px 25px"
         bg="#fff"

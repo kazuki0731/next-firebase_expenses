@@ -20,7 +20,7 @@ const InputDataList: NextPage<Props> = ({ detailData, clickDelete }) => {
           <ListItem>
             {isLarger ? (
               <>
-                <HStack justify="space-between" fontSize="22px">
+                <HStack justify="space-between" fontSize="20px">
                   <HStack spacing={4}>
                     <Text as="span">
                       {" "}
@@ -31,7 +31,7 @@ const InputDataList: NextPage<Props> = ({ detailData, clickDelete }) => {
                   </HStack>
                   <Box>
                     {data.files && (
-                      <Icon as={BsCardImage} mr="20px" fontSize="27px" />
+                      <Icon as={BsCardImage} mr="20px" fontSize="22px" />
                     )}
                     <Text color={data.isExpense ? "#000" : "blue"} as="span">
                       {" "}
@@ -62,7 +62,7 @@ const InputDataList: NextPage<Props> = ({ detailData, clickDelete }) => {
             ) : (
               <>
                 <HStack justify="flex-start">
-                  <Text fontSize="16px">
+                  <Text fontSize="15px">
                     <Text as="span">
                       {" "}
                       {dayjs(data.date).format("MM/DD(ddd)")}{" "}

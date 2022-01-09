@@ -2,7 +2,7 @@ import { HStack } from "@chakra-ui/layout";
 import { NextPage } from "next";
 import MonthButton from "./monthButton";
 import { Heading } from "@chakra-ui/layout";
-import { Button } from "@chakra-ui/react";
+import { Button, Text } from "@chakra-ui/react";
 
 interface Props {
   nowMonth: number;
@@ -23,16 +23,16 @@ const MonthButtonList: NextPage<Props> = ({
       position="relative"
       justify="center"
       m="20px auto"
-      w="85%"
+      w={{ base: "350px", md: "85%", lg: "850px" }}
     >
       <MonthButton
         clickHandle={() => clickShowOtherMonth(nowYear, nowMonth - 1)}
       >
         &lt;&lt;
       </MonthButton>
-      <Heading as="h2" m={2}>
+      <Text fontSize={{ base: "24px", md: "28px" }} fontWeight="bold" m={2}>
         {nowYear}年{nowMonth}月
-      </Heading>
+      </Text>
       <MonthButton
         clickHandle={() => clickShowOtherMonth(nowYear, nowMonth + 1)}
       >
@@ -41,13 +41,14 @@ const MonthButtonList: NextPage<Props> = ({
       <Button
         position="absolute"
         borderRadius="3px"
-        right="10%"
+        right="0"
         bg="gray.300"
-        w={{ base: "80px", md: "80px" }}
+        fontSize={{ base: "12px", md: "18px" }}
+        w={{ base: "40px", md: "80px" }}
         h={{ base: "30px", md: "45px" }}
         onClick={clickShowCurrentMonth}
       >
-        今月へ
+        今月
       </Button>
     </HStack>
   );
