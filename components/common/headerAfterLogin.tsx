@@ -12,9 +12,9 @@ const HeaderAfterLogin: NextPage = () => {
   const { loginUser } = useContext(AuthContext);
   return (
     <>
-      <Box p={1} pb="5px" mb="10px" bg="rgb(255, 255, 255)">
+      <Box pb="5px" mb="10px" bg="#fff">
         <HStack justify="space-between" w="90%" m="0 auto">
-          <HStack spacing={7}>
+          <HStack>
             <Link href={loginUser ? "/home" : "/"} passHref>
               <Image
                 src="/images/sample-logo.jpg"
@@ -48,7 +48,7 @@ const HeaderAfterLogin: NextPage = () => {
           </HStack>
         </HStack>
 
-        <HStack spacing="50px" w="90%" m="10px auto 0">
+        <HStack spacing={{base: "20px", md: "50px"}} w="90%" m="10px auto 0">
           <PageLink underline="underLine" href="/home" color="blackAlpha.700">
             ホーム
           </PageLink>
