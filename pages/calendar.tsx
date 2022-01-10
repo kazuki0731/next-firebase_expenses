@@ -3,8 +3,9 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../hooks/authProvider";
 import Head from "next/head";
 import HeaderAfterLogin from "../components/common/headerAfterLogin";
-import { EventClickArg } from "@fullcalendar/react";
-import { DateClickArg } from "@fullcalendar/interaction";
+import FullCalendar, { EventClickArg } from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
 import { Events, InputData } from "../models/interface";
 import { NextPage } from "next";
 import InputDataList from "../components/detail/inputDataList";
@@ -16,7 +17,7 @@ import {
   getDataByCalendar,
   inputDataForCalendar,
 } from "../apiCaller/inputDataQuery";
-import Container from "../components/calendar/container";
+import { current } from "../const/date";
 
 const Calendar: NextPage = () => {
   const { loginUser } = useContext(AuthContext);
@@ -81,11 +82,32 @@ const Calendar: NextPage = () => {
         <title>calendar</title>
       </Head>
       <HeaderAfterLogin />
-      <Container
-        handleDateClick={handleDateClick}
-        handleEventClick={handleEventClick}
-        event={event}
-      />
+      <Box
+        w={{ base: "95%", sm: "95%", md: "85%", lg: "80%" }}
+        p="10px"
+        bg="#fff"
+        m="20px auto"
+        border="1px solid #aaa"
+        fontSize={{ base: "6px", sm: "10px", md: "12px", lg: "18px" }}
+        lineHeight={{ base: "6px", sm: "8px", md: "10px", lg: "14px" }}
+      >
+        <FullCalendar
+          plugins={[dayGridPlugin, interactionPlugin]}
+          locale="ja"
+          dateClick={handleDateClick}
+          eventClick={handleEventClick}
+          events={event}
+          headerToolbar={{
+            left: "prev next",
+            center: "title",
+            right: "today",
+          }}
+          contentHeight="auto"
+          dayCellClassNames={"cell"}
+          dayHeaderClassNames={"event"}
+          initialDate={`${current.year}-${("0" + current.month).slice(-2)}`}
+        />
+      </Box>
       {loginUser && detailByDate.length !== 0 && (
         <Box
           w={{ base: "95%", sm: "95%", md: "85%", lg: "80%" }}
