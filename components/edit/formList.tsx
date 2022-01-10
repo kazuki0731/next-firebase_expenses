@@ -9,11 +9,11 @@ import {
   InputRightAddon,
 } from "@chakra-ui/input";
 import { HStack, Text } from "@chakra-ui/react";
-import { Errors, InputData } from "../../models/interface";
+import {  CategoryErrors, InputData } from "../../models/interface";
 
 interface Props {
   register: UseFormRegister<InputData>;
-  errors: Errors;
+  errors: CategoryErrors;
   createdAt: string;
 }
 

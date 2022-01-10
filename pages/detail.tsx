@@ -215,7 +215,6 @@ const Detail: NextPage = () => {
               register={register}
               changeDisplay={changeDisplay}
             />
-
             <InputDataList detailData={detailData} clickDelete={clickDelete} />
             <HStack w="100%" justify="center" spacing={5} mt="10px">
               <InputDataButton

@@ -100,10 +100,20 @@ export interface Signup {
   name: string;
 }
 
-export interface Errors {
+export interface CategoryErrors {
   price?: FieldError | undefined;
   title?: FieldError | undefined;
   category?: FieldError | undefined;
   memo?: FieldError | undefined;
   date?: FieldError | undefined;
+}
+export interface SignupErrors {
+  email?: FieldError | undefined;
+  password?: FieldError | undefined;
+  name?: FieldError | undefined;
+}
+
+export interface Events {
+  title: string;
+  start: string;
 }

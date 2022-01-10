@@ -3,10 +3,9 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../hooks/authProvider";
 import Head from "next/head";
 import HeaderAfterLogin from "../components/common/headerAfterLogin";
-import FullCalendar, { EventClickArg } from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
-import { InputData } from "../models/interface";
+import { EventClickArg } from "@fullcalendar/react";
+import { DateClickArg } from "@fullcalendar/interaction";
+import { Events, InputData } from "../models/interface";
 import { NextPage } from "next";
 import InputDataList from "../components/detail/inputDataList";
 import { useRouter } from "next/router";
@@ -17,12 +16,7 @@ import {
   getDataByCalendar,
   inputDataForCalendar,
 } from "../apiCaller/inputDataQuery";
-import { current } from "../const/date";
-
-interface Events {
-  title: string;
-  start: string;
-}
+import Container from "../components/calendar/container";
 
 const Calendar: NextPage = () => {
   const { loginUser } = useContext(AuthContext);
@@ -87,32 +81,11 @@ const Calendar: NextPage = () => {
         <title>calendar</title>
       </Head>
       <HeaderAfterLogin />
-      <Box
-        w={{ base: "95%", sm: "95%", md: "85%", lg: "80%" }}
-        p="10px"
-        bg="#fff"
-        m="20px auto"
-        border="1px solid #aaa"
-        fontSize={{ base: "6px", sm: "10px", md: "12px", lg: "18px" }}
-        lineHeight={{ base: "6px", sm: "8px", md: "10px", lg: "14px" }}
-      >
-        <FullCalendar
-          plugins={[dayGridPlugin, interactionPlugin]}
-          locale="ja"
-          dateClick={handleDateClick}
-          eventClick={handleEventClick}
-          events={event}
-          headerToolbar={{
-            left: "prev next",
-            center: "title",
-            right: "today",
-          }}
-          contentHeight="auto"
-          dayCellClassNames={"cell"}
-          dayHeaderClassNames={"event"}
-          initialDate={`${current.year}-${("0" + current.month).slice(-2)}`}
-        />
-      </Box>
+      <Container
+        handleDateClick={handleDateClick}
+        handleEventClick={handleEventClick}
+        event={event}
+      />
       {loginUser && detailByDate.length !== 0 && (
         <Box
           w={{ base: "95%", sm: "95%", md: "85%", lg: "80%" }}
@@ -126,11 +99,10 @@ const Calendar: NextPage = () => {
               詳細
             </Text>
           </HStack>
-
           <InputDataList detailData={detailByDate} clickDelete={clickDelete} />
           <HStack m="10px auto" justify="flex-end">
             <Button
-            w={{base: "60px", md: "70px"}}
+              w={{ base: "60px", md: "70px" }}
               h={{ base: "35px", md: "40px" }}
               fontSize={{ base: "12px", md: "16px" }}
               onClick={clickCreate}

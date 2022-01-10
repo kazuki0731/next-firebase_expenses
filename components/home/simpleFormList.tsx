@@ -6,7 +6,7 @@ import { Select } from "@chakra-ui/select";
 import { NextPage } from "next";
 import React from "react";
 import { UseFormRegister } from "react-hook-form";
-import { Errors, SubmitFormData } from "../../models/interface";
+import { CategoryErrors, SubmitFormData } from "../../models/interface";
 
 const today = new Date();
 const year = today.getFullYear();
@@ -16,7 +16,7 @@ const date = `${year}-${month}-${day}`;
 
 interface Props {
   register: UseFormRegister<SubmitFormData>;
-  errors: Errors;
+  errors: CategoryErrors;
 }
 
 const FormList: NextPage<Props> = ({ register, errors }) => {

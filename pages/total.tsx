@@ -127,11 +127,6 @@ const Total: NextPage = () => {
     setNowYear(current.year);
   };
 
-  const changeBalance = (text: string) => {
-    getYearlyData(nowYear, text);
-    setSelectedBalance(text);
-  };
-
   return (
     <>
       <Head>

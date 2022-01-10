@@ -16,7 +16,7 @@ import GoalDataForm from "../components/goal/goalDataForm";
 import InputExpenseData from "../components/goal/inputExpenseData";
 import HeaderAfterLogin from "../components/common/headerAfterLogin";
 import { current } from "../const/date";
-import { Spacer, useMediaQuery } from "@chakra-ui/react";
+import { useMediaQuery } from "@chakra-ui/react";
 
 const Goal: NextPage = () => {
   const { register, handleSubmit, reset } = useForm<ExpenseData>();
@@ -141,10 +141,7 @@ const Goal: NextPage = () => {
       {loginUser && (
         <>
           {isLarger ? (
-            <Box
-              m="0 auto"
-              w={{ base: "350px", md: "85%", lg: "850px" }}
-            >
+            <Box m="0 auto" w={{ base: "350px", md: "85%", lg: "850px" }}>
               <HStack m="0 auto" justify="center">
                 <GoalDataForm
                   nowMonth={nowMonth}

@@ -4,7 +4,7 @@ import SimpleSpace from "./simpleSpace";
 import SimpleFormList from "../../components/home/simpleFormList";
 import { NextPage } from "next";
 import { UseFormHandleSubmit, UseFormRegister } from "react-hook-form";
-import { Errors, SubmitFormData } from "../../models/interface";
+import { CategoryErrors, SubmitFormData } from "../../models/interface";
 import PageLink from "../common/pageLink";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 
@@ -12,7 +12,7 @@ interface Props {
   handleSubmit: UseFormHandleSubmit<SubmitFormData>;
   register: UseFormRegister<SubmitFormData>;
   submitData: (data: SubmitFormData) => Promise<void>;
-  errors: Errors;
+  errors: CategoryErrors;
   msg: string | null;
 }
 

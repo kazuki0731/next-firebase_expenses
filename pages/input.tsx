@@ -5,13 +5,12 @@ import { Button, Text, Box, Image, useDisclosure } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useContext, useState } from "react";
 import { AuthContext } from "../hooks/authProvider";
-import FormList from "../components/input/formList";
 import { postData } from "../apiCaller/inputDataQuery";
-import FormSpace from "../components/input/formSpace";
 import HeaderAfterLogin from "../components/common/headerAfterLogin";
 import PreviewModal from "../components/common/previewModal";
 import { useRouter } from "next/router";
 import { SubmitFormData } from "../models/interface";
+import InputForm from "../components/input/InputForm";
 
 const InputData: NextPage = () => {
   const {
@@ -20,7 +19,7 @@ const InputData: NextPage = () => {
     reset,
     formState: { errors },
   } = useForm<SubmitFormData>();
-  const [imageUrl, setImageUrl] = useState<string>("");
+  const [imageUrl, setImageUrl] = useState("");
   const { loginUser } = useContext(AuthContext);
   const [msg, setMsg] = useState("");
   const router = useRouter();
@@ -65,60 +64,18 @@ const InputData: NextPage = () => {
           <Text fontSize="26px" fontWeight="semibold">
             入力
           </Text>
-          <FormSpace>
-            <form onSubmit={handleSubmit(submitForm)}>
-              <VStack spacing={4} alignItems="left">
-                <FormList
-                  register={register}
-                  errors={errors}
-                  showPreview={showPreview}
-                  dateFromCalendar={dateFromCalendar}
-                />
-                {imageUrl && (
-                  <Box w="100%">
-                    <Box m="0 auto" p="7px" w="90%" position="relative">
-                      <Image
-                        cursor="pointer"
-                        src={imageUrl}
-                        m="0 auto"
-                        alt="preview"
-                        w="100%"
-                        _hover={{
-                          opacity: 0.7,
-                        }}
-                        onClick={onOpen}
-                      />
-                      <Box
-                        cursor="pointer"
-                        position="absolute"
-                        fontSize="18px"
-                        bg="#ccc"
-                        top="-5%"
-                        right="-5%"
-                        w="28px"
-                        h="28px"
-                        borderRadius="50%"
-                        _hover={{
-                          opacity: 0.7,
-                        }}
-                        onClick={handleSubmit(deletePreview)}
-                      >
-                        ✕
-                      </Box>
-                    </Box>
-                  </Box>
-                )}
-                <Button type="submit" h="40px">
-                  送信
-                </Button>
-              </VStack>
-            </form>
-            {msg && (
-              <Text mt={2} color={msg === "登録しました" ? "blue" : "red"}>
-                {msg}
-              </Text>
-            )}
-          </FormSpace>
+          <InputForm
+            handleSubmit={handleSubmit}
+            register={register}
+            submitForm={submitForm}
+            errors={errors}
+            imageUrl={imageUrl}
+            showPreview={showPreview}
+            deletePreview={deletePreview}
+            dateFromCalendar={dateFromCalendar}
+            msg={msg}
+            onOpen={onOpen}
+          />
           <PreviewModal isOpen={isOpen} onClose={onClose}>
             <Image
               cursor="pointer"

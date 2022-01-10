@@ -5,15 +5,7 @@ import HeaderBeforeLogin from "../components/common/headerBeforeLogin";
 import Head from "next/head";
 import { NextPage } from "next";
 
-import {
-  Text,
-  Box,
-  HStack,
-  useMediaQuery,
-  VStack,
-  Grid,
-  GridItem,
-} from "@chakra-ui/react";
+import { Text, Box, HStack, useMediaQuery, VStack } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import {
   postData,
@@ -56,7 +48,6 @@ const Home: NextPage = () => {
   } = useForm<SubmitFormData>();
   const { loginUser } = useContext(AuthContext);
   const [isLarger] = useMediaQuery("(min-width: 768px)");
-
   const [pieChart, setPieChart] = useState<Chart>({ labels: [], datasets: [] });
   const [msg, setMsg] = useState("");
   const [recentInputData, setRecentInputData] = useState<InputData[]>([]);

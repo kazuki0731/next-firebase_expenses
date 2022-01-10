@@ -17,6 +17,7 @@ import {
 } from "../../apiCaller/inputDataQuery";
 import { InputData } from "../../models/interface";
 import HeaderAfterLogin from "../../components/common/headerAfterLogin";
+import EditForm from "../../components/edit/EditForm";
 
 const Edit: NextPage = () => {
   const {
@@ -32,7 +33,7 @@ const Edit: NextPage = () => {
   const router = useRouter();
   const id = router.query.dataId;
 
-  const getData = async () => {
+  const getInputData = async () => {
     if (!id) return;
     try {
       const inputData = await selectedInputData(id);
@@ -56,7 +57,7 @@ const Edit: NextPage = () => {
   };
 
   useEffect(() => {
-    getData();
+    getInputData();
   }, []);
 
   const changeData = async (data: InputData) => {
@@ -64,7 +65,7 @@ const Edit: NextPage = () => {
     data.price = Number(data.price);
     try {
       updateInputData(data, id);
-      getData();
+      getInputData();
       setMsg("変更しました");
     } catch (e: any) {
       setMsg("変更に失敗しました");
@@ -84,35 +85,17 @@ const Edit: NextPage = () => {
       <Text fontSize="26px" fontWeight="semibold">
         詳細
       </Text>
-      <FormSpace>
-        <form onSubmit={handleSubmit(changeData)}>
-          <VStack spacing={4} alignItems="flex-start">
-            <FormList
-              register={register}
-              errors={errors}
-              createdAt={createdAt}
-            />
-            {imageUrl && (
-              <Box w="100%">
-                <Box p="7px" w="90%" m="0 auto">
-                  <Image
-                    cursor="pointer"
-                    src={imageUrl}
-                    alt="upLoadImage"
-                    w="100%"
-                    _hover={{
-                      opacity: 0.7,
-                    }}
-                    onClick={onOpen}
-                  />
-                </Box>
-              </Box>
-            )}
-            <FormButton clickBack={clickBack} />
-          </VStack>
-        </form>
-        {msg && <Text mt={1}>{msg}</Text>}
-      </FormSpace>
+      <EditForm
+        handleSubmit={handleSubmit}
+        register={register}
+        changeData={changeData}
+        imageUrl={imageUrl}
+        errors={errors}
+        msg={msg}
+        onOpen={onOpen}
+        createdAt={createdAt}
+        clickBack={clickBack}
+      />
       <PreviewModal isOpen={isOpen} onClose={onClose}>
         <Image
           cursor="pointer"
