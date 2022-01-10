@@ -10,8 +10,8 @@ const HeaderBeforeLogin: NextPage = () => {
   const { loginUser } = useContext(AuthContext);
   return (
     <>
-      <Box bg="#fff">
-        <Box m="0 auto" py="5px" position="relative" w="95%">
+      <Box bg="#fff" py="10px">
+        <Box m="0 auto" position="relative" w="95%">
           <HStack justify={{ base: "flex-start", md: "center" }}>
             <Link href={loginUser ? "/home" : "/"} passHref>
               <Image
