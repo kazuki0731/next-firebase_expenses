@@ -12,7 +12,7 @@ interface Props {
 const TotalBalance: NextPage<Props> = ({ recentExpenseData }) => {
   return (
     <SimpleSpace text={`${new Date().getMonth() + 1}月の収支`}>
-      <Box mt="60px" fontSize={{ base: "19px", lg: "21px" }}>
+      <Box mt="60px" fontSize={{ base: "16px", lg: "21px" }}>
         <HStack justify="space-between">
           <Text as="span">当月収入:</Text>
           <Text as="span">{recentExpenseData.totalIncomePrice}円</Text>

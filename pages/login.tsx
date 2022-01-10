@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import TitleText from "../components/common/titleText";
 import { Text, VStack } from "@chakra-ui/layout";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";

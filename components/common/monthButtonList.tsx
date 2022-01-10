@@ -1,7 +1,6 @@
 import { HStack } from "@chakra-ui/layout";
 import { NextPage } from "next";
 import MonthButton from "./monthButton";
-import { Heading } from "@chakra-ui/layout";
 import { Button, Text } from "@chakra-ui/react";
 
 interface Props {

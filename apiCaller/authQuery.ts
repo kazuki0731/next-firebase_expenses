@@ -1,6 +1,6 @@
 import { Auth, updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-import { auth, db } from "../lib/firebase";
+import { db } from "../lib/firebase";
 
 export const createDisplayName = async (
   auth: Auth,

@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import TitleText from "../../components/common/titleText";
 import { Text, VStack, Box } from "@chakra-ui/layout";
 import { Image, useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
