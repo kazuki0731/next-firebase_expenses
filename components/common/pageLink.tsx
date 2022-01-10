@@ -10,7 +10,7 @@ const PageLink = (props: any) => {
       <Link
         _hover={{ textDecoration: props.underline }}
         fontWeight="semibold"
-        fontSize={{ base: "11px", sm: "15px", md: "18px", lg: "20px" }}
+        fontSize={{ base: "12px", sm: "15px", md: "18px", lg: "20px" }}
         {...props}
         onClick={clickLink}
       />
