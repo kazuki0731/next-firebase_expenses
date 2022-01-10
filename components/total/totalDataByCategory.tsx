@@ -137,7 +137,7 @@ const TotalDataByCategory: NextPage<Props> = ({ allDataByCategory }) => {
       >
         <Text mb={3}>収入</Text>
         <VStack h="230px" justify="space-between">
-          <Box w="90%" m="0 auto">
+          <Box w="90%" m="0 auto 50px">
             <List spacing={3}>
               <Box>
                 <ListItem
