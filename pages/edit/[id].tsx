@@ -1,14 +1,11 @@
 import Head from "next/head";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { Text, VStack, Box } from "@chakra-ui/layout";
+import { Text } from "@chakra-ui/layout";
 import { Image, useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { storage } from "../../lib/firebase";
 import { useForm } from "react-hook-form";
-import FormList from "../../components/edit/formList";
-import FormButton from "../../components/edit/formButton";
-import FormSpace from "../../components/input/formSpace";
 import { getDownloadURL, ref } from "firebase/storage";
 import PreviewModal from "../../components/common/previewModal";
 import {

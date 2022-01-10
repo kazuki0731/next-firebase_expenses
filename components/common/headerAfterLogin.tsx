@@ -48,7 +48,7 @@ const HeaderAfterLogin: NextPage = () => {
           </HStack>
         </HStack>
 
-        <HStack spacing={{base: "20px", md: "40px"}} w="90%" m="10px auto 0">
+        <HStack spacing={{base: "20px", md: "50px"}} w="90%" m="10px auto 0">
           <PageLink underline="underLine" href="/home" color="blackAlpha.700">
             ホーム
           </PageLink>
