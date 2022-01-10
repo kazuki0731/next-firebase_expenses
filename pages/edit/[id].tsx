@@ -14,7 +14,7 @@ import {
 } from "../../apiCaller/inputDataQuery";
 import { InputData } from "../../models/interface";
 import HeaderAfterLogin from "../../components/common/headerAfterLogin";
-import EditForm from "../../components/edit/EditForm";
+import EditForm from "../../components/edit/editForm";
 
 const Edit: NextPage = () => {
   const {
