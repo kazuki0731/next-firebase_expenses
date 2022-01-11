@@ -7,12 +7,7 @@ import { NextPage } from "next";
 import React from "react";
 import { UseFormRegister } from "react-hook-form";
 import { CategoryErrors, SubmitFormData } from "../../models/interface";
-
-const today = new Date();
-const year = today.getFullYear();
-const month = ("0" + (today.getMonth() + 1)).slice(-2);
-const day = ("0" + today.getDate()).slice(-2);
-const date = `${year}-${month}-${day}`;
+import { dateFormat } from "../../util/functions";
 
 interface Props {
   register: UseFormRegister<SubmitFormData>;
@@ -27,6 +22,7 @@ const FormList: NextPage<Props> = ({
   errors,
   dateFromCalendar,
 }) => {
+  const { date } = dateFormat();
   return (
     <>
       <FormControl id="price">

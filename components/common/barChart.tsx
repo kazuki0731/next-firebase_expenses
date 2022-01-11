@@ -1,23 +1,12 @@
 import { Box, Text, HStack } from "@chakra-ui/layout";
 import { NextPage } from "next";
 import { Bar } from "react-chartjs-2";
+import { Chart } from "../../models/interface";
+import { chartOptions } from "../../util/functions";
 import SelectButton from "../total/selectButton";
-import { useMediaQuery } from "@chakra-ui/react";
 
 interface Props {
-  barChart: {
-    labels: string[];
-    datasets:
-      | [
-          {
-            data: number[];
-            backgroundColor: string[];
-            borderColor?: string[];
-            borderWidth: number;
-          }
-        ]
-      | [];
-  };
+  barChart: Chart;
   nowYear: number;
   monthlyAvg: number;
   selectedBalance: string;
@@ -31,38 +20,14 @@ const BarChart: NextPage<Props> = ({
   selectedBalance,
   changeBalance,
 }) => {
-  const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    layout: {
-      padding: {
-        top: 5,
-        left: 15,
-        right: 15,
-        bottom: 10,
-      },
-    },
-    plugins: {
-      title: {
-        display: true,
-        text: `平均: ${monthlyAvg}円／月（${nowYear}年）`,
-        font: {
-          size: 18,
-        },
-      },
-      legend: {
-        display: false,
-      },
-    },
-  };
-  const [isLarger] = useMediaQuery("(min-width: 768px)");
+  const { options } = chartOptions(monthlyAvg, nowYear);
   return (
     <Box
-      w={{ base: "360px", md: "670px" }}
-      h={{ base: "360px", md: "500px" }}
+      w={{ base: "350px", md: "680px" }}
+      h={{ base: "340px", md: "500px" }}
       pt="10px"
-      pb="50px"
-      m="0 auto"
+      pb={{ base: "30px", md: "50px" }}
+      m="20px auto 30px"
       bg={"white"}
       boxShadow="dark-lg"
       position="relative"

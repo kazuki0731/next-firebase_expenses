@@ -1,10 +1,16 @@
 import NextLink from "next/link";
 import { Link } from "@chakra-ui/react";
-import { jumpToLink } from "../../hooks/clickEvent";
+import { NextPage } from "next";
+import { clickLink } from "../../util/functions";
 
-const PageLink = (props: any) => {
-  const { clickLink } = jumpToLink();
+interface Props {
+  href: string;
+  underline?: string;
+  color?: string;
+  url?: string;
+}
 
+const PageLink: NextPage<Props> = (props) => {
   return (
     <NextLink href={props.href} as={props.url}>
       <Link

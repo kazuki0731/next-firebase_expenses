@@ -4,7 +4,7 @@ import { Box, HStack, VStack } from "@chakra-ui/layout";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import MonthButton from "../components/common/monthButtonList";
-import { AuthContext } from "../hooks/authProvider";
+import { AuthContext } from "../hooks/provider/authProvider";
 import { BalanceDetail, ExpenseData } from "../models/interface";
 import { monthlyInputData } from "../apiCaller/inputDataQuery";
 import { divideData } from "../util/functions";

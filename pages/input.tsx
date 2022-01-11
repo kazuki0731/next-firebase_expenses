@@ -1,10 +1,9 @@
 import Head from "next/head";
 import { NextPage } from "next";
-import { VStack } from "@chakra-ui/layout";
-import { Button, Text, Box, Image, useDisclosure } from "@chakra-ui/react";
+import { Text, Box, Image, useDisclosure } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useContext, useState } from "react";
-import { AuthContext } from "../hooks/authProvider";
+import { AuthContext } from "../hooks/provider/authProvider";
 import { postData } from "../apiCaller/inputDataQuery";
 import HeaderAfterLogin from "../components/common/headerAfterLogin";
 import PreviewModal from "../components/common/previewModal";
@@ -19,18 +18,17 @@ const InputData: NextPage = () => {
     reset,
     formState: { errors },
   } = useForm<SubmitFormData>();
-  const [imageUrl, setImageUrl] = useState("");
-  const { loginUser } = useContext(AuthContext);
-  const [msg, setMsg] = useState("");
   const router = useRouter();
+  const { loginUser } = useContext(AuthContext);
+  const [imageUrl, setImageUrl] = useState("");
+  const [msg, setMsg] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dateFromCalendar = router.query.date;
 
   const showPreview = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const url = window.URL.createObjectURL(e.target.files[0]);
-      setImageUrl(url);
-    }
+    if (!e.target.files) return;
+    const url = window.URL.createObjectURL(e.target.files[0]);
+    setImageUrl(url);
   };
 
   const deletePreview = ({

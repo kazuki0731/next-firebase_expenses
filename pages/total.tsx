@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Head from "next/head";
 import HeaderAfterLogin from "../components/common/headerAfterLogin";
 import { NextPage } from "next";
-import { AuthContext } from "../hooks/authProvider";
+import { AuthContext } from "../hooks/provider/authProvider";
 import TotalDataByCategory from "../components/total/totalDataByCategory";
 import MonthButtonList from "../components/common/monthButtonList";
 import BarChart from "../components/common/barChart";
@@ -127,6 +127,11 @@ const Total: NextPage = () => {
     setNowYear(current.year);
   };
 
+  const changeBalance = (text: string) => {
+    getYearlyData(nowYear, text);
+    setSelectedBalance(text);
+  };
+
   return (
     <>
       <Head>
@@ -141,8 +146,15 @@ const Total: NextPage = () => {
       />
       {loginUser && (
         <>
+          <BarChart
+            monthlyAvg={monthlyAvg}
+            nowYear={nowYear}
+            barChart={barChart}
+            selectedBalance={selectedBalance}
+            changeBalance={changeBalance}
+          />
           {isLarger ? (
-            <Box w={{ base: "350px", md: "85%", lg: "850px" }} m="20px auto">
+            <Box w={{ base: "350px", md: "85%", lg: "850px" }} m="0 auto">
               <HStack>
                 <TotalDataByCategory allDataByCategory={allDataBycategory} />
               </HStack>

@@ -4,7 +4,7 @@ import PageLink from "./pageLink";
 import Link from "next/link";
 import { Image } from "@chakra-ui/react";
 import { useContext } from "react";
-import { AuthContext } from "../../hooks/authProvider";
+import { AuthContext } from "../../hooks/provider/authProvider";
 
 const HeaderBeforeLogin: NextPage = () => {
   const { loginUser } = useContext(AuthContext);

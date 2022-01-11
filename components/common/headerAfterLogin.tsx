@@ -1,14 +1,14 @@
 import type { NextPage } from "next";
 import { Box, HStack, Button, Text } from "@chakra-ui/react";
 import PageLink from "./pageLink";
-import { Logout } from "../../hooks/clickEvent";
 import Link from "next/link";
 import { Image } from "@chakra-ui/react";
 import { useContext } from "react";
-import { AuthContext } from "../../hooks/authProvider";
+import { AuthContext } from "../../hooks/provider/authProvider";
+import { useAuth } from "../../hooks/auth";
 
 const HeaderAfterLogin: NextPage = () => {
-  const { clickLogout } = Logout();
+  const { logout } = useAuth();
   const { loginUser } = useContext(AuthContext);
   return (
     <>
@@ -41,14 +41,14 @@ const HeaderAfterLogin: NextPage = () => {
               fontSize={{ base: "12px", md: "18px" }}
               bg="blue.200"
               _hover={{ bg: "blue.100" }}
-              onClick={clickLogout}
+              onClick={logout}
             >
               ログアウト
             </Button>
           </HStack>
         </HStack>
 
-        <HStack spacing={{base: "20px", md: "50px"}} w="90%" m="10px auto 0">
+        <HStack spacing={{ base: "20px", md: "50px" }} w="90%" m="10px auto 0">
           <PageLink underline="underLine" href="/home" color="blackAlpha.700">
             ホーム
           </PageLink>

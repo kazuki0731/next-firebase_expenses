@@ -60,7 +60,7 @@ const InputForm: NextPage<Props> = ({
                   _hover={{
                     opacity: 0.7,
                   }}
-                  onOpen={onOpen}
+                  onClick={onOpen}
                 />
                 <Box
                   cursor="pointer"

@@ -1,6 +1,6 @@
 import { Box, Text, HStack } from "@chakra-ui/layout";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../hooks/authProvider";
+import { AuthContext } from "../hooks/provider/authProvider";
 import Head from "next/head";
 import HeaderAfterLogin from "../components/common/headerAfterLogin";
 import FullCalendar, { EventClickArg } from "@fullcalendar/react";

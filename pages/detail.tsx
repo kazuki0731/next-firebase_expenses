@@ -4,7 +4,7 @@ import { deleteInputData, monthlyInputData } from "../apiCaller/inputDataQuery";
 import InputDataButton from "../components/detail/inputDataButton";
 import { Box, HStack, VStack } from "@chakra-ui/layout";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../hooks/authProvider";
+import { AuthContext } from "../hooks/provider/authProvider";
 import { divideData } from "../util/functions";
 import MonthButtonList from "../components/common/monthButtonList";
 import InputDataList from "../components/detail/inputDataList";

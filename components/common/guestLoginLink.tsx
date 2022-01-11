@@ -1,6 +1,6 @@
 import { HStack, Text } from "@chakra-ui/react";
 import React, { useContext } from "react";
-import { AuthContext } from "../../hooks/authProvider";
+import { AuthContext } from "../../hooks/provider/authProvider";
 
 const GuestLoginLink = () => {
   const { loginAsGuest } = useContext(AuthContext);

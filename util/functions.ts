@@ -134,3 +134,50 @@ export const yearlyAllData = (
     barLabel,
   };
 };
+
+export const dateFormat = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = ("0" + (today.getMonth() + 1)).slice(-2);
+  const day = ("0" + today.getDate()).slice(-2);
+  const date = `${year}-${month}-${day}`;
+  return {
+    date,
+  };
+};
+
+export const chartOptions = (avg: number, year: number) => {
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    layout: {
+      padding: {
+        top: 5,
+        left: 15,
+        right: 15,
+        bottom: 10,
+      },
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: `平均: ${avg}円／月（${year}年）`,
+        font: {
+          size: 18,
+        },
+      },
+      legend: {
+        display: false,
+      },
+    },
+  };
+  return {
+    options,
+  };
+};
+
+export const clickLink = () => {
+  if (document.activeElement instanceof HTMLElement) {
+    document.activeElement.blur();
+  }
+};

@@ -1,12 +1,10 @@
 import Head from "next/head";
 import type { NextPage } from "next";
-import PageLink from "../components/common/pageLink";
 import HeaderBeforeLogin from "../components/common/headerBeforeLogin";
-import { Box, Text, HStack } from "@chakra-ui/layout";
-import { Button } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/layout";
 import GuestLoginLink from "../components/common/guestLoginLink";
-import useIsLogin from "../hooks/useTest";
 import Introduction from "../components/top/introduction";
+import { useIsLogin } from "../hooks/auth";
 
 const Home: NextPage = () => {
   useIsLogin("/home");

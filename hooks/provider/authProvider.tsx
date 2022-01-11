@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 import { onAuthStateChanged } from "@firebase/auth";
-import { auth } from "../lib/firebase";
+import { auth } from "../../lib/firebase";
 import { User } from "firebase/auth";
 import { signInWithEmailAndPassword } from "@firebase/auth";
 
