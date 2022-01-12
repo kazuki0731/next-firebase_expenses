@@ -5,17 +5,18 @@ import { AuthContext } from "../../hooks/provider/authProvider";
 const GuestLoginLink = () => {
   const { loginAsGuest } = useContext(AuthContext);
   return (
-    <HStack m="0 auto" justify="flex-end">
+    <HStack m="20px0 auto" justify="flex-end">
       <Text
-        mr="30px"
-        textDecoration="underline"
-        fontSize={{ base: "14px", md: "19px" }}
+        mr={{ base: "20px", md: "35px" }}
+        mt="20px"
+        fontSize={{ base: "14px", md: "20px" }}
+        color="blue.500"
         fontWeight="semibold"
         cursor="pointer"
-        _hover={{ opacity: 0.7 }}
+        _hover={{ textDecoration: "underline" }}
         onClick={loginAsGuest}
       >
-        ゲストユーザーログイン
+        登録せずに使ってみる
       </Text>
     </HStack>
   );

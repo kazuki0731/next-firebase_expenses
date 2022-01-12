@@ -11,8 +11,8 @@ const HeaderBeforeLogin: NextPage = () => {
   return (
     <>
       <Box bg="#fff" py="10px">
-        <Box m="0 auto" position="relative" w="95%">
-          <HStack justify={{ base: "flex-start", md: "center" }}>
+        <Box m="0 auto" w="95%">
+          <HStack justify="space-between">
             <Link href={loginUser ? "/home" : "/"} passHref>
               <Image
                 src="/images/sample-logo.jpg"
@@ -22,36 +22,31 @@ const HeaderBeforeLogin: NextPage = () => {
                 cursor="pointer"
               />
             </Link>
+            <Box>
+              <HStack spacing={3}>
+                <PageLink href="/signup">
+                  <Button
+                    w={{ base: "60px", md: "100px" }}
+                    h={{ base: "30px", md: "45px" }}
+                    bg="blue.200"
+                    fontSize={{ base: "12px", md: "18px" }}
+                  >
+                    新規登録
+                  </Button>
+                </PageLink>
+                <PageLink href="/login">
+                  <Button
+                    w={{ base: "60px", md: "100px" }}
+                    h={{ base: "30px", md: "45px" }}
+                    bg="blue.200"
+                    fontSize={{ base: "12px", md: "18px" }}
+                  >
+                    ログイン
+                  </Button>
+                </PageLink>
+              </HStack>
+            </Box>
           </HStack>
-          <Box
-            position="absolute"
-            top="50%"
-            right="0%"
-            transform="translateY(-50%)"
-          >
-            <HStack spacing={3}>
-              <PageLink href="/signup">
-                <Button
-                  w={{ base: "60px", md: "100px" }}
-                  h={{ base: "30px", md: "45px" }}
-                  bg="blue.200"
-                  fontSize={{ base: "12px", md: "18px" }}
-                >
-                  新規登録
-                </Button>
-              </PageLink>
-              <PageLink href="/login">
-                <Button
-                  w={{ base: "60px", md: "100px" }}
-                  h={{ base: "30px", md: "45px" }}
-                  bg="blue.200"
-                  fontSize={{ base: "12px", md: "18px" }}
-                >
-                  ログイン
-                </Button>
-              </PageLink>
-            </HStack>
-          </Box>
         </Box>
       </Box>
     </>
