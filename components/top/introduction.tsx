@@ -24,7 +24,7 @@ const Introduction = () => {
         便利な家計簿アプリ
       </Text>
       <Text
-        mb="10px"
+        mb={{ base: "5px", sm: "10px" }}
         textAlign="center"
         fontWeight="bold"
         color="blue.500"
