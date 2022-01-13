@@ -27,6 +27,7 @@ export const useGetDetailData = () => {
   const getInitData = async (year: number, month: number) => {
     const inputData = await monthlyInputData(year, month);
     if (!inputData) return;
+    console.log(inputData);
     inputData.sort((a, b) => {
       if (a.date > b.date) {
         return 1;
@@ -53,6 +54,7 @@ export const useGetDetailData = () => {
       pageLen = 1;
     }
     setMaxPage(pageLen);
+    console.log(priceDataByCategory);
 
     setPieChart({
       expense: {

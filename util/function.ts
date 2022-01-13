@@ -4,7 +4,8 @@ import { QuerySnapshot } from "@firebase/firestore";
 import { initAllCategoryData } from "../const/categoryInitData";
 
 export const divideData = (data: InputData[]) => {
-  const priceDataByCategory = initAllCategoryData;
+  const initPrice = { ...initAllCategoryData };
+  const priceDataByCategory = initPrice;
   data.forEach((item) => {
     switch (item.category) {
       case "日用品":
