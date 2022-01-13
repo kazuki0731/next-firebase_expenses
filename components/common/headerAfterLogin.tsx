@@ -3,13 +3,15 @@ import { Box, HStack, Button, Text } from "@chakra-ui/react";
 import PageLink from "./pageLink";
 import Link from "next/link";
 import { Image } from "@chakra-ui/react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../hooks/provider/authProvider";
 import { useAuth } from "../../hooks/auth";
+import { MenuContext } from "../../hooks/provider/menuProvider";
 
 const HeaderAfterLogin: NextPage = () => {
   const { logout } = useAuth();
   const { loginUser } = useContext(AuthContext);
+  const { currentMenu } = useContext(MenuContext);
   return (
     <>
       <Box py="5px" mb="10px" bg="#fff">
@@ -49,27 +51,49 @@ const HeaderAfterLogin: NextPage = () => {
         </HStack>
 
         <HStack spacing={{ base: "20px", md: "50px" }} w="90%" m="10px auto 0">
-          <PageLink underline="underLine" href="/home" color="blackAlpha.700">
-            ホーム
+          <PageLink href="/home" color="blackAlpha.700">
+            <Text
+              textDecoration={currentMenu === "/home" ? "underline" : "none"}
+            >
+              ホーム
+            </Text>
           </PageLink>
-          <PageLink underline="underLine" href="/input" color="blackAlpha.700">
-            入力
+          <PageLink href="/input" color="blackAlpha.700">
+            <Text
+              textDecoration={currentMenu === "/input" ? "underline" : "none"}
+            >
+              入力
+            </Text>
           </PageLink>
-          <PageLink
-            underline="underLine"
-            href="/calendar"
-            color="blackAlpha.700"
-          >
-            カレンダー
+          <PageLink href="/calendar" color="blackAlpha.700">
+            <Text
+              textDecoration={
+                currentMenu === "/calendar" ? "underline" : "none"
+              }
+            >
+              カレンダー
+            </Text>
           </PageLink>
-          <PageLink underline="underLine" href="/detail" color="blackAlpha.700">
-            詳細
+          <PageLink href="/detail" color="blackAlpha.700">
+            <Text
+              textDecoration={currentMenu === "/detail" ? "underline" : "none"}
+            >
+              詳細
+            </Text>
           </PageLink>
-          <PageLink underline="underLine" href="/goal" color="blackAlpha.700">
-            目標
+          <PageLink href="/goal" color="blackAlpha.700">
+            <Text
+              textDecoration={currentMenu === "/goal" ? "underline" : "none"}
+            >
+              目標
+            </Text>
           </PageLink>
-          <PageLink underline="underLine" href="/total" color="blackAlpha.700">
-            トータル
+          <PageLink href="/total" color="blackAlpha.700">
+            <Text
+              textDecoration={currentMenu === "/total" ? "underline" : "none"}
+            >
+              トータル
+            </Text>
           </PageLink>
         </HStack>
       </Box>

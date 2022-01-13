@@ -4,16 +4,19 @@ import AuthProvider from "../hooks/provider/authProvider";
 import { theme } from "../styles/theme";
 import Head from "next/head";
 import "../styles/globals.css";
+import MenuProvider from "../hooks/provider/menuProvider";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <AuthProvider>
-        <Head>
-          <title>家計簿アプリ</title>
-          <link rel="shortcut icon" href="/images/ie.png" />
-        </Head>
-        <Component {...pageProps} />
+        <MenuProvider>
+          <Head>
+            <title>家計簿アプリ</title>
+            <link rel="shortcut icon" href="/images/ie.png" />
+          </Head>
+          <Component {...pageProps} />
+        </MenuProvider>
       </AuthProvider>
     </ChakraProvider>
   );

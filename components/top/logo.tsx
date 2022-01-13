@@ -8,6 +8,7 @@ const Logo = () => {
         src="/images/logo.png"
         width={{ base: "130px", md: "260px" }}
         height={{ base: "23px", md: "32px" }}
+        alt="logo"
       />
     </Box>
   );
