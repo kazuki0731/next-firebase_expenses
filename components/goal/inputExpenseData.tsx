@@ -40,7 +40,7 @@ const InputExpenseData: NextPage<Props> = ({
       <Box w={{ base: "80%", md: "90%", lg: "85%" }} m="15px auto">
         <List
           spacing={{ base: "22px", md: "21px", lg: "13px" }}
-          fontSize={{ base: "17px", md: "18px", lg: "22px" }}
+          fontSize={{ base: "15px", md: "18px", lg: "22px" }}
         >
           <Box>
             <ListItem>
