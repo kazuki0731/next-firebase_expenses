@@ -1,4 +1,4 @@
-import { Box, Text, HStack } from "@chakra-ui/layout";
+import { Box } from "@chakra-ui/layout";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../hooks/provider/authProvider";
 import Head from "next/head";
@@ -8,17 +8,15 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
 import { Events, InputData } from "../models/interface";
 import { NextPage } from "next";
-import InputDataList from "../components/common/inputDataList";
 import { useRouter } from "next/router";
 import dayjs from "dayjs";
-import { Button } from "@chakra-ui/react";
 import {
   deleteInputData,
   getDataByCalendar,
   inputDataForCalendar,
 } from "../apiCaller/inputDataQuery";
 import { current } from "../const/date";
-import Dailydata from "../components/calendar/dailydata";
+import Dailydata from "../components/calendar/dailyData";
 
 const Calendar: NextPage = () => {
   const { loginUser } = useContext(AuthContext);
