@@ -97,7 +97,7 @@ const Calendar: NextPage = () => {
           xl: "18px",
         }}
         lineHeight={{
-          sm: "4px",
+          sm: "6px",
           md: "10px",
           lg: "12px",
           xl: "14px",
