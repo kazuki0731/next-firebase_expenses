@@ -6,7 +6,7 @@ import GuestLoginLink from "../components/common/guestLoginLink";
 import Introduction from "../components/top/introduction";
 import { useIsLogin } from "../hooks/auth";
 import PageLink from "../components/common/pageLink";
-import { Button, HStack, Text } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 
 const Home: NextPage = () => {
   useIsLogin("/home");
