@@ -17,9 +17,9 @@ const HeaderAfterLogin: NextPage = () => {
           <HStack>
             <Link href={loginUser ? "/home" : "/"} passHref>
               <Image
-                src="/images/sample-logo.jpg"
-                width={{ base: 100, md: 150 }}
-                height={{ base: 30, md: 50 }}
+                src="/images/logo (5).png"
+                width={{ base: "130px", md: "200px" }}
+                height={{ base: "25px", md: "35px" }}
                 alt="logo"
                 cursor="pointer"
               />

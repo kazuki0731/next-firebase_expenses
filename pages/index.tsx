@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Image from "next/image";
 import type { NextPage } from "next";
 import { Box } from "@chakra-ui/layout";
 import GuestLoginLink from "../components/common/guestLoginLink";
@@ -18,20 +19,26 @@ const Home: NextPage = () => {
       <Box
         h={{
           base: "300px",
-          sm: "750px",
+          sm: "700px",
           xl: "850px",
         }}
         w="100%"
-        bgImage="/images/making-a-budget-tracking-finances.jpg"
+        bgImage="/images/bg4.jpg"
         bgRepeat="no-repeat"
         bgSize="cover"
         position="relative"
       >
         <GuestLoginLink />
-        <Box position="absolute" top="0" right={{ base: "180px", md: "260px" }}>
+        <Box position="absolute" top="18px" left={{ base: "30px", md: "30px" }}>
+          <Image src="/images/logo (5).png" width="260px" height="37px" />
+        </Box>
+        <Box
+          position="absolute"
+          top="20px"
+          right={{ base: "180px", md: "260px" }}
+        >
           <PageLink href="/login">
             <Text
-              mt="20px"
               fontSize={{ base: "14px", md: "20px" }}
               color="blue.500"
               fontWeight="semibold"
