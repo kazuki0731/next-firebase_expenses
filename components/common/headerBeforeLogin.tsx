@@ -15,7 +15,7 @@ const HeaderBeforeLogin: NextPage = () => {
           <HStack justify="space-between">
             <Link href={loginUser ? "/home" : "/"}>
               <Image
-                src="/images/logo (5).png"
+                src="/images/logo.png"
                 width={{ base: "130px", md: "200px" }}
                 height={{ base: "25px", md: "32px" }}
                 alt="logo"

@@ -30,7 +30,7 @@ const Home: NextPage = () => {
       >
         <GuestLoginLink />
         <Box position="absolute" top="18px" left={{ base: "30px", md: "30px" }}>
-          <Image src="/images/logo (5).png" width="260px" height="37px" />
+          <Image src="/images/logo.png" width="260px" height="37px" />
         </Box>
         <Box
           position="absolute"
