@@ -7,9 +7,9 @@ const GuestLoginLink = () => {
   return (
     <HStack m="20px0 auto" justify="flex-end">
       <Text
-        mr={{ base: "20px", md: "35px" }}
+        mr={{ base: "10px", md: "35px" }}
         mt="20px"
-        fontSize={{ base: "14px", md: "20px" }}
+        fontSize={{ base: "12px", sm: "14px", md: "20px" }}
         color="blue.500"
         fontWeight="semibold"
         cursor="pointer"

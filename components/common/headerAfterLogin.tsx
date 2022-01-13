@@ -19,7 +19,7 @@ const HeaderAfterLogin: NextPage = () => {
               <Image
                 src="/images/logo.png"
                 width={{ base: "130px", md: "200px" }}
-                height={{ base: "25px", md: "32px" }}
+                height={{ base: "23px", md: "32px" }}
                 alt="logo"
                 cursor="pointer"
               />
