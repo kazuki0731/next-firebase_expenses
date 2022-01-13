@@ -2,7 +2,7 @@ import Head from "next/head";
 import { NextPage } from "next";
 import { Text, Box, Image, useDisclosure } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../hooks/provider/authProvider";
 import { postData } from "../apiCaller/inputDataQuery";
 import HeaderAfterLogin from "../components/common/headerAfterLogin";
@@ -25,12 +25,14 @@ const InputData: NextPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dateFromCalendar = router.query.date;
 
+  // 選択した画像をプレビュー表示する
   const showPreview = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const url = window.URL.createObjectURL(e.target.files[0]);
     setImageUrl(url);
   };
 
+  // 画像と画像プレビューの削除
   const deletePreview = ({
     price,
     title,
@@ -42,6 +44,7 @@ const InputData: NextPage = () => {
     setImageUrl("");
   };
 
+  // 入力データ送信時
   const submitForm = async (data: SubmitFormData) => {
     const resultdata = await postData(data);
     if (!resultdata) return;
@@ -49,10 +52,6 @@ const InputData: NextPage = () => {
     setMsg(resultdata.text);
     reset({ date: data.date });
   };
-
-  useEffect(() => {
-    
-  }, [])
 
   return (
     <>

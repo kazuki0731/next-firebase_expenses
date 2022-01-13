@@ -7,7 +7,6 @@ import MonthButton from "../components/common/monthButtonList";
 import { AuthContext } from "../hooks/provider/authProvider";
 import { ExpenseData } from "../models/interface";
 import { changeMonthAndYear } from "../util/function";
-import { updateBalanceData } from "../apiCaller/balanceDataQuery";
 import GoalDataForm from "../components/goal/goalDataForm";
 import InputExpenseData from "../components/goal/inputExpenseData";
 import HeaderAfterLogin from "../components/common/headerAfterLogin";
@@ -31,6 +30,7 @@ const Goal: NextPage = () => {
   const [nowMonth, setNowMonth] = useState<number>(current.month);
   const [nowYear, setNowYear] = useState<number>(current.year);
 
+  // 全データ取得
   const getAllData = async (year: number, month: number) => {
     const monthlyData = await getInitData(year, month);
     reset(monthlyData);
@@ -42,11 +42,13 @@ const Goal: NextPage = () => {
     }
   }, [loginUser]);
 
+  // 目標変更をクリックした時
   const changeBalanceData = async (data: ExpenseData, month: number) => {
     const expenseGoalData = await saveBalanceData(data, month, nowYear);
     reset(expenseGoalData);
   };
 
+  // 表示月を変更させる
   const clickShowOtherMonth = (year: number, otherMonth: number) => {
     const { newMonth, newYear } = changeMonthAndYear(year, otherMonth);
     setNowMonth(newMonth);
@@ -54,6 +56,7 @@ const Goal: NextPage = () => {
     getAllData(newYear, newMonth);
   };
 
+  // 表示月を今月に戻す
   const clickShowCurrentMonth = () => {
     setNowMonth(current.month);
     setNowYear(current.year);

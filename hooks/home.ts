@@ -12,6 +12,7 @@ export const useGetTotalData = () => {
   const [recentExpenseData, setRecentExpenseData] =
     useState<AllCategoryData>(initAllCategoryData);
 
+  // 円グラフと収支用のデータ取得
   const getInitTotalData = async () => {
     const inputData = await recentlyMonthlyInputData();
     if (!inputData) return;
@@ -48,6 +49,7 @@ export const useGetTotalData = () => {
 export const useGetInputData = () => {
   const [recentInputData, setRecentInputData] = useState<InputData[]>([]);
 
+  // 最近の出入のためのデータ取得
   const getRecentlyInputData = async () => {
     const result = await recentlyInputData();
     if (!result) return;

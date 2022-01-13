@@ -1,21 +1,21 @@
 import { NextPage } from "next";
 import Head from "next/head";
 import { deleteInputData } from "../apiCaller/inputDataQuery";
-import InputDataButton from "../components/detail/inputDataButton";
+import InputDataButton from "../components/list/inputDataButton";
 import { Box, HStack, VStack } from "@chakra-ui/layout";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../hooks/provider/authProvider";
 import MonthButtonList from "../components/common/monthButtonList";
 import InputDataList from "../components/common/inputDataList";
-import FilterList from "../components/detail/filterList";
+import FilterList from "../components/list/filter";
 import { useForm } from "react-hook-form";
 import HeaderAfterLogin from "../components/common/headerAfterLogin";
-import IncomeChart from "../components/detail/incomeChart";
+import IncomeChart from "../components/list/incomeChart";
 import { current } from "../const/date";
 import { Filter } from "../models/interface";
 import PieChart from "../components/common/expenseChart";
 import { useMediaQuery } from "@chakra-ui/react";
-import { useGetDetailData } from "../hooks/detail";
+import { useGetDetailData } from "../hooks/list";
 import { changeMonthAndYear } from "../util/function";
 
 const defaultValue: Filter = {
@@ -24,7 +24,7 @@ const defaultValue: Filter = {
   order: "asc",
 };
 
-const Detail: NextPage = () => {
+const List: NextPage = () => {
   const { register, handleSubmit, reset } = useForm<Filter>();
   const { loginUser } = useContext(AuthContext);
   const [nowMonth, setNowMonth] = useState<number>(current.month);
@@ -51,6 +51,34 @@ const Detail: NextPage = () => {
     }
   }, [loginUser]);
 
+  // １つ先のデータを取得
+  const clickGetNextData = async () => {
+    const limitedData = dataByCategory.slice(
+      nowPage * pageLimit,
+      (nowPage + 1) * pageLimit
+    );
+    setDetailData(limitedData);
+    setNowPage(nowPage + 1);
+  };
+
+  // １つ前のデータを取得
+  const clickGetPrevData = async () => {
+    const limitedData = dataByCategory.slice(
+      (nowPage - 2) * pageLimit,
+      (nowPage - 1) * pageLimit
+    );
+    setDetailData(limitedData);
+    setNowPage(nowPage - 1);
+  };
+  
+  // 削除
+  const clickDelete = (id: string | undefined) => {
+    if (!id) return;
+    deleteInputData(id);
+    getInitData(nowYear, nowMonth);
+  };
+
+  // 表示月を変更させる時
   const clickShowOtherMonth = (year: number, otherMonth: number) => {
     const { newMonth, newYear } = changeMonthAndYear(year, otherMonth);
     setNowYear(newYear);
@@ -61,34 +89,11 @@ const Detail: NextPage = () => {
     getInitData(newYear, newMonth);
   };
 
-  const clickGetNextData = async () => {
-    const limitedData = dataByCategory.slice(
-      nowPage * pageLimit,
-      (nowPage + 1) * pageLimit
-    );
-    setDetailData(limitedData);
-    setNowPage(nowPage + 1);
-  };
-
-  const clickGetPrevData = async () => {
-    const limitedData = dataByCategory.slice(
-      (nowPage - 2) * pageLimit,
-      (nowPage - 1) * pageLimit
-    );
-    setDetailData(limitedData);
-    setNowPage(nowPage - 1);
-  };
-
+  // 表示月を今月に戻す時
   const clickShowCurrentMonth = () => {
     getInitData(current.year, current.month);
     setNowMonth(current.month);
     setNowYear(current.year);
-  };
-
-  const clickDelete = (id: string | undefined) => {
-    if (!id) return;
-    deleteInputData(id);
-    getInitData(nowYear, nowMonth);
   };
 
   return (
@@ -156,4 +161,4 @@ const Detail: NextPage = () => {
   );
 };
 
-export default Detail;
+export default List;

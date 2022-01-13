@@ -11,7 +11,7 @@ import { BsFillArrowRightCircleFill } from "react-icons/bs";
 interface Props {
   handleSubmit: UseFormHandleSubmit<SubmitFormData>;
   register: UseFormRegister<SubmitFormData>;
-  submitData: (data: SubmitFormData) => Promise<void>;
+  submitInputData: (data: SubmitFormData) => Promise<void>;
   errors: CategoryErrors;
   msg: string | null;
 }
@@ -19,13 +19,13 @@ interface Props {
 const SimpleInput: NextPage<Props> = ({
   handleSubmit,
   register,
-  submitData,
+  submitInputData,
   errors,
   msg,
 }) => {
   return (
     <SimpleSpace text="かんたん入力">
-      <form onSubmit={handleSubmit(submitData)}>
+      <form onSubmit={handleSubmit(submitInputData)}>
         <VStack
           mt={{ base: "10px", md: "0" }}
           spacing={{ base: "15px", md: "10px" }}

@@ -34,6 +34,7 @@ const AuthProvider: NextPage = ({ children }) => {
     };
   }, []);
 
+  // 登録なし（ゲスト）ログイン
   const loginAsGuest = async () => {
     const email = process.env.NEXT_PUBLIC_TESTUSER_EMAIL;
     const password = process.env.NEXT_PUBLIC_TESTUSER_PASSWORD;

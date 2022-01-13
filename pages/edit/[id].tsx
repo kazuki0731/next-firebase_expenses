@@ -34,6 +34,7 @@ const Edit: NextPage = () => {
     getInputData();
   }, []);
 
+  // 変更した入力データ送信時
   const changeData = async (data: InputData) => {
     if (!id) return;
     saveData(data, id);

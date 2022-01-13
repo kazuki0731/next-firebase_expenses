@@ -29,6 +29,7 @@ export const useGetGoalData = () => {
     otherBalance: 0,
   });
 
+  // 目標データとカテゴリ別データを取得
   const getInitData = async (year: number, month: number) => {
     const monthlyResult = await monthlyInputData(year, ("0" + month).slice(-2));
     if (!monthlyResult) return;

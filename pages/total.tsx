@@ -27,6 +27,12 @@ const Total: NextPage = () => {
     getYearlyData(nowYear);
   }, [loginUser]);
 
+  // グラフの表示項目を変更する
+  const changeBalance = (text: string) => {
+    getYearlyData(nowYear, text);
+  };
+
+  // 表示月を変更させる
   const clickShowOtherMonth = (year: number, otherMonth: number) => {
     const { newMonth, newYear } = changeMonthAndYear(year, otherMonth);
     setNowMonth(newMonth);
@@ -35,6 +41,7 @@ const Total: NextPage = () => {
     getCategoryData(newYear, newMonth);
   };
 
+  // 表示月を今月に戻す
   const clickShowCurrentMonth = () => {
     setNowMonth(current.month);
     setNowYear(current.year);
@@ -42,9 +49,6 @@ const Total: NextPage = () => {
     getYearlyData(current.year);
   };
 
-  const changeBalance = (text: string) => {
-    getYearlyData(nowYear, text);
-  };
 
   return (
     <>

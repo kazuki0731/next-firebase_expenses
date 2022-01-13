@@ -12,6 +12,7 @@ export const useGetCategoryData = () => {
   const [allDataBycategory, setAlldataByCategory] =
     useState<AllCategoryData>(initAllCategoryData);
 
+  // 今月分のデータ取得
   const getCategoryData = async (year: number, month: number) => {
     const inputData = await monthlyInputData(year, month);
     if (!inputData) return;
@@ -30,6 +31,7 @@ export const useGetYearlyData = () => {
   const [monthlyAvg, setMonthlyAvg] = useState<number>(0);
   const [selectedBalance, setSelectedBalance] = useState("支出");
 
+  // 棒グラフ用データ取得
   const getYearlyData = async (year: number, text?: string) => {
     let result;
     if (!text || text === "支出") {

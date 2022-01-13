@@ -3,7 +3,7 @@ import { Box, HStack, Button, Text } from "@chakra-ui/react";
 import PageLink from "./pageLink";
 import Link from "next/link";
 import { Image } from "@chakra-ui/react";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../../hooks/provider/authProvider";
 import { useAuth } from "../../hooks/auth";
 import { MenuContext } from "../../hooks/provider/menuProvider";
@@ -74,11 +74,11 @@ const HeaderAfterLogin: NextPage = () => {
               カレンダー
             </Text>
           </PageLink>
-          <PageLink href="/detail" color="blackAlpha.700">
+          <PageLink href="/list" color="blackAlpha.700">
             <Text
-              textDecoration={currentMenu === "/detail" ? "underline" : "none"}
+              textDecoration={currentMenu === "/list" ? "underline" : "none"}
             >
-              詳細
+              一覧
             </Text>
           </PageLink>
           <PageLink href="/goal" color="blackAlpha.700">

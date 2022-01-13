@@ -12,6 +12,7 @@ const Login: NextPage = () => {
   const { register, handleSubmit } = useForm<Login>();
   const { login, msg } = useAuth();
 
+  // ログインボタン押下時
   const submitData = async (date: Login) => {
     login(date);
   };

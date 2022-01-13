@@ -3,8 +3,10 @@ import { monthlyInputData } from "../apiCaller/inputDataQuery";
 import { BalanceChart, Filter, InputData } from "../models/interface";
 import { divideData } from "../util/function";
 
+const initPageLimit = 5;
+
 export const useGetDetailData = () => {
-  const [pageLimit, setPageLimit] = useState<number>(5);
+  const [pageLimit, setPageLimit] = useState<number>(initPageLimit);
   const [dataByCategory, setDataByCategory] = useState<InputData[]>([]);
   const [maxPage, setMaxPage] = useState(1);
   const [nowPage, setNowPage] = useState(1);
@@ -21,6 +23,7 @@ export const useGetDetailData = () => {
     },
   });
 
+  // 今月のデータ取得
   const getInitData = async (year: number, month: number) => {
     const inputData = await monthlyInputData(year, month);
     if (!inputData) return;

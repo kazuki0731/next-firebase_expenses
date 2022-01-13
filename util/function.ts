@@ -1,21 +1,10 @@
 import { DocumentData } from "@firebase/firestore";
 import { ExpenseData, InputData } from "../models/interface";
 import { QuerySnapshot } from "@firebase/firestore";
+import { initAllCategoryData } from "../const/categoryInitData";
 
 export const divideData = (data: InputData[]) => {
-  const priceDataByCategory = {
-    daily: 0,
-    food: 0,
-    traffic: 0,
-    enter: 0,
-    fixed: 0,
-    otherExpense: 0,
-    salary: 0,
-    otherIncome: 0,
-    totalExpensePrice: 0,
-    totalIncomePrice: 0,
-    totalBalancePrice: 0,
-  };
+  const priceDataByCategory = initAllCategoryData;
   data.forEach((item) => {
     switch (item.category) {
       case "日用品":

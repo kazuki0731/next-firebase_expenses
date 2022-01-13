@@ -4,11 +4,9 @@ import {
   createContext,
   Dispatch,
   SetStateAction,
-  useContext,
   useEffect,
   useState,
 } from "react";
-import { AuthContext } from "./authProvider";
 
 export const MenuContext = createContext(
   {} as {
@@ -25,6 +23,7 @@ const MenuProvider: NextPage = ({ children }) => {
     router.events.on("routeChangeComplete", handleChangeRoute);
   }, []);
 
+  // 現在表示されているヘッダーのメニューにアンダーラインを追加する
   const handleChangeRoute = (path: string) => {
     const isEdit = /\/edit/;
     if (isEdit.test(path)) {

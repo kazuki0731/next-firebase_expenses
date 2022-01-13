@@ -13,6 +13,7 @@ import { Events, InputData } from "../models/interface";
 export const useGetEvents = () => {
   const [event, setEvent] = useState<Events[]>([]);
 
+  // 入力した全データを取得しカレンダーの日付ごとにに振り分け
   const getEvents = async () => {
     const data = await inputDataForCalendar();
     if (!data) return;
@@ -33,6 +34,7 @@ export const useGetDailyData = () => {
   const [detailByDate, setDetailByDate] = useState<InputData[]>([]);
   const router = useRouter();
 
+  // 入力データが無い日付をクリックした時
   const clickGetDate = async (e: DateClickArg) => {
     const detailByDate = await getDataByCalendar(e.dateStr);
     if (detailByDate) {
@@ -46,6 +48,7 @@ export const useGetDailyData = () => {
     }
   };
 
+  // 入力データがある日付をクリックした時
   const clickGetEvent = async (e: EventClickArg) => {
     const detailByDate = await getDataByCalendar(e.event.startStr);
     if (detailByDate) {
@@ -53,10 +56,12 @@ export const useGetDailyData = () => {
     }
   };
 
+  // 選択した日付で新規作成
   const clickCreateData = () => {
     router.push({ pathname: "/input", query: { date: detailByDate[0].date } });
   };
 
+  // 削除
   const clickDeleteData = (id: string) => {
     deleteInputData(id);
     const newDetailDate = detailByDate.filter((date) => {

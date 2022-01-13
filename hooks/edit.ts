@@ -11,6 +11,7 @@ export const useGetDataById = () => {
   const [imageUrl, setImageUrl] = useState<string>("");
   const [createdAt, setCreatedAt] = useState("");
 
+  // 選択した入力データの詳細を取得
   const getDataById = async (id: string | string[]) => {
     try {
       const inputData = await selectedInputData(id);
@@ -45,6 +46,7 @@ export const useGetDataById = () => {
 export const useChangeData = () => {
   const [msg, setMsg] = useState("");
 
+  // 変更したデータを保存
   const saveData = (data: InputData, id: string | string[]) => {
     data.price = Number(data.price);
     try {

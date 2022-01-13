@@ -20,18 +20,22 @@ const Calendar: NextPage = () => {
     clickDeleteData,
   } = useGetDailyData();
 
+  // カレンダーの入力データが無い日付をクリックしたとき
   const handleDateClick = async (e: DateClickArg) => {
     clickGetDate(e);
   };
 
+  // カレンダーの入力データがある日付をクリックしたとき
   const handleEventClick = async (e: EventClickArg) => {
     clickGetEvent(e);
   };
 
+  // 新規作成
   const clickCreate = () => {
     clickCreateData();
   };
 
+  // 投稿削除
   const clickDelete = (id: string) => {
     clickDeleteData(id);
     getEvents();

@@ -22,7 +22,7 @@ const Home: NextPage = () => {
           xl: "850px",
         }}
         w="100%"
-        bgImage="/images/bg4.jpg"
+        bgImage="/images/bg.jpg"
         bgRepeat="no-repeat"
         bgSize="cover"
         position="relative"

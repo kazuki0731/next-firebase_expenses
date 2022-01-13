@@ -33,7 +33,8 @@ const Home: NextPage = () => {
     getInitTotalData();
   }, [loginUser]);
 
-  const submitData = async (data: SubmitFormData) => {
+  // かんたん入力でのデータ送信時
+  const submitInputData = async (data: SubmitFormData) => {
     const resultData = await postData(data);
     if (!resultData) return;
     setMsg(resultData.text);
@@ -62,7 +63,7 @@ const Home: NextPage = () => {
                 <SimpleInput
                   handleSubmit={handleSubmit}
                   register={register}
-                  submitData={submitData}
+                  submitInputData={submitInputData}
                   errors={errors}
                   msg={msg}
                 />
@@ -79,7 +80,7 @@ const Home: NextPage = () => {
                 <SimpleInput
                   handleSubmit={handleSubmit}
                   register={register}
-                  submitData={submitData}
+                  submitInputData={submitInputData}
                   errors={errors}
                   msg={msg}
                 />

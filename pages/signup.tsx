@@ -18,6 +18,7 @@ const Signup: NextPage = () => {
   } = useForm<Signup>();
   const { signup, msg, memberData } = useAuth();
 
+  // サインアップボタン押下時
   const submitData = async (data: Signup) => {
     signup(data);
   };

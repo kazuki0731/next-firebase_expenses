@@ -20,6 +20,7 @@ export const useAuth = () => {
     email: "",
   });
 
+  // ログイン
   const login = async ({ email, password }: Login) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -40,6 +41,7 @@ export const useAuth = () => {
     }
   };
 
+  // 新規登録
   const signup = async ({ email, password, name }: Signup) => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
@@ -68,6 +70,7 @@ export const useAuth = () => {
     });
   };
 
+  // ログアウト
   const logout = async () => {
     signOut(auth);
     setLoginUser(null);
