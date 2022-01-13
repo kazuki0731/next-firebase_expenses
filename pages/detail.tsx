@@ -5,7 +5,7 @@ import InputDataButton from "../components/detail/inputDataButton";
 import { Box, HStack, VStack } from "@chakra-ui/layout";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../hooks/provider/authProvider";
-import { divideData } from "../util/functions";
+import { divideData } from "../util/function";
 import MonthButtonList from "../components/common/monthButtonList";
 import InputDataList from "../components/common/inputDataList";
 import FilterList from "../components/detail/filterList";

@@ -7,7 +7,7 @@ import MonthButton from "../components/common/monthButtonList";
 import { AuthContext } from "../hooks/provider/authProvider";
 import { BalanceDetail, ExpenseData } from "../models/interface";
 import { monthlyInputData } from "../apiCaller/inputDataQuery";
-import { divideData } from "../util/functions";
+import { divideData } from "../util/function";
 import {
   getBalanceData,
   updateBalanceData,

@@ -1,12 +1,11 @@
 import Head from "next/head";
-import Image from "next/image";
 import type { NextPage } from "next";
 import { Box } from "@chakra-ui/layout";
 import GuestLoginLink from "../components/common/guestLoginLink";
 import Introduction from "../components/top/introduction";
 import { useIsLogin } from "../hooks/auth";
-import PageLink from "../components/common/pageLink";
-import { Text } from "@chakra-ui/react";
+import LoginTextLink from "../components/top/loginTextLink";
+import Logo from "../components/top/logo";
 
 const Home: NextPage = () => {
   useIsLogin("/home");
@@ -29,26 +28,8 @@ const Home: NextPage = () => {
         position="relative"
       >
         <GuestLoginLink />
-        <Box position="absolute" top="18px" left={{ base: "30px", md: "30px" }}>
-          <Image src="/images/logo.png" width="260px" height="37px" />
-        </Box>
-        <Box
-          position="absolute"
-          top="20px"
-          right={{ base: "180px", md: "260px" }}
-        >
-          <PageLink href="/login">
-            <Text
-              fontSize={{ base: "14px", md: "20px" }}
-              color="blue.500"
-              fontWeight="semibold"
-              cursor="pointer"
-              _hover={{ textDecoration: "underline" }}
-            >
-              ログイン
-            </Text>
-          </PageLink>
-        </Box>
+        <Logo />
+        <LoginTextLink />
         <Introduction />
       </Box>
     </>

@@ -1,6 +1,6 @@
 import NextLink from "next/link";
 import { Link } from "@chakra-ui/react";
-import { clickLink } from "../../util/functions";
+import { clickLink } from "../../util/function";
 import { NextPage } from "next";
 
 const PageLink = (props: any) => {

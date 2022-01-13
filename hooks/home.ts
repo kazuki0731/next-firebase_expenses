@@ -5,7 +5,7 @@ import {
 } from "../apiCaller/inputDataQuery";
 import { initAllCategoryData } from "../const/categoryInitData";
 import { AllCategoryData, Chart, InputData } from "../models/interface";
-import { divideData } from "../util/functions";
+import { divideData } from "../util/function";
 
 export const useGetTotalData = () => {
   const [pieChart, setPieChart] = useState<Chart>({ labels: [], datasets: [] });

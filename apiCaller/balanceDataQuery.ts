@@ -1,7 +1,7 @@
 import { doc, getDoc, setDoc } from "@firebase/firestore";
 import { ExpenseData, IncomeData } from "../models/interface";
 import { auth, db } from "../lib/firebase";
-import { calcBalanceData } from "../util/functions";
+import { calcBalanceData } from "../util/function";
 
 export const getBalanceData = async (
   month: number,

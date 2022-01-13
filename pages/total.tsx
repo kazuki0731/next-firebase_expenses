@@ -6,130 +6,44 @@ import { AuthContext } from "../hooks/provider/authProvider";
 import TotalDataByCategory from "../components/total/totalDataByCategory";
 import MonthButtonList from "../components/common/monthButtonList";
 import BarChart from "../components/common/barChart";
-import { Box, HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, HStack, VStack } from "@chakra-ui/react";
 import { useMediaQuery } from "@chakra-ui/react";
-import {
-  allExpenseInputData,
-  allIncomeInputData,
-  monthlyInputData,
-} from "../apiCaller/inputDataQuery";
-import { divideData, yearlyAllData } from "../util/functions";
 import { current } from "../const/date";
-import { AllCategoryData, Chart } from "../models/interface";
+import { useGetCategoryData, useGetYearlyData } from "../hooks/total";
+import { changeMonthAndYear } from "../util/function";
 
 const Total: NextPage = () => {
   const { loginUser } = useContext(AuthContext);
-  const [allDataBycategory, setAlldataByCategory] = useState<AllCategoryData>({
-    daily: 0,
-    food: 0,
-    traffic: 0,
-    enter: 0,
-    fixed: 0,
-    otherExpense: 0,
-    salary: 0,
-    otherIncome: 0,
-    totalExpensePrice: 0,
-    totalIncomePrice: 0,
-    totalBalancePrice: 0,
-  });
-  const [selectedBalance, setSelectedBalance] = useState("支出");
+  const { allDataBycategory, getCategoryData } = useGetCategoryData();
+  const { barChart, monthlyAvg, getYearlyData, selectedBalance } =
+    useGetYearlyData();
+  const [isLarger] = useMediaQuery("(min-width: 768px)");
   const [nowMonth, setNowMonth] = useState<number>(current.month);
   const [nowYear, setNowYear] = useState<number>(current.year);
-  const [barChart, setBarChart] = useState<Chart>({ labels: [], datasets: [] });
-  const [yearlyData, setYearlyData] = useState<number[]>([]);
-  const [monthlyAvg, setMonthlyAvg] = useState<number>(0);
-  const [isLarger] = useMediaQuery("(min-width: 768px)");
-
-  const getTotalDataByCategory = async (year: number, month: number) => {
-    const inputData = await monthlyInputData(year, month);
-    if (!inputData) return;
-    const priceDataByCategory = divideData(inputData);
-    setAlldataByCategory(priceDataByCategory);
-  };
-
-  const getYearlyData = async (year: number, text?: string) => {
-    let result;
-    if (!text || text === "支出") {
-      result = await allExpenseInputData(year);
-    } else if (text === "収入") {
-      result = await allIncomeInputData(year);
-    } else {
-      const balanceData: number[] = [];
-      const expenseData = await allExpenseInputData(year);
-      const incomeData = await allIncomeInputData(year);
-      if (!expenseData || !incomeData) return;
-
-      const expenseTotal = yearlyAllData(expenseData.data);
-      const incomeTotal = yearlyAllData(incomeData.data);
-      incomeTotal.totalData.forEach((data, index) => {
-        balanceData.push(data - expenseTotal.totalData[index]);
-      });
-      setBarChart({
-        labels: expenseTotal.barLabel,
-        datasets: [
-          {
-            data: balanceData,
-            backgroundColor: ["rgba(255, 99, 132, 0.3)"],
-            borderColor: ["rgb(255, 99, 132)"],
-            borderWidth: 1,
-          },
-        ],
-      });
-      setYearlyData(balanceData);
-      setMonthlyAvg(incomeTotal.totalAvg - expenseTotal.totalAvg);
-      return;
-    }
-
-    if (!result) return;
-    const { totalData, totalAvg, barLabel } = yearlyAllData(result.data);
-    setBarChart({
-      labels: barLabel,
-      datasets: [
-        {
-          data: totalData,
-          backgroundColor: ["rgba(255, 99, 132, 0.3)"],
-          borderColor: ["rgb(255, 99, 132)"],
-          borderWidth: 1,
-        },
-      ],
-    });
-    setYearlyData(totalData);
-    setMonthlyAvg(totalAvg);
-  };
 
   useEffect(() => {
-    if (loginUser) {
-      getTotalDataByCategory(nowYear, nowMonth);
-      getYearlyData(nowYear);
-    }
+    if (!loginUser) return;
+    getCategoryData(nowYear, nowMonth);
+    getYearlyData(nowYear);
   }, [loginUser]);
 
   const clickShowOtherMonth = (year: number, otherMonth: number) => {
-    if (otherMonth <= 0) {
-      otherMonth = 12;
-      year -= 1;
-      setNowYear(year);
-      getYearlyData(year, selectedBalance);
-    } else if (otherMonth > 12) {
-      otherMonth = 1;
-      year += 1;
-      setNowYear(year);
-      getYearlyData(year, selectedBalance);
-    }
-    setNowMonth(otherMonth);
-    getTotalDataByCategory(year, otherMonth);
+    const { newMonth, newYear } = changeMonthAndYear(year, otherMonth);
+    setNowMonth(newMonth);
+    setNowYear(newYear);
+    getYearlyData(newYear, selectedBalance);
+    getCategoryData(newYear, newMonth);
   };
 
   const clickShowCurrentMonth = () => {
-    getTotalDataByCategory(current.year, current.month);
-    getYearlyData(current.year);
     setNowMonth(current.month);
     setNowYear(current.year);
+    getCategoryData(current.year, current.month);
+    getYearlyData(current.year);
   };
 
   const changeBalance = (text: string) => {
     getYearlyData(nowYear, text);
-    setSelectedBalance(text);
   };
 
   return (

@@ -2,7 +2,7 @@ import { Box, Text, HStack } from "@chakra-ui/layout";
 import { NextPage } from "next";
 import { Bar } from "react-chartjs-2";
 import { Chart } from "../../models/interface";
-import { chartOptions } from "../../util/functions";
+import { chartOptions } from "../../util/function";
 import SelectButton from "../total/selectButton";
 
 interface Props {

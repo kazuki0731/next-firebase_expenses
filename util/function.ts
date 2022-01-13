@@ -181,3 +181,17 @@ export const clickLink = () => {
     document.activeElement.blur();
   }
 };
+
+export const changeMonthAndYear = (year: number, otherMonth: number) => {
+  if (otherMonth <= 0) {
+    otherMonth = 12;
+    year -= 1;
+  } else if (otherMonth > 12) {
+    otherMonth = 1;
+    year += 1;
+  }
+  return {
+    newMonth: otherMonth,
+    newYear: year,
+  };
+};

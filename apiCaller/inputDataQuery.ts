@@ -13,7 +13,7 @@ import {
 } from "@firebase/firestore";
 import { ref, uploadBytes } from "firebase/storage";
 import { nanoid } from "nanoid";
-import { getInputDataSnap } from "../util/functions";
+import { getInputDataSnap } from "../util/function";
 import { auth, db, storage } from "../lib/firebase";
 import { SubmitFormData, InputData } from "../models/interface";
 

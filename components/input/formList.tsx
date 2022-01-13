@@ -7,7 +7,7 @@ import { NextPage } from "next";
 import React from "react";
 import { UseFormRegister } from "react-hook-form";
 import { CategoryErrors, SubmitFormData } from "../../models/interface";
-import { dateFormat } from "../../util/functions";
+import { dateFormat } from "../../util/function";
 
 interface Props {
   register: UseFormRegister<SubmitFormData>;
