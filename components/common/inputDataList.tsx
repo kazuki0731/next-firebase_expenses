@@ -4,7 +4,7 @@ import { BsCardImage } from "react-icons/bs";
 import dayjs from "dayjs";
 import { NextPage } from "next";
 import { InputData } from "../../models/interface";
-import PageLink from "../common/pageLink";
+import PageLink from "./pageLink";
 
 interface Props {
   detailData: InputData[];

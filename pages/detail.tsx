@@ -7,7 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../hooks/provider/authProvider";
 import { divideData } from "../util/functions";
 import MonthButtonList from "../components/common/monthButtonList";
-import InputDataList from "../components/detail/inputDataList";
+import InputDataList from "../components/common/inputDataList";
 import FilterList from "../components/detail/filterList";
 import { useForm } from "react-hook-form";
 import { SortAndSelectData } from "../hooks/sortAndSelectData";

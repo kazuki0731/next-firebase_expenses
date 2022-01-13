@@ -8,7 +8,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
 import { Events, InputData } from "../models/interface";
 import { NextPage } from "next";
-import InputDataList from "../components/detail/inputDataList";
+import InputDataList from "../components/common/inputDataList";
 import { useRouter } from "next/router";
 import dayjs from "dayjs";
 import { Button } from "@chakra-ui/react";
@@ -18,6 +18,7 @@ import {
   inputDataForCalendar,
 } from "../apiCaller/inputDataQuery";
 import { current } from "../const/date";
+import Dailydata from "../components/calendar/dailydata";
 
 const Calendar: NextPage = () => {
   const { loginUser } = useContext(AuthContext);
@@ -76,6 +77,7 @@ const Calendar: NextPage = () => {
       getAlldata();
     }
   }, [loginUser]);
+
   return (
     <>
       <Head>
@@ -88,8 +90,18 @@ const Calendar: NextPage = () => {
         bg="#fff"
         m="20px auto"
         border="1px solid #aaa"
-        fontSize={{ base: "6px", sm: "10px", md: "12px", lg: "18px" }}
-        lineHeight={{ base: "6px", sm: "8px", md: "10px", lg: "14px" }}
+        fontSize={{
+          sm: "4px",
+          md: "12px",
+          lg: "16px",
+          xl: "18px",
+        }}
+        lineHeight={{
+          sm: "4px",
+          md: "10px",
+          lg: "12px",
+          xl: "14px",
+        }}
       >
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin]}
@@ -109,30 +121,11 @@ const Calendar: NextPage = () => {
         />
       </Box>
       {loginUser && detailByDate.length !== 0 && (
-        <Box
-          w={{ base: "95%", sm: "95%", md: "85%", lg: "80%" }}
-          m="0 auto"
-          bg="#fff"
-          p="25px"
-          border="1px solid #aaa"
-        >
-          <HStack mb="10px" justify="center">
-            <Text as="h1" fontWeight="normal">
-              詳細
-            </Text>
-          </HStack>
-          <InputDataList detailData={detailByDate} clickDelete={clickDelete} />
-          <HStack m="10px auto" justify="flex-end">
-            <Button
-              w={{ base: "60px", md: "70px" }}
-              h={{ base: "35px", md: "40px" }}
-              fontSize={{ base: "12px", md: "16px" }}
-              onClick={clickCreate}
-            >
-              新規登録
-            </Button>
-          </HStack>
-        </Box>
+        <Dailydata
+          detailByDate={detailByDate}
+          clickCreate={clickCreate}
+          clickDelete={clickDelete}
+        />
       )}
     </>
   );

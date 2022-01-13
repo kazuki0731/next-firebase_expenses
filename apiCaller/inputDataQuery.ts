@@ -182,7 +182,6 @@ export const updateInputData = async (
       memo,
       date,
       files,
-      createdAt: new Date(),
       isExpense,
     }
   );
@@ -193,7 +192,7 @@ export const deleteInputData = async (id: string) => {
   await deleteDoc(doc(db, "users", auth.currentUser.uid, "spendings", id));
 };
 
-export const postData = async (data: SubmitFormData)=> {
+export const postData = async (data: SubmitFormData) => {
   if (!auth.currentUser) return;
   data.price = Number(data.price);
   const { price, title, category, memo, date, files } = data;

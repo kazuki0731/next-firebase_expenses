@@ -13,7 +13,7 @@ const HeaderBeforeLogin: NextPage = () => {
       <Box bg="#fff" py="10px">
         <Box m="0 auto" w="95%">
           <HStack justify="space-between">
-            <Link href={loginUser ? "/home" : "/"} passHref>
+            <Link href={loginUser ? "/home" : "/"}>
               <Image
                 src="/images/logo (5).png"
                 width={{ base: "130px", md: "200px" }}
