@@ -3,18 +3,13 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { Text } from "@chakra-ui/layout";
 import { Image, useDisclosure } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { storage } from "../../lib/firebase";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { getDownloadURL, ref } from "firebase/storage";
 import PreviewModal from "../../components/common/previewModal";
-import {
-  selectedInputData,
-  updateInputData,
-} from "../../apiCaller/inputDataQuery";
 import { InputData } from "../../models/interface";
 import HeaderAfterLogin from "../../components/common/headerAfterLogin";
 import EditForm from "../../components/edit/editForm";
+import { useChangeData, useGetDataById } from "../../hooks/edit";
 
 const Edit: NextPage = () => {
   const {
@@ -23,34 +18,16 @@ const Edit: NextPage = () => {
     reset,
     formState: { errors },
   } = useForm<InputData>();
-  const [imageUrl, setImageUrl] = useState<string>("");
-  const [createdAt, setCreatedAt] = useState("");
-  const [msg, setMsg] = useState("");
+  const { imageUrl, createdAt, getDataById } = useGetDataById();
+  const { msg, saveData } = useChangeData();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
   const id = router.query.dataId;
 
   const getInputData = async () => {
     if (!id) return;
-    try {
-      const inputData = await selectedInputData(id);
-      if (!inputData) return;
-      const createdTime = new Date(inputData.data()?.createdAt.seconds * 1000);
-      setCreatedAt(
-        `${
-          createdTime.getMonth() + 1
-        }月${createdTime.getDate()}日${createdTime.getHours()}時${createdTime.getMinutes()}分`
-      );
-
-      reset(inputData.data());
-      if (!inputData.data()?.files) return;
-      const files = inputData.data()?.files;
-      const storageRef = ref(storage, files);
-      const url = await getDownloadURL(storageRef);
-      setImageUrl(url);
-    } catch (e) {
-      console.log(e);
-    }
+    const inputData = await getDataById(id);
+    reset(inputData);
   };
 
   useEffect(() => {
@@ -59,14 +36,7 @@ const Edit: NextPage = () => {
 
   const changeData = async (data: InputData) => {
     if (!id) return;
-    data.price = Number(data.price);
-    try {
-      updateInputData(data, id);
-      getInputData();
-      setMsg("変更しました");
-    } catch (e: any) {
-      setMsg("変更に失敗しました");
-    }
+    saveData(data, id);
   };
 
   const clickBack = () => {

@@ -5,7 +5,6 @@ import {
   monthlyInputData,
 } from "../apiCaller/inputDataQuery";
 import { initAllCategoryData } from "../const/categoryInitData";
-import { current } from "../const/date";
 import { AllCategoryData, Chart } from "../models/interface";
 import { divideData, yearlyAllData } from "../util/function";
 

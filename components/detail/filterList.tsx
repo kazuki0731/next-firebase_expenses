@@ -8,20 +8,20 @@ import { Filter } from "../../models/interface";
 interface Props {
   handleSubmit: UseFormHandleSubmit<Filter>;
   register: UseFormRegister<Filter>;
-  changeDisplay: ({ category, number, order }: Filter) => void;
+  filterData: ({ category, number, order }: Filter) => void;
 }
 
 const FilterList: NextPage<Props> = ({
   handleSubmit,
   register,
-  changeDisplay,
+  filterData,
 }) => {
   return (
     <HStack spacing="5px" mb="10px">
       <FormControl
         w={{ base: "100px", md: "150px" }}
         id="category"
-        onChange={handleSubmit(changeDisplay)}
+        onChange={handleSubmit(filterData)}
       >
         <Select
           bg="white"
@@ -45,7 +45,7 @@ const FilterList: NextPage<Props> = ({
       <FormControl
         w={{ base: "100px", md: "150px" }}
         id="number"
-        onChange={handleSubmit(changeDisplay)}
+        onChange={handleSubmit(filterData)}
       >
         <Select
           w={{ base: "100px", md: "150px" }}
@@ -63,7 +63,7 @@ const FilterList: NextPage<Props> = ({
       <FormControl
         w={{ base: "100px", md: "150px" }}
         id="order"
-        onChange={handleSubmit(changeDisplay)}
+        onChange={handleSubmit(filterData)}
       >
         <Select
           w={{ base: "100px", md: "150px" }}
