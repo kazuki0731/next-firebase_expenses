@@ -89,15 +89,15 @@ const Calendar: NextPage = () => {
         m="20px auto"
         border="1px solid #aaa"
         fontSize={{
-          base: "4px",
-          sm: "6px",
+          base: "6px",
+          sm: "8px",
           md: "12px",
           lg: "16px",
           xl: "18px",
         }}
         lineHeight={{
-          base: "4px",
-          sm: "7px",
+          base: "6px",
+          sm: "8px",
           md: "10px",
           lg: "12px",
           xl: "14px",
