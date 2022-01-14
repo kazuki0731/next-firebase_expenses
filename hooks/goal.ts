@@ -36,11 +36,8 @@ export const useGetGoalData = () => {
     const priceDataByCategory = divideData(monthlyResult);
 
     const goalData = await getBalanceData(month, year, priceDataByCategory);
-
     if (!goalData) return;
     const { monthlyData, expenseTotal, balanceData } = goalData;
-    console.log(expenseTotal);
-
     setGoalExpenses(expenseTotal);
     setExpenseDetail(priceDataByCategory);
     setAllBalance(expenseTotal - priceDataByCategory.totalExpensePrice);

@@ -27,8 +27,9 @@ const MenuProvider: NextPage = ({ children }) => {
   const handleChangeRoute = (path: string) => {
     const isEdit = /\/edit/;
     if (isEdit.test(path)) {
-      path = "/detail";
+      path = "/list";
     }
+    console.log(path);
     setCurrentMenu(path);
   };
 

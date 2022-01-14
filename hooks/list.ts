@@ -27,7 +27,6 @@ export const useGetDetailData = () => {
   const getInitData = async (year: number, month: number) => {
     const inputData = await monthlyInputData(year, month);
     if (!inputData) return;
-    console.log(inputData);
     inputData.sort((a, b) => {
       if (a.date > b.date) {
         return 1;
@@ -54,8 +53,6 @@ export const useGetDetailData = () => {
       pageLen = 1;
     }
     setMaxPage(pageLen);
-    console.log(priceDataByCategory);
-
     setPieChart({
       expense: {
         labels: ["日用品", "食費", "交通費", "交際費", "固定費", "その他"],
