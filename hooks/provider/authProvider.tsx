@@ -10,6 +10,7 @@ import { onAuthStateChanged } from "@firebase/auth";
 import { auth } from "../../lib/firebase";
 import { User } from "firebase/auth";
 import { signInWithEmailAndPassword } from "@firebase/auth";
+import { useRouter } from "next/router";
 
 export const AuthContext = createContext(
   {} as {
@@ -21,6 +22,7 @@ export const AuthContext = createContext(
 
 const AuthProvider: NextPage = ({ children }) => {
   const [loginUser, setLoginUser] = useState<User | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const unsubscribed = onAuthStateChanged(auth, async (user) => {
@@ -38,9 +40,11 @@ const AuthProvider: NextPage = ({ children }) => {
   const loginAsGuest = async () => {
     const email = process.env.NEXT_PUBLIC_TESTUSER_EMAIL;
     const password = process.env.NEXT_PUBLIC_TESTUSER_PASSWORD;
+    console.log(email, password);
     if (!email || !password) return;
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      router.push("/home");
     } catch (e) {
       console.log(e);
     }
