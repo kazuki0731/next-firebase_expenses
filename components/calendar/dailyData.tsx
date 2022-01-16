@@ -18,9 +18,9 @@ const Dailydata: NextPage<Props> = ({
   return (
     <Box
       w={{ base: "95%", sm: "95%", md: "85%", lg: "80%", xl: "65%" }}
-      m="0 auto"
+      m="0 auto 20px"
       bg="#fff"
-      p="25px"
+      p="10px 30px"
       border="1px solid #aaa"
     >
       <HStack mb="10px" justify="center">

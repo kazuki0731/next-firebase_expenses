@@ -72,7 +72,7 @@ const Total: NextPage = () => {
             changeBalance={changeBalance}
           />
           {isLarger ? (
-            <Box w={{ base: "350px", md: "85%", lg: "850px" }} m="0 auto">
+            <Box w={{ base: "350px", md: "85%", lg: "850px" }} m="0 auto 30px">
               <HStack>
                 <TotalDataByCategory allDataByCategory={allDataBycategory} />
               </HStack>

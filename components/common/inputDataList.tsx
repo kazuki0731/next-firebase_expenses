@@ -35,7 +35,7 @@ const InputDataList: NextPage<Props> = ({ detailData, clickDelete }) => {
                     )}
                     <Text color={data.isExpense ? "#000" : "blue"} as="span">
                       {" "}
-                      {data.price} 円
+                      {data.price.toLocaleString()} 円
                     </Text>
                     <PageLink
                       href={{

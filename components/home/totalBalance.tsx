@@ -15,17 +15,23 @@ const TotalBalance: NextPage<Props> = ({ recentExpenseData }) => {
       <Box mt="60px" fontSize={{ base: "16px", lg: "21px" }}>
         <HStack justify="space-between">
           <Text as="span">当月収入:</Text>
-          <Text as="span">{recentExpenseData.totalIncomePrice}円</Text>
+          <Text as="span">
+            {recentExpenseData.totalIncomePrice.toLocaleString()}円
+          </Text>
         </HStack>
         <Divider my="5px" />
         <HStack justify="space-between">
           <Text as="span">当月支出:</Text>
-          <Text as="span">{recentExpenseData.totalExpensePrice}円</Text>
+          <Text as="span">
+            {recentExpenseData.totalExpensePrice.toLocaleString()}円
+          </Text>
         </HStack>
         <Divider my="5px" />
         <HStack justify="space-between">
           <Text as="span">当月収支:</Text>
-          <Text as="span">{recentExpenseData.totalBalancePrice}円</Text>
+          <Text as="span">
+            {recentExpenseData.totalBalancePrice.toLocaleString()}円
+          </Text>
         </HStack>
         <Divider my="5px" />
       </Box>

@@ -44,7 +44,9 @@ const TotalDataByCategory: NextPage<Props> = ({ allDataByCategory }) => {
                     <ListIcon as={IoIosBasket} color="green.500" />
                     <Text as="span">日用品 </Text>
                   </Box>
-                  <Text as="span">{allDataByCategory.daily}円</Text>
+                  <Text as="span">
+                    {allDataByCategory.daily.toLocaleString()}円
+                  </Text>
                 </HStack>
               </ListItem>
               <Divider w="100%" mb="7px" borderColor="black" />
@@ -59,7 +61,9 @@ const TotalDataByCategory: NextPage<Props> = ({ allDataByCategory }) => {
                     <ListIcon as={IoFastFoodOutline} color="green.500" />
                     <Text as="span">食費 </Text>
                   </Box>
-                  <Text as="span">{allDataByCategory.food}円</Text>
+                  <Text as="span">
+                    {allDataByCategory.food.toLocaleString()}円
+                  </Text>
                 </HStack>
               </ListItem>
               <Divider w="100%" mb="7px" borderColor="black" />
@@ -74,7 +78,9 @@ const TotalDataByCategory: NextPage<Props> = ({ allDataByCategory }) => {
                     <ListIcon as={AiFillCar} color="green.500" />
                     <Text as="span">交通費 </Text>
                   </Box>
-                  <Text as="span">{allDataByCategory.traffic}円</Text>
+                  <Text as="span">
+                    {allDataByCategory.traffic.toLocaleString()}円
+                  </Text>
                 </HStack>
               </ListItem>
               <Divider w="100%" mb="7px" borderColor="black" />
@@ -89,7 +95,9 @@ const TotalDataByCategory: NextPage<Props> = ({ allDataByCategory }) => {
                     <ListIcon as={BiBeer} color="green.500" />
                     <Text as="span">交際費 </Text>
                   </Box>
-                  <Text as="span">{allDataByCategory.enter}円</Text>
+                  <Text as="span">
+                    {allDataByCategory.enter.toLocaleString()}円
+                  </Text>
                 </HStack>
               </ListItem>
               <Divider w="100%" mb="7px" borderColor="black" />
@@ -104,7 +112,9 @@ const TotalDataByCategory: NextPage<Props> = ({ allDataByCategory }) => {
                     <ListIcon as={AiFillInsurance} color="green.500" />
                     <Text as="span">固定費 </Text>
                   </Box>
-                  <Text as="span">{allDataByCategory.fixed}円</Text>
+                  <Text as="span">
+                    {allDataByCategory.fixed.toLocaleString()}円
+                  </Text>
                 </HStack>
               </ListItem>
               <Divider w="100%" mb="7px" borderColor="black" />
@@ -119,7 +129,9 @@ const TotalDataByCategory: NextPage<Props> = ({ allDataByCategory }) => {
                     <ListIcon as={RiPsychotherapyFill} color="green.500" />
                     <Text as="span">その他 </Text>
                   </Box>
-                  <Text as="span">{allDataByCategory.otherExpense}円</Text>
+                  <Text as="span">
+                    {allDataByCategory.otherExpense.toLocaleString()}円
+                  </Text>
                 </HStack>
               </ListItem>
               <Divider w="100%" mb="7px" borderColor="black" />
@@ -149,7 +161,9 @@ const TotalDataByCategory: NextPage<Props> = ({ allDataByCategory }) => {
                       <ListIcon as={AiFillInsurance} color="green.500" />
                       <Text as="span">給料 </Text>
                     </Box>
-                    <Text as="span">{allDataByCategory.salary}円</Text>
+                    <Text as="span">
+                      {allDataByCategory.salary.toLocaleString()}円
+                    </Text>
                   </HStack>
                 </ListItem>
                 <Divider w="100%" mb="7px" borderColor="black" />
@@ -164,7 +178,9 @@ const TotalDataByCategory: NextPage<Props> = ({ allDataByCategory }) => {
                       <ListIcon as={RiPsychotherapyFill} color="green.500" />
                       <Text as="span">その他 </Text>
                     </Box>
-                    <Text as="span">{allDataByCategory.otherIncome}円</Text>
+                    <Text as="span">
+                      {allDataByCategory.otherIncome.toLocaleString()}円
+                    </Text>
                   </HStack>
                 </ListItem>
                 <Divider w="100%" mb="7px" borderColor="black" />
@@ -179,17 +195,23 @@ const TotalDataByCategory: NextPage<Props> = ({ allDataByCategory }) => {
           >
             <HStack justify="space-between">
               <Text as="span">当月収入</Text>
-              <Text as="span">{allDataByCategory.totalIncomePrice}円</Text>
+              <Text as="span">
+                {allDataByCategory.totalIncomePrice.toLocaleString()}円
+              </Text>
             </HStack>
             <Divider my="5px" />
             <HStack justify="space-between">
               <Text as="span">当月支出</Text>
-              <Text as="span">{allDataByCategory.totalExpensePrice}円</Text>
+              <Text as="span">
+                {allDataByCategory.totalExpensePrice.toLocaleString()}円
+              </Text>
             </HStack>
             <Divider my="5px" />
             <HStack justify="space-between">
               <Text as="span">当月収支</Text>
-              <Text as="span">{allDataByCategory.totalBalancePrice}円</Text>
+              <Text as="span">
+                {allDataByCategory.totalBalancePrice.toLocaleString()}円
+              </Text>
             </HStack>
           </Box>
         </VStack>

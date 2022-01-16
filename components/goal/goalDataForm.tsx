@@ -39,7 +39,7 @@ const GoalDataForm: NextPage<Props> = ({
         fontSize={{ base: "18px", md: "19px", lg: "22px" }}
         my={{ base: "10px", md: "5px" }}
       >
-        目標合計: {goalExpenses}円
+        目標合計: {goalExpenses.toLocaleString()}円
       </Text>
       <GoalButtons
         nowMonth={nowMonth}

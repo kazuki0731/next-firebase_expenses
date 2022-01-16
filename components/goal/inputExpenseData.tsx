@@ -47,14 +47,14 @@ const InputExpenseData: NextPage<Props> = ({
               <HStack justify="space-between" px="10px">
                 <HStack>
                   <ListIcon as={IoIosBasket} color="green.500" />
-                  <Text>{expenseDetail.daily}円</Text>
+                  <Text>{expenseDetail.daily.toLocaleString()}円</Text>
                 </HStack>
                 <Text
                   display="inline"
                   color={balanceDetail.dailyBalance >= 0 ? "black" : "red"}
                 >
                   ({balanceDetail.dailyBalance >= 0 && "あと"}
-                  {balanceDetail.dailyBalance}円 )
+                  {balanceDetail.dailyBalance.toLocaleString()}円 )
                 </Text>
               </HStack>
             </ListItem>
@@ -65,14 +65,14 @@ const InputExpenseData: NextPage<Props> = ({
               <HStack justify="space-between" px="10px">
                 <HStack>
                   <ListIcon as={IoFastFoodOutline} color="green.500" />
-                  <Text>{expenseDetail.food}円</Text>
+                  <Text>{expenseDetail.food.toLocaleString()}円</Text>
                 </HStack>
                 <Text
                   display="inline"
                   color={balanceDetail.foodBalance >= 0 ? "black" : "red"}
                 >
                   ({balanceDetail.foodBalance >= 0 && "あと"}
-                  {balanceDetail.foodBalance}円 )
+                  {balanceDetail.foodBalance.toLocaleString()}円 )
                 </Text>
               </HStack>
             </ListItem>
@@ -83,14 +83,14 @@ const InputExpenseData: NextPage<Props> = ({
               <HStack justify="space-between" px="10px">
                 <HStack>
                   <ListIcon as={AiFillCar} color="green.500" />
-                  <Text>{expenseDetail.traffic}円</Text>
+                  <Text>{expenseDetail.traffic.toLocaleString()}円</Text>
                 </HStack>
                 <Text
                   display="inline"
                   color={balanceDetail.trafficBalance >= 0 ? "black" : "red"}
                 >
                   ({balanceDetail.trafficBalance >= 0 && "あと"}
-                  {balanceDetail.trafficBalance}円 )
+                  {balanceDetail.trafficBalance.toLocaleString()}円 )
                 </Text>
               </HStack>
             </ListItem>
@@ -101,14 +101,14 @@ const InputExpenseData: NextPage<Props> = ({
               <HStack justify="space-between" px="10px">
                 <HStack>
                   <ListIcon as={BiBeer} color="green.500" />
-                  <Text>{expenseDetail.enter}円</Text>
+                  <Text>{expenseDetail.enter.toLocaleString()}円</Text>
                 </HStack>
                 <Text
                   display="inline"
                   color={balanceDetail.enterBalance >= 0 ? "black" : "red"}
                 >
                   ({balanceDetail.enterBalance >= 0 && "あと"}
-                  {balanceDetail.enterBalance}円 )
+                  {balanceDetail.enterBalance.toLocaleString()}円 )
                 </Text>
               </HStack>
             </ListItem>
@@ -119,14 +119,14 @@ const InputExpenseData: NextPage<Props> = ({
               <HStack justify="space-between" px="10px">
                 <HStack>
                   <ListIcon as={AiFillInsurance} color="green.500" />
-                  <Text>{expenseDetail.fixed}円</Text>
+                  <Text>{expenseDetail.fixed.toLocaleString()}円</Text>
                 </HStack>
                 <Text
                   display="inline"
                   color={balanceDetail.fixedBalance >= 0 ? "black" : "red"}
                 >
                   ({balanceDetail.fixedBalance >= 0 && "あと"}
-                  {balanceDetail.fixedBalance}円 )
+                  {balanceDetail.fixedBalance.toLocaleString()}円 )
                 </Text>
               </HStack>
             </ListItem>
@@ -137,14 +137,14 @@ const InputExpenseData: NextPage<Props> = ({
               <HStack justify="space-between" px="10px">
                 <HStack>
                   <ListIcon as={RiPsychotherapyFill} color="green.500" />
-                  <Text>{expenseDetail.otherExpense}円</Text>
+                  <Text>{expenseDetail.otherExpense.toLocaleString()}円</Text>
                 </HStack>
                 <Text
                   display="inline"
                   color={balanceDetail.otherBalance >= 0 ? "black" : "red"}
                 >
                   ({balanceDetail.otherBalance >= 0 && "あと"}
-                  {balanceDetail.otherBalance}円 )
+                  {balanceDetail.otherBalance.toLocaleString()}円 )
                 </Text>
               </HStack>
             </ListItem>
@@ -156,7 +156,7 @@ const InputExpenseData: NextPage<Props> = ({
           fontSize={{ base: "18px", md: "19px", lg: "22px" }}
           textAlign="right"
         >
-          合計: {expenseDetail.totalExpensePrice}円
+          合計: {expenseDetail.totalExpensePrice.toLocaleString()}円
         </Box>
         <Text
           mt="15px"
@@ -166,7 +166,7 @@ const InputExpenseData: NextPage<Props> = ({
         >
           目標までの残り:{" "}
           <strong style={{ color: allBalance >= 0 ? "blue" : "red" }}>
-            {allBalance}
+            {allBalance.toLocaleString()}
           </strong>{" "}
           円
         </Text>

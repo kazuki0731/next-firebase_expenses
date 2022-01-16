@@ -20,7 +20,7 @@ export const useGetEvents = () => {
     let detailData: Events[] = [];
     data.forEach((doc, index) => {
       detailData[index] = {
-        title: `${String(doc.price)}(${doc.category})`,
+        title: `${String(doc.price.toLocaleString())}(${doc.category})`,
         start: doc.date,
       };
     });

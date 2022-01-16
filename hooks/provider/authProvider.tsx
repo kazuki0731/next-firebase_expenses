@@ -40,7 +40,6 @@ const AuthProvider: NextPage = ({ children }) => {
   const loginAsGuest = async () => {
     const email = process.env.NEXT_PUBLIC_TESTUSER_EMAIL;
     const password = process.env.NEXT_PUBLIC_TESTUSER_PASSWORD;
-    console.log(email, password);
     if (!email || !password) return;
     try {
       await signInWithEmailAndPassword(auth, email, password);

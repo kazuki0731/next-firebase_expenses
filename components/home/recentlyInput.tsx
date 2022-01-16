@@ -28,7 +28,7 @@ const RecentlyInput: NextPage<Props> = ({ recentInputData }) => {
               </Box>
               <Text color={inputData.isExpense ? "#000" : "blue"} as="span">
                 {" "}
-                {inputData.price}円
+                {inputData.price.toLocaleString()}円
               </Text>
             </HStack>
             <Divider />

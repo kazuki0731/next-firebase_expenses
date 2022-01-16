@@ -61,7 +61,7 @@ export const useGetDetailData = () => {
             data: [daily, food, traffic, enter, fixed, otherExpense],
             backgroundColor: [
               "rgba(255, 0, 0, 0.2)",
-              "rgba(255, 69, 0, 0.2)",
+              "rgba(255, 0, 180, 0.2)",
               "rgba(255, 255, 0, 0.2)",
               "rgba(0, 128, 0, 0.2)",
               "rgba(0, 0, 255, 0.2)",

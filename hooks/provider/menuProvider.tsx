@@ -29,7 +29,6 @@ const MenuProvider: NextPage = ({ children }) => {
     if (isEdit.test(path)) {
       path = "/list";
     }
-    console.log(path);
     setCurrentMenu(path);
   };
 

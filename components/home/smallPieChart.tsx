@@ -1,19 +1,7 @@
-import { Box, Text } from "@chakra-ui/layout";
+import { Box } from "@chakra-ui/layout";
 import { NextPage } from "next";
 import { Pie } from "react-chartjs-2";
-
-const pieOptions = {
-  responsive: true,
-  maintainAspectRatio: false,
-
-  layout: {
-    padding: {
-      left: 15,
-      right: 15,
-      bottom: 15,
-    },
-  },
-};
+import { pieOptions } from "../../const/optins";
 
 interface Props {
   pieChart: {

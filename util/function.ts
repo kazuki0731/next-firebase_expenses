@@ -151,7 +151,7 @@ export const chartOptions = (avg: number, year: number) => {
     plugins: {
       title: {
         display: true,
-        text: `平均: ${avg}円／月（${year}年）`,
+        text: `平均: ${avg.toLocaleString()}円／月（${year}年）`,
         font: {
           size: 18,
         },
