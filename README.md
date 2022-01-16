@@ -1,39 +1,45 @@
-![スクリーンショット 2022-01-16 8 04 13](https://user-images.githubusercontent.com/65108885/149640735-39b66a7d-372d-4ed2-88e8-8ea94c25e2d0.png)
+## アプリケーション名
 
-![スクリーンショット 2022-01-16 8 19 18](https://user-images.githubusercontent.com/65108885/149640811-35eca66c-cdd4-4467-8aa9-00ce5243851b.png)
+かんたん家計簿
+
+## アプリケーション概要
+
+日々の支出や収入を入力し、グラフやカレンダーなどで家計の状況を把握できる家計簿です。
+
+## アプリ作成理由と解決するための工夫点
+
+- 理由  
+  - 過去に自分が使っていた家計簿アプリにあまり利便性を感じなかった
+  - 継続的に使いたくなるような家計簿アプリを自分が開発して、使用したかった
+
+- 工夫点
+  - トップページからでも収支を入力できるようにして煩わしさを軽減させた
+  - 使う金額をいくらまでに抑えたいか記入する欄（目標欄）を作ることで、モチベーションを保ちやすくした
+  - グラフやカレンダーを導入し、データを可視化して見やすくした
+
+## アプリURL
+
+https://next-firebase-expenses.vercel.app/
+
+## テスト用アカウント
+
+email: test@test.com  
+パスワード: testuser  
+※トップページの「登録せずに使ってみる」からもログインできます。  
 
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## 機能一覧
 
-## Getting Started
+- ログイン
+- ユーザー登録
+- 投稿
+  - 画像投稿
+- ページネーション
+- カレンダー
 
-First, run the development server:
+## 使用技術
 
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- HTML/CSS
+- TypeScript 4.4.4
+- Next.js 12.0.1
+- Firebase 9.5.0
