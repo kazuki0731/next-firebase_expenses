@@ -6,6 +6,8 @@
 
 日々の支出や収入を入力し、グラフやカレンダーなどで家計の状況を把握できる家計簿です。
 
+<img src="https://user-images.githubusercontent.com/65108885/149640735-39b66a7d-372d-4ed2-88e8-8ea94c25e2d0.png" width="400px"><img src="https://user-images.githubusercontent.com/65108885/149640811-35eca66c-cdd4-4467-8aa9-00ce5243851b.png" width="400px">
+
 ## アプリ作成理由と解決するための工夫点
 
 - 理由  
