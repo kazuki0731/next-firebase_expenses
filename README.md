@@ -26,8 +26,7 @@ https://next-firebase-expenses.vercel.app/
 email: test@test.com  
 パスワード: testuser  
 ※トップページの「登録せずに使ってみる」からもログインできます。  
-
-
+  
 ## 機能一覧
 
 - ログイン
