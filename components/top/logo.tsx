@@ -6,8 +6,8 @@ const Logo = () => {
     <Box position="absolute" top="18px" left={{ base: "10px", md: "30px" }}>
       <Image
         src="/images/logo.png"
-        width={{ base: "140px", md: "300px" }}
-        height={{ base: "23px", md: "42px" }}
+        width={{ base: "140px", sm: "200px", md: "300px" }}
+        height={{ base: "23px", sm: "30px", md: "42px" }}
         alt="logo"
       />
     </Box>

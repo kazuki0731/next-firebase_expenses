@@ -9,7 +9,7 @@ const GuestLoginLink = () => {
       <Text
         mr={{ base: "10px", md: "35px" }}
         mt="20px"
-        fontSize={{ base: "12px", sm: "14px", md: "20px" }}
+        fontSize={{ base: "12px", sm: "16px", md: "20px", lg: "24px" }}
         color="blue.500"
         fontWeight="semibold"
         cursor="pointer"
