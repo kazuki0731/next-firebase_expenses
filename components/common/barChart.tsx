@@ -23,8 +23,8 @@ const BarChart: NextPage<Props> = ({
   const { options } = chartOptions(monthlyAvg, nowYear);
   return (
     <Box
-      w={{ base: "350px", md: "670px" }}
-      h={{ base: "340px", md: "400px" }}
+      w={{ base: "350px", md: "660px" }}
+      h={{ base: "300px", md: "400px" }}
       pt="10px"
       pb={{ base: "30px", md: "50px" }}
       m="20px auto 30px"

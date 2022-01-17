@@ -47,8 +47,8 @@ export const useGetDetailData = () => {
       otherIncome,
     } = priceDataByCategory;
 
-    const limitedData = inputData.slice(0, pageLimit);
-    let pageLen = Math.ceil(inputData.length / pageLimit);
+    const limitedData = inputData.slice(0, initPageLimit);
+    let pageLen = Math.ceil(inputData.length / initPageLimit);
     if (pageLen === 0) {
       pageLen = 1;
     }
