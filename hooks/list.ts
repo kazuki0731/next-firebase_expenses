@@ -57,15 +57,15 @@ export const useGetDetailData = () => {
 
     const displayPage = [];
     const displayInputData = inputData.slice(
-      pageLimit * (currentPage <= 2 ? 0 : currentPage - 3),
-      pageLimit *
-        (currentPage === 1 && pageLen >= 3 ? currentPage + 3 : currentPage + 2)
+      0,
+      pageLimit * (pageLen >= 3 ? 4 : 3)
     );
     for (let i = 0; i < displayInputData.length / pageLimit; i++) {
       displayPage.push(
         displayInputData.slice(pageLimit * i, pageLimit * (i + 1))
       );
     }
+    console.log(displayInputData);
     setDisplayPage(displayPage);
 
     setPieChart({
@@ -100,6 +100,7 @@ export const useGetDetailData = () => {
     setMonthlyAllData(inputData);
     setDataByCategory(inputData);
     setDetailData(limitedData);
+    setCurrentPage(1);
   };
 
   const filterData = ({ category, number, order }: Filter) => {
