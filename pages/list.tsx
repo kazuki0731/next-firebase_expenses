@@ -14,9 +14,16 @@ import IncomeChart from "../components/list/incomeChart";
 import { current } from "../const/date";
 import { Filter } from "../models/interface";
 import PieChart from "../components/common/expenseChart";
-import { useMediaQuery } from "@chakra-ui/react";
+import {
+  UnorderedList,
+  useMediaQuery,
+  ListItem,
+  Button,
+  Text,
+} from "@chakra-ui/react";
 import { useGetDetailData } from "../hooks/list";
 import { changeMonthAndYear } from "../util/function";
+import PageNation from "../components/list/pageNation";
 
 const defaultValue: Filter = {
   category: "すべて",
@@ -35,12 +42,15 @@ const List: NextPage = () => {
     pageLimit,
     setPageLimit,
     dataByCategory,
-    maxPage,
+    pageLen,
+    monthlyAllData,
     detailData,
     setDetailData,
     pieChart,
-    nowPage,
-    setNowPage,
+    currentPage,
+    setCurrentPage,
+    displayPage,
+    setDisplayPage,
     getInitData,
     filterData,
   } = useGetDetailData();
@@ -51,26 +61,79 @@ const List: NextPage = () => {
     }
   }, [loginUser]);
 
-  // １つ先のデータを取得
-  const clickGetNextData = async () => {
+  const clickChangeCurrentPage = (page: number) => {
+    if (currentPage <= 3) {
+      page += 1;
+    } else {
+      page = page + (currentPage - 2);
+    }
     const limitedData = dataByCategory.slice(
-      nowPage * pageLimit,
-      (nowPage + 1) * pageLimit
+      (page - 1) * pageLimit,
+      page * pageLimit
     );
+    const displayPage = [];
+    const displayInputData = dataByCategory.slice(
+      pageLimit * (page <= 2 ? 0 : page - 3),
+      pageLimit * (page === 1 ? page + 3 : page + 2)
+    );
+    for (let i = 0; i < displayInputData.length / pageLimit; i++) {
+      displayPage.push(
+        displayInputData.slice(pageLimit * i, pageLimit * (i + 1))
+      );
+    }
+
+    setDisplayPage(displayPage);
     setDetailData(limitedData);
-    setNowPage(nowPage + 1);
+    setCurrentPage(page);
+  };
+
+  // １つ先のデータを取得
+  const clickGetNextPage = async () => {
+    const nextPage = currentPage + 1;
+    const limitedData = dataByCategory.slice(
+      currentPage * pageLimit,
+      nextPage * pageLimit
+    );
+    const displayPage = [];
+    const displayInputData = dataByCategory.slice(
+      pageLimit * (nextPage <= 2 ? 0 : nextPage - 3),
+      pageLimit * (nextPage === 1 ? nextPage + 3 : nextPage + 2)
+    );
+    for (let i = 0; i < displayInputData.length / pageLimit; i++) {
+      displayPage.push(
+        displayInputData.slice(pageLimit * i, pageLimit * (i + 1))
+      );
+    }
+
+    setDisplayPage(displayPage);
+    setDetailData(limitedData);
+    setCurrentPage(nextPage);
   };
 
   // １つ前のデータを取得
-  const clickGetPrevData = async () => {
+  const clickGetPrevPage = async () => {
+    const prevPage = currentPage - 1;
     const limitedData = dataByCategory.slice(
-      (nowPage - 2) * pageLimit,
-      (nowPage - 1) * pageLimit
+      (currentPage - 2) * pageLimit,
+      prevPage * pageLimit
     );
+
+    const displayPage = [];
+    const displayInputData = dataByCategory.slice(
+      pageLimit * (prevPage <= 2 ? 0 : prevPage - 3),
+      pageLimit * (prevPage === 1 ? prevPage + 3 : prevPage + 2)
+    );
+    for (let i = 0; i < displayInputData.length / pageLimit; i++) {
+      displayPage.push(
+        displayInputData.slice(pageLimit * i, pageLimit * (i + 1))
+      );
+    }
+
+    setDisplayPage(displayPage);
     setDetailData(limitedData);
-    setNowPage(nowPage - 1);
+    setCurrentPage(prevPage);
   };
-  
+
   // 削除
   const clickDelete = (id: string | undefined) => {
     if (!id) return;
@@ -83,7 +146,7 @@ const List: NextPage = () => {
     const { newMonth, newYear } = changeMonthAndYear(year, otherMonth);
     setNowYear(newYear);
     setNowMonth(newMonth);
-    setNowPage(1);
+    setCurrentPage(1);
     setPageLimit(5);
     reset(defaultValue);
     getInitData(newYear, newMonth);
@@ -99,7 +162,7 @@ const List: NextPage = () => {
   return (
     <>
       <Head>
-        <title>detail</title>
+        <title>list</title>
       </Head>
       <HeaderAfterLogin />
       <MonthButtonList
@@ -142,16 +205,37 @@ const List: NextPage = () => {
             <InputDataList detailData={detailData} clickDelete={clickDelete} />
             <HStack w="100%" justify="center" spacing={5} mt="10px">
               <InputDataButton
-                disabled={nowPage === 1}
-                clickHandle={clickGetPrevData}
+                disabled={currentPage === 1}
+                clickHandle={clickGetPrevPage}
               >
-                &lt;&lt;前の{pageLimit}件
+                &lt;&lt;
               </InputDataButton>
+              {/* <PageNation /> */}
+              <UnorderedList listStyleType="none">
+                <HStack>
+                  {displayPage.length !== 0 &&
+                    displayPage.map((page, index) => (
+                      <ListItem key={index}>
+                        <Button
+                          disabled={
+                            (currentPage > 2 && index === 2) ||
+                            (currentPage <= 2 && currentPage === index + 1)
+                          }
+                          onClick={() => clickChangeCurrentPage(index)}
+                        >
+                          {(currentPage === 1 && currentPage + index) ||
+                            (currentPage === 2 && index + 1) ||
+                            (currentPage >= 3 && index + currentPage - 2)}
+                        </Button>
+                      </ListItem>
+                    ))}
+                </HStack>
+              </UnorderedList>
               <InputDataButton
-                disabled={nowPage === maxPage}
-                clickHandle={clickGetNextData}
+                disabled={currentPage === pageLen}
+                clickHandle={clickGetNextPage}
               >
-                次の{pageLimit}件&gt;&gt;
+                &gt;&gt;
               </InputDataButton>
             </HStack>
           </Box>

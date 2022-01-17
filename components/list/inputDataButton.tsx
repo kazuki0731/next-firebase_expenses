@@ -15,7 +15,7 @@ const InputDataButton: NextPage<Props> = ({
 }) => {
   return (
     <Button
-      w={{ base: "80px", md: "130px" }}
+      w={{ base: "30px", md: "50px" }}
       h={{ base: "30px", md: "45px" }}
       fontSize={{ base: "12px", md: "18px" }}
       disabled={disabled}

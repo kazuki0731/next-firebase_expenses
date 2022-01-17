@@ -8,8 +8,9 @@ const initPageLimit = 5;
 export const useGetDetailData = () => {
   const [pageLimit, setPageLimit] = useState<number>(initPageLimit);
   const [dataByCategory, setDataByCategory] = useState<InputData[]>([]);
-  const [maxPage, setMaxPage] = useState(1);
-  const [nowPage, setNowPage] = useState(1);
+  const [displayPage, setDisplayPage] = useState<InputData[][]>([]);
+  const [pageLen, setPageLen] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [monthlyAllData, setMonthlyAllData] = useState<InputData[]>([]);
   const [detailData, setDetailData] = useState<InputData[]>([]);
   const [pieChart, setPieChart] = useState<BalanceChart>({
@@ -52,7 +53,21 @@ export const useGetDetailData = () => {
     if (pageLen === 0) {
       pageLen = 1;
     }
-    setMaxPage(pageLen);
+    setPageLen(pageLen);
+
+    const displayPage = [];
+    const displayInputData = inputData.slice(
+      pageLimit * (currentPage <= 2 ? 0 : currentPage - 3),
+      pageLimit *
+        (currentPage === 1 && pageLen >= 3 ? currentPage + 3 : currentPage + 2)
+    );
+    for (let i = 0; i < displayInputData.length / pageLimit; i++) {
+      displayPage.push(
+        displayInputData.slice(pageLimit * i, pageLimit * (i + 1))
+      );
+    }
+    setDisplayPage(displayPage);
+
     setPieChart({
       expense: {
         labels: ["日用品", "食費", "交通費", "交際費", "固定費", "その他"],
@@ -88,6 +103,7 @@ export const useGetDetailData = () => {
   };
 
   const filterData = ({ category, number, order }: Filter) => {
+    const displayPage = [];
     const displayNumber = Number(number);
     if (order === "asc") {
       monthlyAllData.sort((a, b) => {
@@ -108,21 +124,48 @@ export const useGetDetailData = () => {
     }
     if (category === "すべて") {
       const limitedData = monthlyAllData.slice(0, displayNumber);
+      const pageLen = Math.ceil(monthlyAllData.length / displayNumber);
+      const displayInputData = monthlyAllData.slice(
+        displayNumber * (currentPage <= 2 ? 0 : currentPage - 3),
+        displayNumber *
+          (currentPage === 1 && pageLen >= 3
+            ? currentPage + 3
+            : currentPage + 2)
+      );
+      for (let i = 0; i < displayInputData.length / displayNumber; i++) {
+        displayPage.push(
+          displayInputData.slice(displayNumber * i, displayNumber * (i + 1))
+        );
+      }
+
       setDetailData(limitedData);
       setDataByCategory(monthlyAllData);
-      const pageLen = Math.ceil(monthlyAllData.length / displayNumber);
-      setMaxPage(pageLen);
+      setPageLen(pageLen);
     } else {
       const categorizedData = monthlyAllData.filter((data) => {
         return data.category === category;
       });
       const limitedData = categorizedData.slice(0, displayNumber);
-      setDataByCategory(categorizedData);
       const pageLen = Math.ceil(categorizedData.length / displayNumber);
-      setMaxPage(pageLen);
+      const displayInputData = categorizedData.slice(
+        displayNumber * (currentPage <= 2 ? 0 : currentPage - 3),
+        displayNumber *
+          (currentPage === 1 && pageLen >= 3
+            ? currentPage + 3
+            : currentPage + 2)
+      );
+      for (let i = 0; i < displayInputData.length / displayNumber; i++) {
+        displayPage.push(
+          displayInputData.slice(displayNumber * i, displayNumber * (i + 1))
+        );
+      }
+      setDataByCategory(categorizedData);
+      setPageLen(pageLen);
       setDetailData(limitedData);
     }
-    setNowPage(1);
+
+    setDisplayPage(displayPage);
+    setCurrentPage(1);
     setPageLimit(displayNumber);
   };
 
@@ -131,16 +174,18 @@ export const useGetDetailData = () => {
     setPageLimit,
     dataByCategory,
     setDataByCategory,
-    maxPage,
-    setMaxPage,
+    pageLen,
+    setPageLen,
     monthlyAllData,
     setMonthlyAllData,
     detailData,
     setDetailData,
     pieChart,
     setPieChart,
-    nowPage,
-    setNowPage,
+    currentPage,
+    setCurrentPage,
+    displayPage,
+    setDisplayPage,
     getInitData,
     filterData,
   };
