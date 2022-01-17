@@ -76,9 +76,30 @@ email: test@test.com
 - 棒グラフ
   - 月ごとの支出、収入、収支を年間で表示 
 
-# 使用技術
+# 使用技術、ライブラリ等
+
+## フロントエンド
 
 - HTML/CSS
 - TypeScript 4.4.4
 - Next.js 12.0.1
+
+## バックエンド、DB、認証
+
 - Firebase 9.5.0
+
+## パッケージマネージャー
+
+- node.js 16.0.0
+
+## その他ライブラリ
+
+- Chakra UI 1.6.10
+- FullCalendar 5.10.1
+- Chart.js2 3.3.0 
+- React Hook Form 7.18.0
+- nanoid 3.1.30
+
+
+
+
