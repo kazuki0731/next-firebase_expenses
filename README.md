@@ -8,7 +8,7 @@
 
 <img src="https://user-images.githubusercontent.com/65108885/149640735-39b66a7d-372d-4ed2-88e8-8ea94c25e2d0.png" width="400px"><img src="https://user-images.githubusercontent.com/65108885/149640811-35eca66c-cdd4-4467-8aa9-00ce5243851b.png" width="400px">
 
-![アニメ２](https://user-images.githubusercontent.com/65108885/149703905-4e203979-3f14-4c32-831c-2706be183552.gif)
+![sample111](https://user-images.githubusercontent.com/65108885/149787672-c4a88f14-2fd6-434b-8ddb-cd172e48329f.gif)
 
 # アプリ作成理由と解決するための工夫点
 
