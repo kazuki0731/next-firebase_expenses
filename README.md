@@ -1,3 +1,7 @@
+# アプリURL
+
+https://next-firebase-expenses.vercel.app/
+
 # アプリケーション名
 
 かんたん家計簿
@@ -21,9 +25,6 @@
 - 使う金額をいくらまでに抑えたいか記入する欄（目標欄）を作ることで、モチベーションを保ちやすくした
 - グラフやカレンダーを導入し、データを可視化して見やすくした
 
-# アプリURL
-
-https://next-firebase-expenses.vercel.app/
 
 # テスト用アカウント
 
